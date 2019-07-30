@@ -1,0 +1,46 @@
+﻿@page "/movies"
+@inherits MoviesBase
+@using RPedretti.RazorComponents.Sample.Models;
+@using RPedretti.RazorComponents.Layout.PagedGrid;
+@using RPedretti.RazorComponents.Sample.Components.MoviePoster;
+
+<div class="input-group mb-3">
+    <input type="text"
+           class="form-control"
+           aria-label="title"
+           placeholder="Movie title..."
+           oninput="(this.dispatchEvent(new CustomEvent('change', { bubbles: true })))"
+           @bind="SearchMovieTitle" />
+    <div class="input-group-append">
+        <button class="btn btn-outline-secondary"
+                type="button"
+                @onclick="SearchAsync"
+                disabled="@string.IsNullOrWhiteSpace(SearchMovieTitle)">
+            Search
+        </button>
+    </div>
+</div>
+
+<h1>Movies (@MoviesCount)</h1>
+
+<PagedGrid MaxIndicators="3"
+           SmallPager
+           TItem="MoviePosterModel"
+           Items="@Movies"
+           ListClasses="movies"
+           ItemClasses="movie-poster"
+           A11yLabel="Movies"
+           Loading="@Loading"
+           HasContent="@HasContent"
+           CurrentPage="@CurrentPage"
+           PageCount="@PageCount"
+           OnRequestPage="@RequestPage">
+    <ItemTemplate>
+        <MoviePoster Movie="@(@context.Item)"
+                  A11yRole="listitem"
+                  A11ySetSize="@MoviesCount"
+                  A11yPosInSet="@((CurrentPage - 1) * 10 + @context.Index + 1)"
+                  A11yLabel="@($"{@context.Item.Title}{(@context.Item.Plot != null ? ", " + @context.Item.Plot : null)}")"
+                  OnClick="@(() => GoToMovie(@context.Item))" />
+    </ItemTemplate>
+</PagedGrid>

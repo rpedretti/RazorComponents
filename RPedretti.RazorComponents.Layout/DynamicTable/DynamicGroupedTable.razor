@@ -1,0 +1,74 @@
+﻿@typeparam TItem
+@inherits DynamicGroupedTableBase
+@using RPedretti.RazorComponents.Input.Spinner
+
+<div class="dynamic-grouped-table">
+    @if (Loading)
+    {
+        <Spinner Centered Active="@Loading" Size="SpinnerSize.MEDIUM"></Spinner>
+    }
+    else
+    {
+        <table class="@($"table table-header {@Classes}")">
+            <thead>
+                <tr>
+                    @foreach (var header in Headers)
+                    {
+                        <th class="@($"{header.Classes}{(header.Hidden ? " -hidden" : null)}")">@header.Title</th>
+                    }
+                </tr>
+            </thead>
+        </table>
+        @foreach (var group in Groups)
+        {
+            var g = group;
+            <div class="@($"group{(g.Collapsed ? " -collapse" : null)}")">
+                <span class="group-header"
+                      role="heading"
+                      tabindex="0"
+                      @onkeydown="@(k => HandleKeyPress(k, () => ToggleGroupCollapsed(g)))"
+                      @onclick="@(() => ToggleGroupCollapsed(g))">
+                    @GroupHeaderTemplate(g)
+                </span>
+                <div class="group-content">
+                    <table class="table">
+                        <tbody>
+                            @foreach (var row in group.Rows)
+                            {
+                                <tr tabindex="@(g.Collapsed ? null : "0")" class="table-row @row.Classes">
+                                    @for (int i = 0; i < Columns.Count(); i++)
+                                    {
+                                        var header = Headers.ElementAt(i);
+                                        var column = Columns.ElementAt(i);
+                                    <td class="@($"table-cell {column.Classes}{(header.Hidden ? " -hidden" : null)}")">
+                                        @if (column.Template != null)
+                                        {
+                                            @column.Template(row.Context);
+                                        }
+                                        else
+                                        {
+                                            @row.Context.ToString();
+                                        }
+                                    </td>
+                                    }
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        }
+    }
+</div>
+
+@functions {
+    [Parameter] protected List<DynamicTableGroup<TItem>> Groups { get; set; } = new List<DynamicTableGroup<TItem>>();
+    [Parameter] RenderFragment<DynamicTableGroup<TItem>> GroupHeaderTemplate { get; set; }
+    [Parameter] IEnumerable<DynamicTableColumn<TItem>> Columns { get; set; } = new DynamicTableColumn<TItem>[] { };
+
+    protected Task ToggleGroupCollapsed(DynamicTableGroup<TItem> group)
+    {
+        group.Collapsed = !group.Collapsed;
+        return Task.CompletedTask;
+    }
+}

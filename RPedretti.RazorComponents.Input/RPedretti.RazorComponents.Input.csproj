@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
+    <DefaultItemExcludes>${DefaultItemExcludes};node_modules\**</DefaultItemExcludes>
+    <NoWarn>CS2008</NoWarn>
+    <DisableFastUpToDateCheck>true</DisableFastUpToDateCheck>
+    <TypeScriptToolsVersion>2.8</TypeScriptToolsVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RPedretti.RazorComponents.Shared\RPedretti.RazorComponents.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <WebpackInputs Include="ts\**\*.ts" Exclude="wwwroot\**;node_modules\**" />
+  </ItemGroup>
+
+  <Target Name="EnsureNpmRestored" Condition="!Exists('node_modules')">
+    <Message Importance="high" Text="Restoring dependencies using 'npm'. This may take several minutes..." />
+    <Exec Command="npm install" />
+  </Target>
+
+  <Target Name="RunWebpack" AfterTargets="ResolveReferences" Inputs="@(WebpackInputs)" Outputs="wwwroot\js\input.js" DependsOnTargets="EnsureNpmRestored">
+    <Exec Command="npm run build" />
+  </Target>
+
+</Project>

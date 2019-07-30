@@ -1,0 +1,8 @@
+/**/bin/
+/**/obj/
+/**/node_modules/
+/**/wwwroot/css
+/**/wwwroot/lib
+/**/wwwroot/js
+/**/package-lock.json
+/**/.vscode

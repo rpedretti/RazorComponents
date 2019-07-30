@@ -1,0 +1,40 @@
+﻿.checkbox {
+    &.-disabled {
+        opacity: .65;
+    }
+
+    &.-inline {
+        display: inline-table;
+    }
+
+    &.size-1 {
+        font-size: 0.75rem;
+    }
+
+    &.size-2 {
+        font-size: 1rem;
+    }
+
+    &.size-3 {
+        font-size: 1.25rem;
+    }
+
+    &.size-4 {
+        font-size: 1.5rem;
+    }
+
+    &:focus {
+        outline: none;
+        & > .checkbox-label {
+            box-shadow: 0px 0px 4px 2px #2196f3;
+        }
+    }
+    > .checkbox-label {
+        cursor: default;
+        margin-bottom: 4px;
+
+        &::before {
+            margin-right: 4px;
+        }
+    }
+}

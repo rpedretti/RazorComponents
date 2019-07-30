@@ -1,0 +1,66 @@
+﻿@typeparam TItem
+@inherits DynamicTableBase
+@using RPedretti.RazorComponents.Input.Spinner
+
+<div class="dynamic-table">
+    <table class="@($"table {@Classes}")">
+        <thead>
+            <tr>
+                @foreach (var header in Headers)
+                {
+                    var h = header;
+                    <th tabindex="@(h.CanSort ? "0" : null)"
+                        class="@($"table-header {h.Classes}{(h.Hidden ? " -hidden" : null)}")"
+                        @onkeydown="@(k => HandleKeyPress(k, () => SortHeader(h)))"
+                        @onclick="@(() => SortHeader(h))">
+                        @h.Title
+                        @if (h.CanSort)
+                        {
+                            <i class="fas fa-sort@(SortedTable.ContainsKey(h) ? SortedTable[h] ? "-down" : "-up" : null)"></i>
+                        }
+                    </th>
+                }
+            </tr>
+        </thead>
+        @if (!Loading)
+        {
+            <tbody>
+                @foreach (var row in Rows)
+                {
+                    <tr tabindex="0" class="table-row @row.Classes" onclick="@(() => OnRowClick?.Invoke(row))">
+                        @for (int i = 0; i < Columns.Count(); i++)
+                        {
+                            var header = Headers.ElementAt(i);
+                            var column = Columns.ElementAt(i);
+                            <td class="@($"table-cell {column.Classes}{(header.Hidden ? " -hidden" : null)}")">
+                                @if (column.Template != null)
+                                {
+                                    @column.Template(row.Context);
+                                }
+                                else {
+                                    @row.Context.ToString();
+                                }
+                            </td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        }
+    </table>
+    @if (Loading)
+    {
+        <Spinner Centered Active="@Loading" Size="SpinnerSize.MEDIUM"></Spinner>
+    }
+</div>
+
+@functions {
+    [Parameter] IEnumerable<DynamicTableRow<TItem>> Rows { get; set; } = new DynamicTableRow<TItem>[] { };
+    [Parameter] IEnumerable<DynamicTableColumn<TItem>> Columns { get; set; } = new DynamicTableColumn<TItem>[] { };
+    [Parameter] Func<DynamicTableRow<TItem>, Task> OnRowClick { get; set; }
+
+    protected Task SortHeader(DynamicTableHeader header)
+    {
+        if (header.CanSort) Sort(header);
+        return Task.CompletedTask;
+    }
+}

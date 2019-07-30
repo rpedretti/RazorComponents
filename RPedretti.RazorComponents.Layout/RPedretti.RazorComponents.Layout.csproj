@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RPedretti.RazorComponents.Shared\RPedretti.RazorComponents.Shared.csproj" />
+    <ProjectReference Include="..\RPedretti.RazorComponents.Input\RPedretti.RazorComponents.Input.csproj" />
+  </ItemGroup>
+
+</Project>
