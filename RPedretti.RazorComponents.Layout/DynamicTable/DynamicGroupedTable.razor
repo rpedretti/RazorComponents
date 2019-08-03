@@ -62,7 +62,7 @@
 </div>
 
 @functions {
-    [Parameter] protected List<DynamicTableGroup<TItem>> Groups { get; set; } = new List<DynamicTableGroup<TItem>>();
+    [Parameter] IEnumerable<DynamicTableGroup<TItem>> Groups { get; set; } = new List<DynamicTableGroup<TItem>>();
     [Parameter] RenderFragment<DynamicTableGroup<TItem>> GroupHeaderTemplate { get; set; }
     [Parameter] IEnumerable<DynamicTableColumn<TItem>> Columns { get; set; } = new DynamicTableColumn<TItem>[] { };
 

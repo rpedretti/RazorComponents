@@ -8,7 +8,7 @@ namespace RPedretti.RazorComponents.Layout.DynamicTable
 
         public string Classes { get; set; }
         public bool Collapsed { get; set; }
-        public List<DynamicTableRow<T>> Rows { get; set; }
+        public IEnumerable<DynamicTableRow<T>> Rows { get; set; }
 
         #endregion Properties
     }

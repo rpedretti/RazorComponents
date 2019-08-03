@@ -15,16 +15,11 @@
 <button type="button" class="btn" @onclick="@(() => ToggleColumn(3))">@(Headers.ElementAt(3).Hidden ? "Show" : "Hide") Rain Ammount</button>
 
 @{
-    RenderFragment<WeatherForecast> dateTemplate = (w) => 
-        @<span>@w.Date.ToString("dd/MM HH:00")</span>;
-    RenderFragment<WeatherForecast> tempTemplate = (w) =>
-        @<span>@w.Temperature</span>;
-    RenderFragment<WeatherForecast> rainChanceTemplate = (w) =>
-        @<span>@w.RainChangePercent</span>;
-    RenderFragment<WeatherForecast> rainAmmountTemplate = (w) =>
-        @<span>@w.RainAmmount</span>;
-    RenderFragment<DynamicTableGroup<WeatherForecast>> groupHeaderTemplate = (g) =>
-        @<span class="@g.Classes">@g.Rows.Average(f => f.Context.Temperature)</span>;
+    RenderFragment<WeatherForecast> dateTemplate = (w) => @<span>@w.Date.ToString("dd/MM HH:00")</span>;
+    RenderFragment<WeatherForecast> tempTemplate = (w) => @<span>@w.Temperature</span>;
+    RenderFragment<WeatherForecast> rainChanceTemplate = (w) => @<span>@w.RainChangePercent</span>;
+    RenderFragment<WeatherForecast> rainAmmountTemplate = (w) => @<span>@w.RainAmmount</span>;
+    RenderFragment<DynamicTableGroup<WeatherForecast>> groupHeaderTemplate = (g) => @<span class="@g.Classes">@g.Rows.Average(f => f.Context.Temperature)</span>;
 
     Columns = new List<DynamicTableColumn<WeatherForecast>>
     {

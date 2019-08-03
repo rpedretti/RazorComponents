@@ -1,4 +1,6 @@
 ﻿@inherits MoviePosterBase
+@using RPedretti.RazorComponents.Input.Spinner
+
 
 <div class="movie-poster_card"
      tabindex="0"
@@ -16,13 +18,13 @@
         {
             if (!ImageLoaded)
             {
-                <Spinner Active="@(!ImageLoaded)" Centered></Spinner>
+                <Spinner Active Centered></Spinner>
             }
             <img class="@($"poster-image {(ImageLoaded ? "-loaded" : null)}")"
                  alt="@Movie.Title"
                  src="@(ImageError ? "/assets/poster-placeholder.png" : Movie.Poster)"
                  @onerror="UpdateError"
-                 @onload="UpdateLoader" />
+                 @onload="UpdateLoader"/>
         }
     </div>
 </div>

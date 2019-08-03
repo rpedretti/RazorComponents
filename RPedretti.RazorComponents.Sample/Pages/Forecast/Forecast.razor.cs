@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -23,7 +24,7 @@ namespace RPedretti.RazorComponents.Sample.Pages.Forecast
 
         [Inject]
         private IForecastService ForecastService { get; set; }
-        protected List<DynamicTableColumn<WeatherForecast>> Columns { get; set; }
+        protected IEnumerable<DynamicTableColumn<WeatherForecast>> Columns { get; set; }
 
         #endregion Properties
 
@@ -39,24 +40,22 @@ namespace RPedretti.RazorComponents.Sample.Pages.Forecast
 
             GroupedForecast = forecasts.GroupBy(f => f.Date.Date).Select(g =>
             {
-                var group = new DynamicTableGroup<WeatherForecast>
+                return new DynamicTableGroup<WeatherForecast>
                 {
                     Rows = g.Select(f => new DynamicTableRow<WeatherForecast> { Context = f }).ToList()
                 };
-
-                return group;
-            }).ToList();
+            });
 
             Loading = false;
         }
 
         #endregion Methods
 
-        protected List<DynamicTableRow<WeatherForecast>> Forecasts { get; set; }
+        protected IEnumerable<DynamicTableRow<WeatherForecast>> Forecasts { get; set; }
 
-        protected List<DynamicTableGroup<WeatherForecast>> GroupedForecast { get; set; }
+        protected IEnumerable<DynamicTableGroup<WeatherForecast>> GroupedForecast { get; set; }
 
-        protected List<DynamicTableHeader> Headers { get; set; }
+        protected IEnumerable<DynamicTableHeader> Headers { get; set; }
 
         protected bool Loading
         {
@@ -101,39 +100,23 @@ namespace RPedretti.RazorComponents.Sample.Pages.Forecast
 
             if (isAsc)
             {
-                switch (column.SortProp)
-                {
-                    case nameof(WeatherForecast.Date):
-                        Forecasts = Forecasts.OrderBy(r => r.Context.Date).ToList();
-                        break;
-                    case nameof(WeatherForecast.RainAmmount):
-                        Forecasts = Forecasts.OrderBy(r => r.Context.RainAmmount).ToList();
-                        break;
-                    case nameof(WeatherForecast.RainChangePercent):
-                        Forecasts = Forecasts.OrderBy(r => r.Context.RainChangePercent).ToList();
-                        break;
-                    case nameof(WeatherForecast.Temperature):
-                        Forecasts = Forecasts.OrderBy(r => r.Context.Temperature).ToList();
-                        break;
-                }
+                Forecasts = column.SortProp switch {
+                    nameof(WeatherForecast.Date) => Forecasts.OrderBy(r => r.Context.Date).ToList(),
+                    nameof(WeatherForecast.RainAmmount) => Forecasts.OrderBy(r => r.Context.RainAmmount).ToList(),
+                    nameof(WeatherForecast.RainChangePercent) => Forecasts.OrderBy(r => r.Context.RainChangePercent).ToList(),
+                    nameof(WeatherForecast.Temperature) => Forecasts.OrderBy(r => r.Context.Temperature).ToList(),
+                    _ => throw new ArgumentException($"invalid property", column.SortProp)
+                };
             }
             else
             {
-                switch (column.SortProp)
-                {
-                    case nameof(WeatherForecast.Date):
-                        Forecasts = Forecasts.OrderByDescending(r => r.Context.Date).ToList();
-                        break;
-                    case nameof(WeatherForecast.RainAmmount):
-                        Forecasts = Forecasts.OrderByDescending(r => r.Context.RainAmmount).ToList();
-                        break;
-                    case nameof(WeatherForecast.RainChangePercent):
-                        Forecasts = Forecasts.OrderByDescending(r => r.Context.RainChangePercent).ToList();
-                        break;
-                    case nameof(WeatherForecast.Temperature):
-                        Forecasts = Forecasts.OrderByDescending(r => r.Context.Temperature).ToList();
-                        break;
-                }
+                Forecasts = column.SortProp switch {
+                    nameof(WeatherForecast.Date) => Forecasts.OrderByDescending(r => r.Context.Date).ToList(),
+                    nameof(WeatherForecast.RainAmmount) => Forecasts.OrderByDescending(r => r.Context.RainAmmount).ToList(),
+                    nameof(WeatherForecast.RainChangePercent) => Forecasts.OrderByDescending(r => r.Context.RainChangePercent).ToList(),
+                    nameof(WeatherForecast.Temperature) => Forecasts.OrderByDescending(r => r.Context.Temperature).ToList(),
+                    _ => throw new ArgumentException($"invalid property", column.SortProp)
+                };
             }
 
             Loading = false;

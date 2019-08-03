@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Logging;
 using RPedretti.RazorComponents.Sample.Models;
 using RPedretti.RazorComponents.Shared.Components;
 using System.Threading.Tasks;
@@ -9,19 +10,27 @@ namespace RPedretti.RazorComponents.Sample.Components.MoviePoster
     {
         #region Fields
 
-        protected bool ImageError;
+        protected bool ImageError = false;
         protected bool ImageLoaded = false;
 
         #endregion Fields
 
         #region Properties
 
+        [Inject] protected ILogger<MoviePosterBase> Logger { get; set; }
         [Parameter] protected MoviePosterModel Movie { get; set; }
         [Parameter] protected EventCallback OnClick { get; set; }
 
         #endregion Properties
 
         #region Methods
+
+        protected override async Task OnParametersSetAsync()
+        {
+            ImageError = false;
+            Logger.LogDebug("movie parameter set");
+            await base.OnParametersSetAsync();
+        }
 
         protected async Task HandleClick()
         {

@@ -83,7 +83,6 @@ namespace RPedretti.RazorComponents.Sample.Pages.Inputs
             if (!string.IsNullOrWhiteSpace(query))
             {
                 LoadingSuggestions = true;
-                StateHasChanged();
                 await Task.Delay(1000);
 
                 FilteredList = someList.Where(s => s.ToLower().StartsWith(query.ToLower())).ToList();
@@ -93,7 +92,6 @@ namespace RPedretti.RazorComponents.Sample.Pages.Inputs
             {
                 FilteredList = null;
             }
-            StateHasChanged();
         }
 
         protected void ResetSelectedRadios()
@@ -118,7 +116,7 @@ namespace RPedretti.RazorComponents.Sample.Pages.Inputs
         }
 
         public RadioButton[] RadioButtons { get; set; } = new RadioButton[]
-                                                                                                {
+        {
             new RadioButton { Label = "Button 1", Value = 4 },
             new RadioButton { Label = "Button 2", Value = "olar"},
             new RadioButton { Label = "Button 3", Value = null, Disabled = true },
