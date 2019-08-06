@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using RPedretti.RazorComponents.Sample.HttpClients;
 using RPedretti.RazorComponents.Sample.Services;
+using RPedretti.RazorComponents.Sensors.Extensions;
 
 namespace RPedretti.RazorComponents.Sample
 {

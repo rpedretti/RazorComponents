@@ -121,5 +121,11 @@ namespace RPedretti.RazorComponents.Sample.Pages.Forecast
 
             Loading = false;
         }
+
+        protected Task RowClicked(DynamicTableRow<WeatherForecast> row)
+        {
+            Console.WriteLine(row.Context.Date);
+            return Task.CompletedTask;
+        }
     }
 }

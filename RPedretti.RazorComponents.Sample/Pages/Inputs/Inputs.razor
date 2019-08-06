@@ -81,7 +81,7 @@
 
     <div class="accordeon-container">
         <Accordeon Title="Radio Button" CenterTitle>
-            <button class="btn my-button" onclick="@ResetSelectedRadios" disabled="@(!HasSelection)">Reset All</button>
+            <button class="btn my-button" @onclick="@ResetSelectedRadios" disabled="@(!HasSelection)">Reset All</button>
 
             <fieldset>
                 <legend>Vertical</legend>

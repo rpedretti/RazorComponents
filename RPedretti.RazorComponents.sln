@@ -1,15 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26124.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29123.89
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RPedretti.RazorComponents.Sample", "RPedretti.RazorComponents.Sample\RPedretti.RazorComponents.Sample.csproj", "{87B86669-7795-4765-8766-A3EBE9DC1B8F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RPedretti.RazorComponents.Sample", "RPedretti.RazorComponents.Sample\RPedretti.RazorComponents.Sample.csproj", "{87B86669-7795-4765-8766-A3EBE9DC1B8F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RPedretti.RazorComponents.Input", "RPedretti.RazorComponents.Input\RPedretti.RazorComponents.Input.csproj", "{A4CFF588-A999-4B8F-8D39-3B3A71FBCD70}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RPedretti.RazorComponents.Input", "RPedretti.RazorComponents.Input\RPedretti.RazorComponents.Input.csproj", "{A4CFF588-A999-4B8F-8D39-3B3A71FBCD70}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RPedretti.RazorComponents.Shared", "RPedretti.RazorComponents.Shared\RPedretti.RazorComponents.Shared.csproj", "{5381EA51-B992-4201-BE6C-8EDB30A6A41F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RPedretti.RazorComponents.Shared", "RPedretti.RazorComponents.Shared\RPedretti.RazorComponents.Shared.csproj", "{5381EA51-B992-4201-BE6C-8EDB30A6A41F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RPedretti.RazorComponents.Layout", "RPedretti.RazorComponents.Layout\RPedretti.RazorComponents.Layout.csproj", "{6DAA1559-80EA-4269-8401-2246ED7180D7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RPedretti.RazorComponents.Layout", "RPedretti.RazorComponents.Layout\RPedretti.RazorComponents.Layout.csproj", "{6DAA1559-80EA-4269-8401-2246ED7180D7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RPedretti.RazorComponents.Sensors", "RPedretti.RazorComponents.Sensors\RPedretti.RazorComponents.Sensors.csproj", "{1E4E9698-403B-42A1-B2DB-4140203830D5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,9 +21,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{87B86669-7795-4765-8766-A3EBE9DC1B8F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -72,5 +71,23 @@ Global
 		{6DAA1559-80EA-4269-8401-2246ED7180D7}.Release|x64.Build.0 = Release|Any CPU
 		{6DAA1559-80EA-4269-8401-2246ED7180D7}.Release|x86.ActiveCfg = Release|Any CPU
 		{6DAA1559-80EA-4269-8401-2246ED7180D7}.Release|x86.Build.0 = Release|Any CPU
+		{1E4E9698-403B-42A1-B2DB-4140203830D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E4E9698-403B-42A1-B2DB-4140203830D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E4E9698-403B-42A1-B2DB-4140203830D5}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{1E4E9698-403B-42A1-B2DB-4140203830D5}.Debug|x64.Build.0 = Debug|Any CPU
+		{1E4E9698-403B-42A1-B2DB-4140203830D5}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{1E4E9698-403B-42A1-B2DB-4140203830D5}.Debug|x86.Build.0 = Debug|Any CPU
+		{1E4E9698-403B-42A1-B2DB-4140203830D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E4E9698-403B-42A1-B2DB-4140203830D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E4E9698-403B-42A1-B2DB-4140203830D5}.Release|x64.ActiveCfg = Release|Any CPU
+		{1E4E9698-403B-42A1-B2DB-4140203830D5}.Release|x64.Build.0 = Release|Any CPU
+		{1E4E9698-403B-42A1-B2DB-4140203830D5}.Release|x86.ActiveCfg = Release|Any CPU
+		{1E4E9698-403B-42A1-B2DB-4140203830D5}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {10C5FB1C-D5EF-487A-8C25-0C25DBACDC27}
 	EndGlobalSection
 EndGlobal

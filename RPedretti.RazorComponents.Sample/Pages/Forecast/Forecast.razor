@@ -48,8 +48,5 @@ else
                   Columns="@Columns"
                   Loading="@Loading"
                   SortRequest="@Sort" 
-                  OnRowClick="@(row => {
-                    Console.WriteLine(row);
-                    return Task.CompletedTask;
-                  })"/>
+                  OnRowClick="@RowClicked"/>
 }
