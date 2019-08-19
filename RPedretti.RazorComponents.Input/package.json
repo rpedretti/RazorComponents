@@ -3,12 +3,13 @@
   "name": "rpedretti.razorcomponents",
   "private": true,
   "scripts": {
-    "build": "webpack-cli"
+    "build:debug": "webpack-cli --mode=development",
+    "build:production": "webpack-cli --mode=production"
   },
   "devDependencies": {
     "@types/jquery": "3.3.9",
     "ts-loader": "^4.4.2",
-    "typescript": "^2.8.3",
+    "typescript": "^3.5.3",
     "webpack": "^4.16.3",
     "webpack-cli": "^3.1.0"
   }

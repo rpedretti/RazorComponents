@@ -14,47 +14,30 @@ namespace RPedretti.RazorComponents.Input.SuggestBox
     public class SuggestBoxBase<T> : BaseComponent, IDisposable
     {
         #region Fields
+
+        private readonly SuggestBoxBaseJSInterop interop = new SuggestBoxBaseJSInterop();
         private string _a11ylabel;
         private bool _loading;
         private bool _shouldRender;
         private bool init = true;
         private string originalQuery;
         private DebounceDispatcher queryDispatcher = new DebounceDispatcher();
-        private SuggestBoxBaseJSInterop interop = new SuggestBoxBaseJSInterop();
-
-        [Inject]
-        private IJSRuntime JSRuntime { get; set; }
-
-        [Inject]
-        private IComponentContext ComponentContext { get; set; }
-        [Inject]
-        private ILogger<SuggestBoxBase<T>> Logger { get; set; }
-
-        protected ElementRef input;
-
-        #endregion Fields
-
-        #region Methods
-
-        private void UpdateLoadingA11yLabel(bool loading)
-        {
-            if (loading)
-            {
-                AnnounceA11Y = true;
-                A11yLabel = "Loading";
-            }
-        }
-
-        #endregion Methods
-
         protected readonly string directions = "Keyboard users, use up and down arrows to review and enter to select. Touch device users, explore by touch or with swipe gestures.";
         protected List<SuggestionItem<T>> _suggestionItems = new List<SuggestionItem<T>>();
         protected List<T> _suggestions;
         protected bool AnnounceA11Y = false;
-
-        private DotNetObjectRef<SuggestBoxBaseJSInterop> ObjRef { get; set; }
-
+        protected ElementReference input;
         protected string internalQuery;
+
+        #endregion Fields
+
+        #region Properties
+
+        [Inject] private IComponentContext ComponentContext { get; set; }
+        private JSReferenceFactory JSReferenceFactory { get; set; }
+        [Inject] private IJSRuntime JSRuntime { get; set; }
+        [Inject] private ILogger<SuggestBoxBase<T>> Logger { get; set; }
+        private DotNetObjectRef<SuggestBoxBaseJSInterop> ObjRef { get; set; }
 
         protected string A11yLabel
         {
@@ -62,14 +45,18 @@ namespace RPedretti.RazorComponents.Input.SuggestBox
             set => SetParameter(ref _a11ylabel, value, () => AnnounceA11Y = true);
         }
 
-        [Parameter] protected string Description { get; set; }
         protected bool HasFocus { get; set; }
+
         protected string ListId { get; set; }
 
-        [Parameter] protected RenderFragment<SuggestionItem<T>> SuggestionTemplate { get; set; }
+        protected bool OpenSuggestion { get; set; }
+
+        internal string SuggestBoxId { get; set; }
+
+        [Parameter] public string Description { get; set; }
 
         [Parameter]
-        protected bool LoadingSuggestion
+        public bool LoadingSuggestion
         {
             get => _loading;
             set
@@ -81,11 +68,11 @@ namespace RPedretti.RazorComponents.Input.SuggestBox
                 });
             }
         }
-        [Parameter] protected int MaxSuggestions { get; set; }
-        protected bool OpenSuggestion { get; set; }
+
+        [Parameter] public int MaxSuggestions { get; set; }
 
         [Parameter]
-        protected string Query
+        public string Query
         {
             get => internalQuery;
             set
@@ -99,10 +86,10 @@ namespace RPedretti.RazorComponents.Input.SuggestBox
             }
         }
 
-        [Parameter] protected EventCallback<string> QueryChanged { get; set; }
+        [Parameter] public EventCallback<string> QueryChanged { get; set; }
 
         [Parameter]
-        protected List<T> Suggestions
+        public List<T> Suggestions
         {
             get => _suggestions;
             set
@@ -128,11 +115,30 @@ namespace RPedretti.RazorComponents.Input.SuggestBox
             }
         }
 
-        [Parameter] protected EventCallback<T> SuggestionSelected { get; set; }
+        [Parameter] public EventCallback<T> SuggestionSelected { get; set; }
+
+        [Parameter] public RenderFragment<SuggestionItem<T>> SuggestionTemplate { get; set; }
+
+        #endregion Properties
+
+        #region Constructors
 
         public SuggestBoxBase()
         {
-            this.interop.ClearSelectionEvent += (s, e) => ClearSelection();
+            interop.ClearSelectionEvent += (s, e) => ClearSelection();
+        }
+
+        #endregion Constructors
+
+        #region Methods
+
+        private void UpdateLoadingA11yLabel(bool loading)
+        {
+            if (loading)
+            {
+                AnnounceA11Y = true;
+                A11yLabel = "Loading";
+            }
         }
 
         protected async Task HandleKeyDown(UIKeyboardEventArgs args)
@@ -239,7 +245,6 @@ namespace RPedretti.RazorComponents.Input.SuggestBox
 
         protected override async Task OnAfterRenderAsync()
         {
-
             if (ComponentContext.IsConnected)
             {
                 if (init)
@@ -254,18 +259,9 @@ namespace RPedretti.RazorComponents.Input.SuggestBox
             }
         }
 
-        protected override void OnInit()
-        {
-            SuggestBoxId = $"suggestbox-{Guid.NewGuid()}";
-        }
+        protected override void OnInitialized() => SuggestBoxId = $"suggestbox-{Guid.NewGuid()}";
 
-        protected override bool ShouldRender()
-        {
-            return _shouldRender;
-        }
-
-        internal string SuggestBoxId { get; set; }
-        private JSReferenceFactory JSReferenceFactory { get; set; }
+        protected override bool ShouldRender() => _shouldRender;
 
         public void ClearSelection()
         {
@@ -284,6 +280,8 @@ namespace RPedretti.RazorComponents.Input.SuggestBox
                 JSReferenceFactory.DisposeDotNetObjectRef(ObjRef);
             }
         }
+
+        #endregion Methods
     }
 
     public sealed class SuggestionItem<T>

@@ -10,8 +10,8 @@ $border-large: 8px;
 @mixin spinner-size($size, $border-size) {
     width: $size;
     height: $size;
-    border: $border-size solid #f3f3f3; /* Light grey */
-    border-top: $border-size solid #3498db; /* Blue */
+    border: $border-size solid var(--progress-color-big-ring); /* Light grey */
+    border-top: $border-size solid var(--progress-color-small-ring); /* Blue */
 }
 
 @mixin spinner-center($size) {
@@ -68,8 +68,8 @@ $border-large: 8px;
     }
 
     .spinner {
-        border: 4px solid #f3f3f3; /* Light grey */
-        border-top: 4px solid #3498db; /* Blue */
+        border: 4px solid var(--progress-color-big-ring); /* Light grey */
+        border-top: 4px solid var(--progress-color-small-ring); /* Blue */
         border-radius: 50%;
         display: none;
 

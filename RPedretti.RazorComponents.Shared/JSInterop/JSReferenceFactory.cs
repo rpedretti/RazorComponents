@@ -1,16 +1,31 @@
 using Microsoft.JSInterop;
+
 namespace RPedretti.RazorComponents.Shared.JSInterop
 {
     public class JSReferenceFactory
     {
+        #region Fields
+
+        private static object CreateDotNetObjectRefSyncObj = new object();
+
+        #endregion Fields
+
+        #region Properties
+
         private IJSRuntime Js { get; set; }
+
+        #endregion Properties
+
+        #region Constructors
 
         public JSReferenceFactory(IJSRuntime jsRuntime)
         {
             Js = jsRuntime;
         }
 
-        private static object CreateDotNetObjectRefSyncObj = new object();
+        #endregion Constructors
+
+        #region Methods
 
         public DotNetObjectRef<T> CreateDotNetObjectRef<T>(T value) where T : class
         {
@@ -32,5 +47,7 @@ namespace RPedretti.RazorComponents.Shared.JSInterop
                 }
             }
         }
+
+        #endregion Methods
     }
 }

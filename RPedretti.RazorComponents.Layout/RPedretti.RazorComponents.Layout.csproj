@@ -12,7 +12,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\RPedretti.RazorComponents.Shared\RPedretti.RazorComponents.Shared.csproj" />
-    <ProjectReference Include="..\RPedretti.RazorComponents.Input\RPedretti.RazorComponents.Input.csproj" />
   </ItemGroup>
 
 </Project>

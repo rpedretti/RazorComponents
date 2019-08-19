@@ -1,19 +1,16 @@
-﻿using Microsoft.JSInterop;
-using System;
-using System.Net.Http;
+﻿using Microsoft.Extensions.Logging;
+using RPedretti.RazorComponents.Sample.Domain;
+using RPedretti.RazorComponents.Sample.HttpClients;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
-using RPedretti.RazorComponents.Sample.Domain;
-using System.Text.Json;
-using RPedretti.RazorComponents.Sample.HttpClients;
 
 namespace RPedretti.RazorComponents.Sample.Services
 {
     public sealed class ImdbService : IMovieService
     {
-        private readonly IImdbClient imdbClient;
         #region Fields
+
+        private readonly IImdbClient imdbClient;
 
         private readonly ILogger<ImdbService> logger;
 

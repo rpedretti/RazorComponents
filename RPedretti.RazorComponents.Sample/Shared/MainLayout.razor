@@ -1,15 +1,38 @@
 ﻿@inherits LayoutComponentBase
+@using RPedretti.RazorComponents.Sensors.Component
+@using RPedretti.RazorComponents.Input.ToggleSwitch
+@using Microsoft.Extensions.Logging
 
-<div class="sidebar">
+@inject ILogger<MainLayout> Logger
+
+<LightSensor PollTime="0.5" OnError="@OnError" OnValue="@OnReading" />
+<div class="sidebar @(Checked ? "dark" : "light")">
     <NavMenu />
 </div>
 
-<div class="main">
+<div class="main @(Checked ? "dark" : "light")">
     <div class="top-row px-4">
-        <a href="https://docs.microsoft.com/en-us/aspnet/" target="_blank">About</a>
+        <ToggleSwitch @bind-Checked="@Checked" />
     </div>
 
     <div class="content px-4">
         @Body
     </div>
 </div>
+@code {
+    public bool Checked { get; set; }
+    public int Light { get; set; }
+    public string LightError { get; set; }
+
+    protected Task OnError(string error)
+    {
+        LightError = error;
+        Logger.LogError(error);
+        return Task.CompletedTask;
+    }
+
+    protected void OnReading(int reading)
+    {
+        Light = reading;
+    }
+}

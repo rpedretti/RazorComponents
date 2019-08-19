@@ -1,6 +1,5 @@
 ﻿@typeparam TItem
 @inherits PagedGridBase
-@using RPedretti.RazorComponents.Input.Spinner
 @using RPedretti.RazorComponents.Layout.Pager
 
 <div class="paged-grid">
@@ -27,7 +26,7 @@
     }
     else if (Loading)
     {
-        <Spinner Active Centered Size="SpinnerSize.LARGE"></Spinner>
+        @LoadingTemplate
     }
     else if (!HasContent)
     {
@@ -35,16 +34,17 @@
     }
 </div>
 
-@functions {
-[Parameter] IEnumerable<TItem> Items { get; set; }
-[Parameter] RenderFragment<PagedGridContext> ItemTemplate { get; set; }
-[Parameter] RenderFragment NoContentTemplate { get; set; }
-[Parameter] string ListClasses { get; set; }
-[Parameter] string ItemClasses { get; set; }
+@code {
+    [Parameter] public IEnumerable<TItem> Items { get; set; }
+    [Parameter] public RenderFragment<PagedGridContext> ItemTemplate { get; set; }
+    [Parameter] public RenderFragment NoContentTemplate { get; set; }
+    [Parameter] public RenderFragment LoadingTemplate { get; set; }
+    [Parameter] public string ListClasses { get; set; }
+    [Parameter] public string ItemClasses { get; set; }
 
-public class PagedGridContext
-{
-    public TItem Item { get; set; }
-    public int Index { get; set; }
-}
+    public class PagedGridContext
+    {
+        public TItem Item { get; set; }
+        public int Index { get; set; }
+    }
 }

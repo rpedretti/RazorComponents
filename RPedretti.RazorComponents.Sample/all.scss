@@ -148,3 +148,15 @@ app {
 @import "Pages/Movies/movies";
 @import "Components/MoviePoster/movie-poster";
 @import "Pages/Sensors/sensors";
+
+.dark .checkbox {
+    --label-color: red;
+    --outline-color: red;
+}
+
+.dark .inputs-page .toggle-switch {
+    --enabled-color: orange;
+    --disabled-color: purple;
+    --bullet-color: red;
+    --outline-color: cyan;
+}

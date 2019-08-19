@@ -15,6 +15,6 @@
             aria-checked="@Checked.ToString().ToLower()"
             aria-disabled="@Disabled.ToString().ToLower()"
             class="@($"slider{(Round ? " -round" : null)}")"
-            @onkeydown="@(k => HandleKeyPress(k, ToggleChecked))"></span>
+            @onkeydown="@KeyDown"></span>
     </label>
 </div>

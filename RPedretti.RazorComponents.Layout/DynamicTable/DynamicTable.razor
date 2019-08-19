@@ -1,6 +1,5 @@
 ﻿@typeparam TItem
 @inherits DynamicTableBase
-@using RPedretti.RazorComponents.Input.Spinner
 
 <div class="dynamic-table">
     <table class="@($"table {@Classes}")">
@@ -27,7 +26,7 @@
             <tbody>
                 @foreach (var row in Rows)
                 {
-                    <tr tabindex="0" class="table-row @row.Classes" onclick="@(() => OnRowClick?.Invoke(row))">
+                    <tr tabindex="0" class="table-row @row.Classes" @onclick="@(() => OnRowClick?.Invoke(row))">
                         @for (int i = 0; i < Columns.Count(); i++)
                         {
                             var header = Headers.ElementAt(i);
@@ -49,14 +48,15 @@
     </table>
     @if (Loading)
     {
-        <Spinner Centered Active="@Loading" Size="SpinnerSize.MEDIUM"></Spinner>
+        @LoadingTemplate
     }
 </div>
 
-@functions {
-    [Parameter] IEnumerable<DynamicTableRow<TItem>> Rows { get; set; } = new DynamicTableRow<TItem>[] { };
-    [Parameter] IEnumerable<DynamicTableColumn<TItem>> Columns { get; set; } = new DynamicTableColumn<TItem>[] { };
-    [Parameter] Func<DynamicTableRow<TItem>, Task> OnRowClick { get; set; }
+@code {
+    [Parameter] public IEnumerable<DynamicTableRow<TItem>> Rows { get; set; } = new DynamicTableRow<TItem>[] { };
+    [Parameter] public IEnumerable<DynamicTableColumn<TItem>> Columns { get; set; } = new DynamicTableColumn<TItem>[] { };
+    [Parameter] public Func<DynamicTableRow<TItem>, Task> OnRowClick { get; set; }
+    [Parameter] public RenderFragment LoadingTemplate { get; set; }
 
     protected Task SortHeader(DynamicTableHeader header)
     {

@@ -1,17 +1,11 @@
-using System;
-using System.Net.Http;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 namespace RPedretti.RazorComponents.Sample
 {
     public class Program
     {
-        public static void Main(string[] args)
-        {
-            CreateHostBuilder(args).Build().Run();
-        }
+        #region Methods
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
@@ -19,5 +13,12 @@ namespace RPedretti.RazorComponents.Sample
                 {
                     webBuilder.UseStartup<Startup>();
                 });
+
+        public static void Main(string[] args)
+        {
+            CreateHostBuilder(args).Build().Run();
+        }
+
+        #endregion Methods
     }
 }

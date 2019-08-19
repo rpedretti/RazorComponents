@@ -6,10 +6,10 @@ namespace RPedretti.RazorComponents.Shared.Components
     {
         #region Properties
 
-        [Parameter] protected string A11yLabel { get; set; }
-        [Parameter] protected int? A11yPosInSet { get; set; }
-        [Parameter] protected string A11yRole { get; set; }
-        [Parameter] protected int? A11ySetSize { get; set; }
+        [Parameter] public string A11yLabel { get; set; }
+        [Parameter] public int? A11yPosInSet { get; set; }
+        [Parameter] public string A11yRole { get; set; }
+        [Parameter] public int? A11ySetSize { get; set; }
 
         #endregion Properties
     }

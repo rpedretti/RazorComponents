@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
-using System.Collections.Generic;
 using RPedretti.RazorComponents.Shared.Components;
+using System.Collections.Generic;
 
 namespace RPedretti.RazorComponents.Layout.DynamicTable
 {
@@ -8,10 +8,10 @@ namespace RPedretti.RazorComponents.Layout.DynamicTable
     {
         #region Properties
 
-        [Parameter] protected string Classes { get; set; }
+        [Parameter] public string Classes { get; set; }
 
-        [Parameter] protected IEnumerable<DynamicTableHeader> Headers { get; set; }
-        [Parameter] protected bool Loading { get; set; }
+        [Parameter] public IEnumerable<DynamicTableHeader> Headers { get; set; }
+        [Parameter] public bool Loading { get; set; }
 
         #endregion Properties
     }

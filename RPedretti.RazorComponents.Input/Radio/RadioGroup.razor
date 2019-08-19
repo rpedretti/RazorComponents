@@ -6,11 +6,11 @@
         var b = button;
         <div class="@($"btn radio-button{(b == Selected ? " -checked" : null)}{(b.Disabled ? " -disabled" : null)}")"
              role="radio"
-             aria-checked="@(b == Selected ? "true" : "false")"
-             aria-disabled="@(b.Disabled ? "true" : "false")"
+             aria-checked="@((b == Selected).ToString().ToLower())"
+             aria-disabled="@(b.Disabled.ToString().ToLower())"
              tabindex="@(!b.Disabled ? "0" : null)"
-             @onkeydown="(k => HandleKeyPress(k, () => { if (!b.Disabled) SelectButton(b); return Task.CompletedTask; }))"
-             @onclick="(() => { if (!b.Disabled) SelectButton(b); })">
+             @onkeydown="@(k => KeyDown(k, b))"
+             @onclick="@(() => Click(b))">
             @b.Label
         </div>
     }

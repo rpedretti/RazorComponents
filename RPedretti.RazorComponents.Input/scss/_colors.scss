@@ -1,0 +1,8 @@
+﻿:root {
+    --enabled-color: #3498db;
+    --disabled-color: #f3f3f3;
+    --default-outline-color: #2196F3;
+    --default-label-color: black;
+    --progress-color-small-ring: var(--enabled-color);
+    --progress-color-big-ring: var(--disabled-color);
+}

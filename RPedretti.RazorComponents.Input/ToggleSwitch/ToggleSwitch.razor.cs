@@ -15,14 +15,14 @@ namespace RPedretti.RazorComponents.Input.ToggleSwitch
     {
         #region Properties
 
-        [Parameter] protected bool Checked { get; set; }
-        [Parameter] protected EventCallback<bool> CheckedChanged { get; set; }
-        [Parameter] protected bool Disabled { get; set; }
-        [Parameter] protected bool Fill { get; set; }
-        [Parameter] protected bool Inline { get; set; }
-        [Parameter] protected string Label { get; set; }
-        [Parameter] protected bool Round { get; set; }
-        [Parameter] protected SwitchSize Size { get; set; } = SwitchSize.MEDIUM;
+        [Parameter] public bool Checked { get; set; }
+        [Parameter] public EventCallback<bool> CheckedChanged { get; set; }
+        [Parameter] public bool Disabled { get; set; }
+        [Parameter] public bool Fill { get; set; }
+        [Parameter] public bool Inline { get; set; }
+        [Parameter] public string Label { get; set; }
+        [Parameter] public bool Round { get; set; }
+        [Parameter] public SwitchSize Size { get; set; } = SwitchSize.MEDIUM;
 
         #endregion Properties
 
@@ -32,6 +32,11 @@ namespace RPedretti.RazorComponents.Input.ToggleSwitch
         {
             Checked = (bool)a.Value;
             await CheckedChanged.InvokeAsync(Checked);
+        }
+
+        protected async Task KeyDown(UIKeyboardEventArgs args)
+        {
+            await (!Disabled ? HandleKeyPress(args, ToggleChecked) : Task.CompletedTask);
         }
 
         protected async Task ToggleChecked()

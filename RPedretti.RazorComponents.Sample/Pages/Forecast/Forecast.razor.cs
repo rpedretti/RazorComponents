@@ -1,12 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using RPedretti.RazorComponents.Layout.DynamicTable;
 using RPedretti.RazorComponents.Sample.Data;
 using RPedretti.RazorComponents.Sample.Services;
 using RPedretti.RazorComponents.Shared.Components;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace RPedretti.RazorComponents.Sample.Pages.Forecast
 {
@@ -24,9 +24,43 @@ namespace RPedretti.RazorComponents.Sample.Pages.Forecast
 
         [Inject]
         private IForecastService ForecastService { get; set; }
+
         protected IEnumerable<DynamicTableColumn<WeatherForecast>> Columns { get; set; }
 
+        protected IEnumerable<DynamicTableRow<WeatherForecast>> Forecasts { get; set; }
+
+        protected IEnumerable<DynamicTableGroup<WeatherForecast>> GroupedForecast { get; set; }
+
+        protected IEnumerable<DynamicTableHeader> Headers { get; set; }
+
+        protected bool Loading
+        {
+            get => _loading;
+            set => SetParameter(ref _loading, value, StateHasChanged);
+        }
+
+        public bool Grouped
+        {
+            get => _grouped;
+            set => SetParameter(ref _grouped, value, StateHasChanged);
+        }
+
         #endregion Properties
+
+        #region Constructors
+
+        public ForecastBase()
+        {
+            Headers = new List<DynamicTableHeader>()
+            {
+                new DynamicTableHeader{ Title =  "Date", Classes = "-l"},
+                new DynamicTableHeader{ Title =  "Temp. (C)", CanSort = true, Classes = "-l", SortId = "1" },
+                new DynamicTableHeader{ Title =  "Rain chance (%)", CanSort = true, Classes = "-r", SortId = "2" },
+                new DynamicTableHeader{ Title =  "Rain Ammount (mm)", CanSort = true, Classes = "-r", SortId = "3" }
+            };
+        }
+
+        #endregion Constructors
 
         #region Methods
 
@@ -49,45 +83,15 @@ namespace RPedretti.RazorComponents.Sample.Pages.Forecast
             Loading = false;
         }
 
-        #endregion Methods
-
-        protected IEnumerable<DynamicTableRow<WeatherForecast>> Forecasts { get; set; }
-
-        protected IEnumerable<DynamicTableGroup<WeatherForecast>> GroupedForecast { get; set; }
-
-        protected IEnumerable<DynamicTableHeader> Headers { get; set; }
-
-        protected bool Loading
-        {
-            get => _loading;
-            set => SetParameter(ref _loading, value, StateHasChanged);
-        }
-
-        protected override async Task OnInitAsync()
+        protected override async Task OnInitializedAsync()
         {
             await GetForecastAsync();
         }
 
-        public bool Grouped
+        protected Task RowClicked(DynamicTableRow<WeatherForecast> row)
         {
-            get => _grouped;
-            set => SetParameter(ref _grouped, value, StateHasChanged);
-        }
-
-        public ForecastBase()
-        {
-            Headers = new List<DynamicTableHeader>()
-            {
-                new DynamicTableHeader{ Title =  "Date", Classes = "-l"},
-                new DynamicTableHeader{ Title =  "Temp. (C)", CanSort = true, Classes = "-l", SortId = "1" },
-                new DynamicTableHeader{ Title =  "Rain chance (%)", CanSort = true, Classes = "-r", SortId = "2" },
-                new DynamicTableHeader{ Title =  "Rain Ammount (mm)", CanSort = true, Classes = "-r", SortId = "3" }
-            };
-        }
-
-        public void ToggleColumn(int index)
-        {
-            Headers.ElementAt(index).Hidden = !Headers.ElementAt(index).Hidden;
+            Console.WriteLine(row.Context.Date);
+            return Task.CompletedTask;
         }
 
         protected async Task Sort(string sortId, bool isAsc)
@@ -100,7 +104,8 @@ namespace RPedretti.RazorComponents.Sample.Pages.Forecast
 
             if (isAsc)
             {
-                Forecasts = column.SortProp switch {
+                Forecasts = column.SortProp switch
+                {
                     nameof(WeatherForecast.Date) => Forecasts.OrderBy(r => r.Context.Date).ToList(),
                     nameof(WeatherForecast.RainAmmount) => Forecasts.OrderBy(r => r.Context.RainAmmount).ToList(),
                     nameof(WeatherForecast.RainChangePercent) => Forecasts.OrderBy(r => r.Context.RainChangePercent).ToList(),
@@ -110,7 +115,8 @@ namespace RPedretti.RazorComponents.Sample.Pages.Forecast
             }
             else
             {
-                Forecasts = column.SortProp switch {
+                Forecasts = column.SortProp switch
+                {
                     nameof(WeatherForecast.Date) => Forecasts.OrderByDescending(r => r.Context.Date).ToList(),
                     nameof(WeatherForecast.RainAmmount) => Forecasts.OrderByDescending(r => r.Context.RainAmmount).ToList(),
                     nameof(WeatherForecast.RainChangePercent) => Forecasts.OrderByDescending(r => r.Context.RainChangePercent).ToList(),
@@ -122,10 +128,11 @@ namespace RPedretti.RazorComponents.Sample.Pages.Forecast
             Loading = false;
         }
 
-        protected Task RowClicked(DynamicTableRow<WeatherForecast> row)
+        public void ToggleColumn(DynamicTableHeader header)
         {
-            Console.WriteLine(row.Context.Date);
-            return Task.CompletedTask;
+            header.Hidden = !header.Hidden;
         }
+
+        #endregion Methods
     }
 }

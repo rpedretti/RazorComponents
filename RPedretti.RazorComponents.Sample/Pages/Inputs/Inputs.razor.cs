@@ -73,6 +73,38 @@ namespace RPedretti.RazorComponents.Sample.Pages.Inputs
             set => SetParameter(ref _someToggled2, value, StateHasChanged);
         }
 
+        public string Query
+        {
+            get => _query;
+            set => SetParameter(ref _query, value);
+        }
+
+        public RadioButton[] RadioButtons { get; set; } = new RadioButton[]
+        {
+            new RadioButton { Label = "Button 1", Value = 4 },
+            new RadioButton { Label = "Button 2", Value = "olar"},
+            new RadioButton { Label = "Button 3", Value = null, Disabled = true },
+            new RadioButton { Label = "Button 4", Value = false }
+        };
+
+        public RadioButton SelectedRadioButton1
+        {
+            get => _selectedRadioButton1;
+            set => SetParameter(ref _selectedRadioButton1, value);
+        }
+
+        public RadioButton SelectedRadioButton2
+        {
+            get => _selectedRadioButton2;
+            set => SetParameter(ref _selectedRadioButton2, value);
+        }
+
+        public RadioButton SelectedRadioButton3
+        {
+            get => _selectedRadioButton3;
+            set => SetParameter(ref _selectedRadioButton3, value);
+        }
+
         #endregion Properties
 
         #region Methods
@@ -108,37 +140,5 @@ namespace RPedretti.RazorComponents.Sample.Pages.Inputs
         }
 
         #endregion Methods
-
-        public string Query
-        {
-            get => _query;
-            set => SetParameter(ref _query, value);
-        }
-
-        public RadioButton[] RadioButtons { get; set; } = new RadioButton[]
-        {
-            new RadioButton { Label = "Button 1", Value = 4 },
-            new RadioButton { Label = "Button 2", Value = "olar"},
-            new RadioButton { Label = "Button 3", Value = null, Disabled = true },
-            new RadioButton { Label = "Button 4", Value = false }
-        };
-
-        public RadioButton SelectedRadioButton1
-        {
-            get => _selectedRadioButton1;
-            set => SetParameter(ref _selectedRadioButton1, value);
-        }
-
-        public RadioButton SelectedRadioButton2
-        {
-            get => _selectedRadioButton2;
-            set => SetParameter(ref _selectedRadioButton2, value);
-        }
-
-        public RadioButton SelectedRadioButton3
-        {
-            get => _selectedRadioButton3;
-            set => SetParameter(ref _selectedRadioButton3, value);
-        }
     }
 }

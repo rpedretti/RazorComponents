@@ -52,6 +52,11 @@ $translate: ( small: 16px, medium: 22px, large: 26px );
 }
 
 .toggle-switch {
+    --enabled-color: var(--default-outline-color);
+    --disabled-color: #ccc;
+    --bullet-color: white;
+    --outline-color: var(--default-outline-color);
+    
     display: flex;
     align-items: center;
 
@@ -75,7 +80,7 @@ $translate: ( small: 16px, medium: 22px, large: 26px );
             display: none;
 
             &:checked + .slider {
-                background-color: #2196F3;
+                background-color: var(--enabled-color);
             }
         }
 
@@ -86,19 +91,19 @@ $translate: ( small: 16px, medium: 22px, large: 26px );
             left: 0;
             right: 0;
             bottom: 0;
-            background-color: #ccc;
+            background-color: var(--disabled-color);
             @include intrinsic(transition, .4s);
 
 
             &:focus {
                 outline: none;
-                box-shadow: 0px 0px 4px 2px #2196F3
+                box-shadow: 0px 0px 4px 2px var(--outline-color)
             }
 
             &:before {
                 position: absolute;
                 content: "";
-                background-color: white;
+                background-color: var(--bullet-color);
                 @include intrinsic(transition, .4s);
             }
         }
@@ -124,6 +129,7 @@ $translate: ( small: 16px, medium: 22px, large: 26px );
                 background-color: #00447A;
             }
         }
+
         > .slider:before {
             background-color: darkgray;
         }

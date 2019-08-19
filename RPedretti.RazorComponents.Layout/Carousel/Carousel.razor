@@ -30,17 +30,16 @@
 </div>
 
 
-@functions {
+@code {
 private bool _slide;
 private int _cycleTime;
 private int currentIndex = 1;
 
-[Parameter] protected string Id { get; set; } = $"carousel_{Guid.NewGuid()}";
-[Parameter] protected IEnumerable<TItem> Items { get; set; } = new TItem[0];
-[Parameter] protected RenderFragment<CarouselContext> ItemTemplate { get; set; }
-[Parameter] protected string Classes { get; set; }
-[Parameter]
-protected int CycleTime
+[Parameter] public string Id { get; set; } = $"carousel_{Guid.NewGuid()}";
+[Parameter] public IEnumerable<TItem> Items { get; set; } = new TItem[0];
+[Parameter] public RenderFragment<CarouselContext> ItemTemplate { get; set; }
+[Parameter] public string Classes { get; set; }
+[Parameter] public int CycleTime
 {
     get => _cycleTime;
     set

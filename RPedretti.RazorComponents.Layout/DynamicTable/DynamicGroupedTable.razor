@@ -1,11 +1,10 @@
 ﻿@typeparam TItem
 @inherits DynamicGroupedTableBase
-@using RPedretti.RazorComponents.Input.Spinner
 
 <div class="dynamic-grouped-table">
     @if (Loading)
     {
-        <Spinner Centered Active="@Loading" Size="SpinnerSize.MEDIUM"></Spinner>
+        @LoadingTemplate
     }
     else
     {
@@ -61,10 +60,11 @@
     }
 </div>
 
-@functions {
-    [Parameter] IEnumerable<DynamicTableGroup<TItem>> Groups { get; set; } = new List<DynamicTableGroup<TItem>>();
-    [Parameter] RenderFragment<DynamicTableGroup<TItem>> GroupHeaderTemplate { get; set; }
-    [Parameter] IEnumerable<DynamicTableColumn<TItem>> Columns { get; set; } = new DynamicTableColumn<TItem>[] { };
+@code {
+    [Parameter] public IEnumerable<DynamicTableGroup<TItem>> Groups { get; set; } = new List<DynamicTableGroup<TItem>>();
+    [Parameter] public RenderFragment<DynamicTableGroup<TItem>> GroupHeaderTemplate { get; set; }
+    [Parameter] public RenderFragment LoadingTemplate { get; set; }
+    [Parameter] public IEnumerable<DynamicTableColumn<TItem>> Columns { get; set; } = new DynamicTableColumn<TItem>[] { };
 
     protected Task ToggleGroupCollapsed(DynamicTableGroup<TItem> group)
     {

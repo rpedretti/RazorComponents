@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Components;
-
+using RPedretti.RazorComponents.Shared.Components;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using RPedretti.RazorComponents.Shared.Components;
 
 namespace RPedretti.RazorComponents.Layout.DynamicTable
 {
@@ -16,11 +15,12 @@ namespace RPedretti.RazorComponents.Layout.DynamicTable
         #endregion Fields
 
         #region Properties
-        [Parameter] protected string Classes { get; set; }
+
         protected DynamicTableHeader CurrentOrdered { get; set; }
-        [Parameter] protected IEnumerable<DynamicTableHeader> Headers { get; set; }
-        [Parameter] protected bool Loading { get; set; }
-        [Parameter] protected Func<string, bool, Task> SortRequest { get; set; }
+        [Parameter] public string Classes { get; set; }
+        [Parameter] public IEnumerable<DynamicTableHeader> Headers { get; set; }
+        [Parameter] public bool Loading { get; set; }
+        [Parameter] public Func<string, bool, Task> SortRequest { get; set; }
 
         #endregion Properties
 

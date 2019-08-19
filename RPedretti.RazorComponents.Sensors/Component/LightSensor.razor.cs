@@ -1,28 +1,38 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 using Microsoft.JSInterop;
+using RPedretti.RazorComponents.Sensors.AmbientLight;
 using RPedretti.RazorComponents.Shared.JSInterop;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace RPedretti.RazorComponents.Sensors.Component
 {
-    public class LightSensorBase : ComponentBase, IDisposable
+    public abstract class LightSensorBase : ComponentBase, IDisposable
     {
+        #region Fields
+
+        private bool init;
         private JSReferenceFactory JSReferenceFactory;
         private DotNetObjectRef<LightSensorBase> thisRef;
-        private bool init;
 
-        [Parameter] protected bool Render { get; set; }
-        [Parameter] protected int? PollTime { get; set; }
-        [Inject] private IJSRuntime JSRuntime { get; set; }
+        #endregion Fields
+
+        #region Properties
+
+        [Inject] private AmbientLightSensorService ambientLightSensorService { get; set; }
+
         [Inject] private IComponentContext ComponentContext { get; set; }
+        [Inject] private IJSRuntime JSRuntime { get; set; }
         [Inject] private ILogger<LightSensor> Logger { get; set; }
+        [Parameter] public EventCallback<string> OnError { get; set; }
+        [Parameter] public EventCallback<int> OnValue { get; set; }
+        [Parameter] public double? PollTime { get; set; }
+        [Parameter] public bool Render { get; set; }
 
-        [Parameter] protected EventCallback<int> OnValue { get; set; }
-        [Parameter] protected EventCallback<string> OnError { get; set; }
+        #endregion Properties
+
+        #region Methods
 
         protected override async Task OnAfterRenderAsync()
         {
@@ -36,18 +46,6 @@ namespace RPedretti.RazorComponents.Sensors.Component
             await base.OnAfterRenderAsync();
         }
 
-        [JSInvokable]
-        public async Task NotifyAmbientLightError(string error)
-        {
-            await OnError.InvokeAsync(error);
-        }
-
-        [JSInvokable]
-        public async Task NotifyReading(int illuminance)
-        {
-            await OnValue.InvokeAsync(illuminance);
-        }
-
         public void Dispose()
         {
             try
@@ -56,7 +54,8 @@ namespace RPedretti.RazorComponents.Sensors.Component
                 {
                     if (ComponentContext.IsConnected)
                     {
-                        JSRuntime.InvokeAsync<object>("rpedrettiBlazorSensors.lightSensor.stopSensor", thisRef).ContinueWith(_ => {
+                        JSRuntime.InvokeAsync<object>("rpedrettiBlazorSensors.lightSensor.stopSensor", thisRef).ContinueWith(_ =>
+                        {
                             JSReferenceFactory.DisposeDotNetObjectRef(thisRef);
                         });
                     }
@@ -68,5 +67,21 @@ namespace RPedretti.RazorComponents.Sensors.Component
                 Logger.LogError(e, "Error disposing");
             }
         }
+
+        [JSInvokable]
+        public async Task NotifyAmbientLightError(string error)
+        {
+            ambientLightSensorService.NotifyAmbientLightError(error);
+            await OnError.InvokeAsync(error);
+        }
+
+        [JSInvokable]
+        public async Task NotifyReading(int illuminance)
+        {
+            ambientLightSensorService.NotifyAmbientLightReading(illuminance);
+            await OnValue.InvokeAsync(illuminance);
+        }
+
+        #endregion Methods
     }
 }

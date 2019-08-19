@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Components;
-using System;
 
 namespace RPedretti.RazorComponents.Layout.DynamicTable
 {
@@ -8,8 +7,8 @@ namespace RPedretti.RazorComponents.Layout.DynamicTable
         #region Properties
 
         public string Classes { get; set; }
-        public RenderFragment<T> Template { get; set; }
         public string SortProp { get; set; }
+        public RenderFragment<T> Template { get; set; }
 
         #endregion Properties
     }

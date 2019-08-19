@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
-using System;
-
 using RPedretti.RazorComponents.Shared.Components;
+using System;
 using System.Threading.Tasks;
 
 namespace RPedretti.RazorComponents.Layout.Pager
@@ -30,6 +29,41 @@ namespace RPedretti.RazorComponents.Layout.Pager
         #region Properties
 
         private int TotalPaginationPages { get; set; }
+
+        protected int IndicatorCount { get; set; }
+
+        protected Indicator[] Indicators { get; set; }
+
+        protected bool ShowFirst { get; set; } = false;
+
+        protected bool ShowLast { get; set; } = false;
+
+        [Parameter]
+        public int CurrentPage
+        {
+            get => _currentPage;
+            set => SetParameter(ref _currentPage, value, UpdatePagerCount);
+        }
+
+        [Parameter]
+        public int MaxIndicators
+        {
+            get => _maxIndicators;
+            set => SetParameter(ref _maxIndicators, value, UpdatePagerCount);
+        }
+
+        [Parameter] public EventCallback<int> OnRequestPage { get; set; }
+
+        [Parameter]
+        public int PageCount
+        {
+            get => _pageCount;
+            set => SetParameter(ref _pageCount, value, UpdatePagerCount);
+        }
+
+        [Parameter] public PagerPosition Position { get; set; } = PagerPosition.CENTER;
+
+        [Parameter] public bool Small { get; set; }
 
         #endregion Properties
 
@@ -74,39 +108,6 @@ namespace RPedretti.RazorComponents.Layout.Pager
             }
         }
 
-        #endregion Methods
-
-        [Parameter]
-        protected int CurrentPage
-        {
-            get => _currentPage;
-            set => SetParameter(ref _currentPage, value, UpdatePagerCount);
-        }
-
-        protected int IndicatorCount { get; set; }
-        protected Indicator[] Indicators { get; set; }
-
-        [Parameter]
-        protected int MaxIndicators
-        {
-            get => _maxIndicators;
-            set => SetParameter(ref _maxIndicators, value, UpdatePagerCount);
-        }
-
-        [Parameter] protected EventCallback<int> OnRequestPage { get; set; }
-
-        [Parameter]
-        protected int PageCount
-        {
-            get => _pageCount;
-            set => SetParameter(ref _pageCount, value, UpdatePagerCount);
-        }
-
-        [Parameter] protected PagerPosition Position { get; set; } = PagerPosition.CENTER;
-        protected bool ShowFirst { get; set; } = false;
-        protected bool ShowLast { get; set; } = false;
-        [Parameter] protected bool Small { get; set; }
-
         protected async Task FirstPage()
         {
             await OnRequestPage.InvokeAsync(1);
@@ -128,7 +129,7 @@ namespace RPedretti.RazorComponents.Layout.Pager
             await OnRequestPage.InvokeAsync(CurrentPage + MaxIndicators - ammount);
         }
 
-        protected override void OnInit()
+        protected override void OnInitialized()
         {
             IndicatorCount = Math.Min(PageCount, MaxIndicators);
             Indicators = new Indicator[IndicatorCount];
@@ -160,6 +161,10 @@ namespace RPedretti.RazorComponents.Layout.Pager
             await OnRequestPage.InvokeAsync(CurrentPage - MaxIndicators - ammount);
         }
 
+        #endregion Methods
+
+        #region Classes
+
         protected class Indicator
         {
             #region Properties
@@ -171,5 +176,7 @@ namespace RPedretti.RazorComponents.Layout.Pager
 
             #endregion Properties
         }
+
+        #endregion Classes
     }
 }

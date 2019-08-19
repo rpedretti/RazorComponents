@@ -11,52 +11,31 @@ namespace RPedretti.RazorComponents.Sensors.Component
 {
     public class GeolocationBase : BaseComponent, IDisposable
     {
+        #region Fields
+
+        private bool? _internalWatching;
+        private bool init;
         private JSReferenceFactory JSReferenceFactory;
         private DotNetObjectRef<GeolocationBase> thisRef;
-        private bool init;
-        private bool? _internalWatching;
         private int? watchId;
 
-        [Parameter]
-        protected bool Render { get; set; }
-        [Inject]
-        private IJSRuntime JSRuntime { get; set; }
-        [Inject]
-        private IComponentContext ComponentContext { get; set; }
-        [Inject]
-        private ILogger<LightSensor> Logger { get; set; }
-        [Parameter] protected EventCallback<Position> OnValue { get; set; }
-        [Parameter] protected EventCallback<PositionError> OnError { get; set; }
+        #endregion Fields
 
-        [Parameter]
-        protected bool Watching { get; set; }
+        #region Properties
 
-        protected override async Task OnAfterRenderAsync()
-        {
-            if (ComponentContext.IsConnected)
-            {
-                if (!init)
-                {
-                    init = true;
-                    JSReferenceFactory = new JSReferenceFactory(JSRuntime);
-                    thisRef = JSReferenceFactory.CreateDotNetObjectRef(this);
-                }
-                if (Watching != _internalWatching)
-                {
-                    if (Watching)
-                    {
-                        await StartWatch();
-                    }
-                    else
-                    {
-                        await StopWatch();
-                    }
-                    _internalWatching = Watching;
-                }
-            }
+        [Inject] private IComponentContext ComponentContext { get; set; }
+        [Inject] private IJSRuntime JSRuntime { get; set; }
+        [Inject] private GeolocationSensorService geolocationSensorService { get; set; }
+        [Inject] private ILogger<LightSensor> Logger { get; set; }
 
-            await base.OnAfterRenderAsync();
-        }
+        [Parameter] public EventCallback<PositionError> OnError { get; set; }
+        [Parameter] public EventCallback<Position> OnValue { get; set; }
+        [Parameter] public bool Render { get; set; }
+        [Parameter] public bool Watching { get; set; }
+
+        #endregion Properties
+
+        #region Methods
 
         private async Task StartWatch()
         {
@@ -89,16 +68,31 @@ namespace RPedretti.RazorComponents.Sensors.Component
             }
         }
 
-        [JSInvokable]
-        public async Task WatchPositionError(PositionError error)
+        protected override async Task OnAfterRenderAsync()
         {
-            await OnError.InvokeAsync(error);
-        }
+            if (ComponentContext.IsConnected)
+            {
+                if (!init)
+                {
+                    init = true;
+                    JSReferenceFactory = new JSReferenceFactory(JSRuntime);
+                    thisRef = JSReferenceFactory.CreateDotNetObjectRef(this);
+                }
+                if (Watching != _internalWatching)
+                {
+                    if (Watching)
+                    {
+                        await StartWatch();
+                    }
+                    else
+                    {
+                        await StopWatch();
+                    }
+                    _internalWatching = Watching;
+                }
+            }
 
-        [JSInvokable]
-        public async Task WatchPositionResponse(Position position)
-        {
-            await OnValue.InvokeAsync(position);
+            await base.OnAfterRenderAsync();
         }
 
         public void Dispose()
@@ -112,5 +106,21 @@ namespace RPedretti.RazorComponents.Sensors.Component
                 JSReferenceFactory.DisposeDotNetObjectRef(thisRef);
             }
         }
+
+        [JSInvokable]
+        public async Task WatchPositionError(PositionError error)
+        {
+            geolocationSensorService.NotifyPositionError(error);
+            await OnError.InvokeAsync(error);
+        }
+
+        [JSInvokable]
+        public async Task WatchPositionResponse(Position position)
+        {
+            geolocationSensorService.NotifyPositionResponse(position);
+            await OnValue.InvokeAsync(position);
+        }
+
+        #endregion Methods
     }
 }

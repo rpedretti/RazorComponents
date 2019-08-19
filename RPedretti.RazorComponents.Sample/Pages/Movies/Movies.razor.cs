@@ -114,7 +114,7 @@ namespace RPedretti.RazorComponents.Sample.Pages.Movies
             Loading = false;
         }
 
-        protected override void OnInit()
+        protected override void OnInitialized()
         {
             HasContent = MoviesCount > 0;
         }

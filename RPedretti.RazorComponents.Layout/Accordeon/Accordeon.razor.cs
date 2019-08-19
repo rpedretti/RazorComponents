@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Components;
-using System;
-using System.Threading;
-using RPedretti.RazorComponents.Shared.Components;
-using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
+using RPedretti.RazorComponents.Shared.Components;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace RPedretti.RazorComponents.Layout.Accordeon
 {
@@ -21,11 +20,11 @@ namespace RPedretti.RazorComponents.Layout.Accordeon
         [Inject]
         private ILogger<AccordeonBase> Logger { get; set; }
 
-        [Parameter] protected bool CenterTitle { get; set; }
-        [Parameter] protected RenderFragment ChildContent { get; set; }
+        [Parameter] public bool CenterTitle { get; set; }
+        [Parameter] public RenderFragment ChildContent { get; set; }
 
         [Parameter]
-        protected bool Expanded
+        public bool Expanded
         {
             get => _expanded;
             set
@@ -44,8 +43,12 @@ namespace RPedretti.RazorComponents.Layout.Accordeon
             }
         }
 
-        [Parameter] protected EventCallback<bool> ExpandedChanged { get; set; }
-        [Parameter] protected string Title { get; set; }
+        [Parameter] public EventCallback<bool> ExpandedChanged { get; set; }
+        [Parameter] public string Title { get; set; }
+
+        #endregion Properties
+
+        #region Methods
 
         protected async Task ToggleExpanded()
         {
@@ -53,6 +56,6 @@ namespace RPedretti.RazorComponents.Layout.Accordeon
             await Task.CompletedTask;
         }
 
-        #endregion Properties
+        #endregion Methods
     }
 }

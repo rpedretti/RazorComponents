@@ -1,19 +1,24 @@
+using Microsoft.Extensions.Logging;
+using RPedretti.RazorComponents.Sample.Domain;
 using System;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
-using RPedretti.RazorComponents.Sample.Domain;
 
 namespace RPedretti.RazorComponents.Sample.HttpClients
 {
-
     public class ImdbClient : IImdbClient
     {
+        #region Fields
+
         private const string key = "db5dadb9";
-        public HttpClient httpClient;
         private readonly ILogger<ImdbClient> logger;
+        public HttpClient httpClient;
+
+        #endregion Fields
+
+        #region Constructors
 
         public ImdbClient(HttpClient httpClient, ILogger<ImdbClient> logger)
         {
@@ -23,21 +28,9 @@ namespace RPedretti.RazorComponents.Sample.HttpClients
             this.httpClient.BaseAddress = new Uri(baseUrl);
         }
 
-        public async Task<MovieSearchResult> GetMoviesByPattern(string pattern, int page, CancellationToken cancelationToken)
-        {
-            try
-            {
-                var responseJson = await httpClient.GetAsync($"?apikey={key}&s={pattern}&page={page}", cancelationToken);
-                var content = await responseJson.Content.ReadAsStringAsync();
-                var movies = JsonSerializer.Deserialize<MovieSearchResult>(content);
-                return movies;
-            }
-            catch (Exception e)
-            {
-                logger.LogError(e, e.Message);
-                throw;
-            }
-        }
+        #endregion Constructors
+
+        #region Methods
 
         public async Task<Movie> GetMovieById(string id)
         {
@@ -66,5 +59,23 @@ namespace RPedretti.RazorComponents.Sample.HttpClients
             var movie = JsonSerializer.Deserialize<Movie>(content);
             return movie;
         }
+
+        public async Task<MovieSearchResult> GetMoviesByPattern(string pattern, int page, CancellationToken cancelationToken)
+        {
+            try
+            {
+                var responseJson = await httpClient.GetAsync($"?apikey={key}&s={pattern}&page={page}", cancelationToken);
+                var content = await responseJson.Content.ReadAsStringAsync();
+                var movies = JsonSerializer.Deserialize<MovieSearchResult>(content);
+                return movies;
+            }
+            catch (Exception e)
+            {
+                logger.LogError(e, e.Message);
+                throw;
+            }
+        }
+
+        #endregion Methods
     }
 }

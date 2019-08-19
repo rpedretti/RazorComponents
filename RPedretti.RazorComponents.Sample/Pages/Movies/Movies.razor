@@ -2,6 +2,7 @@
 @inherits MoviesBase
 @using RPedretti.RazorComponents.Sample.Models;
 @using RPedretti.RazorComponents.Layout.PagedGrid;
+@using RPedretti.RazorComponents.Input.Spinner;
 @using RPedretti.RazorComponents.Sample.Components.MoviePoster;
 
 <div class="input-group mb-3">
@@ -35,12 +36,15 @@
            CurrentPage="@CurrentPage"
            PageCount="@PageCount"
            OnRequestPage="@RequestPage">
+    <LoadingTemplate>
+        <Spinner Centered Active Size="SpinnerSize.MEDIUM" />
+    </LoadingTemplate>
     <ItemTemplate>
         <MoviePoster Movie="@(@context.Item)"
-                  A11yRole="listitem"
-                  A11ySetSize="@MoviesCount"
-                  A11yPosInSet="@((CurrentPage - 1) * 10 + @context.Index + 1)"
-                  A11yLabel="@($"{@context.Item.Title}{(@context.Item.Plot != null ? ", " + @context.Item.Plot : null)}")"
-                  OnClick="@(() => GoToMovie(@context.Item))" />
+                     A11yRole="listitem"
+                     A11ySetSize="@MoviesCount"
+                     A11yPosInSet="@((CurrentPage - 1) * 10 + @context.Index + 1)"
+                     A11yLabel="@($"{@context.Item.Title}{(@context.Item.Plot != null ? ", " + @context.Item.Plot : null)}")"
+                     OnClick="@(() => GoToMovie(@context.Item))" />
     </ItemTemplate>
 </PagedGrid>

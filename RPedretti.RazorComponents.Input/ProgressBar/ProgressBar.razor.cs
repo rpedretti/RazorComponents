@@ -6,7 +6,7 @@ namespace RPedretti.RazorComponents.Input.ProgressBar
     {
         #region Properties
 
-        [Parameter] protected bool Active { get; set; }
+        [Parameter] public bool Active { get; set; }
 
         #endregion Properties
     }

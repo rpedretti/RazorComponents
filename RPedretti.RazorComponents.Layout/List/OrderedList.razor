@@ -12,7 +12,7 @@
 </ol>
 }
 
-@functions  {
-    [Parameter] protected RenderFragment<TItem> ItemTemplate { get; set; }
-    [Parameter] protected IEnumerable<TItem> Items { get; set; }
+@code {
+    [Parameter] public RenderFragment<TItem> ItemTemplate { get; set; }
+    [Parameter] public IEnumerable<TItem> Items { get; set; }
 }

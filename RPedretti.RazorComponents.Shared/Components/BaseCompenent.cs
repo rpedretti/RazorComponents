@@ -1,11 +1,11 @@
+using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Components;
 
 namespace RPedretti.RazorComponents.Shared.Components
 {
-public abstract class BaseComponent : ComponentBase
+    public abstract class BaseComponent : ComponentBase
     {
         #region Methods
 

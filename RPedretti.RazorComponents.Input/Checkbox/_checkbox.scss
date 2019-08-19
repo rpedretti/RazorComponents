@@ -1,4 +1,7 @@
 ﻿.checkbox {
+    --label-color: var(--default-label-color);
+    --outline-color: var(--default-outline-color);
+
     &.-disabled {
         opacity: .65;
     }
@@ -25,13 +28,16 @@
 
     &:focus {
         outline: none;
+
         & > .checkbox-label {
-            box-shadow: 0px 0px 4px 2px #2196f3;
+            box-shadow: 0px 0px 4px 2px var(--outline-color);
         }
     }
+
     > .checkbox-label {
         cursor: default;
         margin-bottom: 4px;
+        color: var(--label-color);
 
         &::before {
             margin-right: 4px;

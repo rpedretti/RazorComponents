@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace RPedretti.RazorComponents.Layout.DynamicTable
+﻿namespace RPedretti.RazorComponents.Layout.DynamicTable
 {
     public class DynamicTableRow<T>
     {

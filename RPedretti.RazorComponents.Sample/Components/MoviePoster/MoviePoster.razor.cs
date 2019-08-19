@@ -18,23 +18,30 @@ namespace RPedretti.RazorComponents.Sample.Components.MoviePoster
         #region Properties
 
         [Inject] protected ILogger<MoviePosterBase> Logger { get; set; }
-        [Parameter] protected MoviePosterModel Movie { get; set; }
-        [Parameter] protected EventCallback OnClick { get; set; }
+        [Parameter] public MoviePosterModel Movie { get; set; }
+        [Parameter] public EventCallback OnClick { get; set; }
 
         #endregion Properties
 
         #region Methods
 
-        protected override async Task OnParametersSetAsync()
-        {
-            ImageError = false;
-            Logger.LogDebug("movie parameter set");
-            await base.OnParametersSetAsync();
-        }
-
         protected async Task HandleClick()
         {
             await OnClick.InvokeAsync(null);
+        }
+
+        public override Task SetParametersAsync(ParameterView parameters)
+        {
+            var isPresent = parameters.TryGetValue<MoviePosterModel>(nameof(Movie), out var movie);
+            if (isPresent)
+            {
+                if (movie.Id != Movie?.Id)
+                {
+                    ImageLoaded = false;
+                    ImageError = false;
+                }
+            }
+            return base.SetParametersAsync(parameters);
         }
 
         protected void UpdateError()

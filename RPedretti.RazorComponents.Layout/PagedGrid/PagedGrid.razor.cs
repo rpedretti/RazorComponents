@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
 using RPedretti.RazorComponents.Layout.Pager;
-using System;
 using RPedretti.RazorComponents.Shared.Components;
 
 namespace RPedretti.RazorComponents.Layout.PagedGrid
@@ -9,16 +8,16 @@ namespace RPedretti.RazorComponents.Layout.PagedGrid
     {
         #region Properties
 
-        [Parameter] protected RenderFragment ChildContent { get; set; }
-        [Parameter] protected int CurrentPage { get; set; }
-        [Parameter] protected bool HasContent { get; set; }
-        [Parameter] protected bool Loading { get; set; }
-        [Parameter] protected int MaxIndicators { get; set; }
-        [Parameter] protected string NoContentMessage { get; set; } = "No content";
-        [Parameter] protected EventCallback<int> OnRequestPage { get; set; }
-        [Parameter] protected int PageCount { get; set; }
-        [Parameter] protected PagerPosition PagerPosition { get; set; } = PagerPosition.CENTER;
-        [Parameter] protected bool SmallPager { get; set; }
+        [Parameter] public RenderFragment ChildContent { get; set; }
+        [Parameter] public int CurrentPage { get; set; }
+        [Parameter] public bool HasContent { get; set; }
+        [Parameter] public bool Loading { get; set; }
+        [Parameter] public int MaxIndicators { get; set; }
+        [Parameter] public string NoContentMessage { get; set; } = "No content";
+        [Parameter] public EventCallback<int> OnRequestPage { get; set; }
+        [Parameter] public int PageCount { get; set; }
+        [Parameter] public PagerPosition PagerPosition { get; set; } = PagerPosition.CENTER;
+        [Parameter] public bool SmallPager { get; set; }
 
         #endregion Properties
     }

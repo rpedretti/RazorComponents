@@ -14,10 +14,9 @@ namespace RPedretti.RazorComponents.Input.Spinner
     {
         #region Properties
 
-        [Parameter] protected bool Active { get; set; }
-
-        [Parameter] protected bool Centered { get; set; }
-        [Parameter] protected SpinnerSize Size { get; set; } = SpinnerSize.SMALL;
+        [Parameter] public bool Active { get; set; }
+        [Parameter] public bool Centered { get; set; }
+        [Parameter] public SpinnerSize Size { get; set; } = SpinnerSize.SMALL;
 
         #endregion Properties
     }
