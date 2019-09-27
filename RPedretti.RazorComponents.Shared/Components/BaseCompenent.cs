@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -9,7 +10,7 @@ namespace RPedretti.RazorComponents.Shared.Components
     {
         #region Methods
 
-        protected async Task HandleKeyPress(UIKeyboardEventArgs args, Func<Task> action)
+        protected async Task HandleKeyPress(KeyboardEventArgs args, Func<Task> action)
         {
             if (args.Key == " " || args.Key == "Enter")
             {

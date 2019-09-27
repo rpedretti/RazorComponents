@@ -1,11 +1,17 @@
-﻿@using RPedretti.RazorComponents.Sensors.Component
+﻿@using RPedretti.RazorComponents.Sensors.AmbientLight
+@using RPedretti.RazorComponents.Sensors.Geolocation
 
-<CascadingAuthenticationState>
-    <LightSensor PollTime="1" />
-    <Geolocation Watching="true" />
-    <Router AppAssembly="typeof(Startup).Assembly">
-        <NotFoundContent>
-            <p>Sorry, there's nothing at this address.</p>
-        </NotFoundContent>
-    </Router>
-</CascadingAuthenticationState>
+<Router AppAssembly="typeof(Startup).Assembly">
+    <Found Context="routeData">
+        <Geolocation Watching="true" />
+        <LightSensor PollTime="1" />
+        <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
+    </Found>
+    <NotFound>
+        <CascadingAuthenticationState>
+            <LayoutView Layout="@typeof(MainLayout)">
+                <p>Sorry, there's nothing at this address.</p>
+            </LayoutView>
+        </CascadingAuthenticationState>
+    </NotFound>
+</Router>

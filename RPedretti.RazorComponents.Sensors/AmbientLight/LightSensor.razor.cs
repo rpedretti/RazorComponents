@@ -2,19 +2,17 @@
 using Microsoft.Extensions.Logging;
 using Microsoft.JSInterop;
 using RPedretti.RazorComponents.Sensors.AmbientLight;
-using RPedretti.RazorComponents.Shared.JSInterop;
 using System;
 using System.Threading.Tasks;
 
-namespace RPedretti.RazorComponents.Sensors.Component
+namespace RPedretti.RazorComponents.Sensors.AmbientLight
 {
-    public abstract class LightSensorBase : ComponentBase, IDisposable
+    public abstract class LightSensorBase : ComponentBase, IAsyncDisposable
     {
         #region Fields
 
         private bool init;
-        private JSReferenceFactory JSReferenceFactory;
-        private DotNetObjectRef<LightSensorBase> thisRef;
+        private DotNetObjectReference<LightSensorBase> thisRef;
 
         #endregion Fields
 
@@ -22,7 +20,6 @@ namespace RPedretti.RazorComponents.Sensors.Component
 
         [Inject] private AmbientLightSensorService ambientLightSensorService { get; set; }
 
-        [Inject] private IComponentContext ComponentContext { get; set; }
         [Inject] private IJSRuntime JSRuntime { get; set; }
         [Inject] private ILogger<LightSensor> Logger { get; set; }
         [Parameter] public EventCallback<string> OnError { get; set; }
@@ -34,31 +31,25 @@ namespace RPedretti.RazorComponents.Sensors.Component
 
         #region Methods
 
-        protected override async Task OnAfterRenderAsync()
+        protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            if (ComponentContext.IsConnected && !init)
+            if (!firstRender && !init)
             {
                 init = true;
-                JSReferenceFactory = new JSReferenceFactory(JSRuntime);
-                thisRef = JSReferenceFactory.CreateDotNetObjectRef(this);
+                thisRef = DotNetObjectReference.Create(this);
                 await JSRuntime.InvokeAsync<object>("rpedrettiBlazorSensors.lightSensor.initSensor", thisRef, PollTime);
             }
-            await base.OnAfterRenderAsync();
+            await base.OnAfterRenderAsync(firstRender);
         }
 
-        public void Dispose()
+        public async ValueTask DisposeAsync()
         {
             try
             {
                 if (thisRef != null)
                 {
-                    if (ComponentContext.IsConnected)
-                    {
-                        JSRuntime.InvokeAsync<object>("rpedrettiBlazorSensors.lightSensor.stopSensor", thisRef).ContinueWith(_ =>
-                        {
-                            JSReferenceFactory.DisposeDotNetObjectRef(thisRef);
-                        });
-                    }
+                    await JSRuntime.InvokeAsync<object>("rpedrettiBlazorSensors.lightSensor.stopSensor", thisRef);
+                    thisRef.Dispose();
                 }
                 init = false;
             }

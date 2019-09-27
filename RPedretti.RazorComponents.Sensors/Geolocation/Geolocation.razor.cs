@@ -1,29 +1,26 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 using Microsoft.JSInterop;
-using RPedretti.RazorComponents.Sensors.Geolocation;
+using RPedretti.RazorComponents.Sensors.AmbientLight;
 using RPedretti.RazorComponents.Shared.Components;
-using RPedretti.RazorComponents.Shared.JSInterop;
 using System;
 using System.Threading.Tasks;
 
-namespace RPedretti.RazorComponents.Sensors.Component
+namespace RPedretti.RazorComponents.Sensors.Geolocation
 {
-    public class GeolocationBase : BaseComponent, IDisposable
+    public class GeolocationBase : BaseComponent, IAsyncDisposable
     {
         #region Fields
 
         private bool? _internalWatching;
         private bool init;
-        private JSReferenceFactory JSReferenceFactory;
-        private DotNetObjectRef<GeolocationBase> thisRef;
+        private DotNetObjectReference<GeolocationBase> thisRef;
         private int? watchId;
 
         #endregion Fields
 
         #region Properties
 
-        [Inject] private IComponentContext ComponentContext { get; set; }
         [Inject] private IJSRuntime JSRuntime { get; set; }
         [Inject] private GeolocationSensorService geolocationSensorService { get; set; }
         [Inject] private ILogger<LightSensor> Logger { get; set; }
@@ -43,8 +40,7 @@ namespace RPedretti.RazorComponents.Sensors.Component
             {
                 if (thisRef == null)
                 {
-                    JSReferenceFactory = new JSReferenceFactory(JSRuntime);
-                    thisRef = JSReferenceFactory.CreateDotNetObjectRef(this);
+                    thisRef = DotNetObjectReference.Create(this);
                 }
                 watchId = await JSRuntime.InvokeAsync<int>("rpedrettiBlazorSensors.geolocation.watchPosition", thisRef);
             }
@@ -68,15 +64,14 @@ namespace RPedretti.RazorComponents.Sensors.Component
             }
         }
 
-        protected override async Task OnAfterRenderAsync()
+        protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            if (ComponentContext.IsConnected)
+            if (!firstRender)
             {
                 if (!init)
                 {
                     init = true;
-                    JSReferenceFactory = new JSReferenceFactory(JSRuntime);
-                    thisRef = JSReferenceFactory.CreateDotNetObjectRef(this);
+                    thisRef = DotNetObjectReference.Create(this);
                 }
                 if (Watching != _internalWatching)
                 {
@@ -92,18 +87,18 @@ namespace RPedretti.RazorComponents.Sensors.Component
                 }
             }
 
-            await base.OnAfterRenderAsync();
+            await base.OnAfterRenderAsync(firstRender);
         }
 
-        public void Dispose()
+        public async ValueTask DisposeAsync()
         {
             if (watchId.HasValue)
             {
-                StopWatch().ContinueWith(_ => JSReferenceFactory.DisposeDotNetObjectRef(thisRef));
+                await StopWatch();
             }
-            else
+            if (thisRef != null)
             {
-                JSReferenceFactory.DisposeDotNetObjectRef(thisRef);
+                thisRef.Dispose();
             }
         }
 

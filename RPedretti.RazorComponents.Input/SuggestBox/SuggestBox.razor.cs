@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 using Microsoft.Extensions.Logging;
 using Microsoft.JSInterop;
 using RPedretti.RazorComponents.Shared.Components;
-using RPedretti.RazorComponents.Shared.JSInterop;
 using RPedretti.RazorComponents.Shared.Operators;
 using System;
 using System.Collections.Generic;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace RPedretti.RazorComponents.Input.SuggestBox
 {
-    public class SuggestBoxBase<T> : BaseComponent, IDisposable
+    public class SuggestBoxBase<T> : BaseComponent, IAsyncDisposable
     {
         #region Fields
 
@@ -33,11 +33,9 @@ namespace RPedretti.RazorComponents.Input.SuggestBox
 
         #region Properties
 
-        [Inject] private IComponentContext ComponentContext { get; set; }
-        private JSReferenceFactory JSReferenceFactory { get; set; }
         [Inject] private IJSRuntime JSRuntime { get; set; }
         [Inject] private ILogger<SuggestBoxBase<T>> Logger { get; set; }
-        private DotNetObjectRef<SuggestBoxBaseJSInterop> ObjRef { get; set; }
+        private DotNetObjectReference<SuggestBoxBaseJSInterop> ObjRef { get; set; }
 
         protected string A11yLabel
         {
@@ -141,7 +139,7 @@ namespace RPedretti.RazorComponents.Input.SuggestBox
             }
         }
 
-        protected async Task HandleKeyDown(UIKeyboardEventArgs args)
+        protected async Task HandleKeyDown(KeyboardEventArgs args)
         {
             if (_suggestionItems.Any())
             {
@@ -243,19 +241,18 @@ namespace RPedretti.RazorComponents.Input.SuggestBox
             _shouldRender = true;
         }
 
-        protected override async Task OnAfterRenderAsync()
+        protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            if (ComponentContext.IsConnected)
+            if (!firstRender)
             {
                 if (init)
                 {
-                    JSReferenceFactory = new JSReferenceFactory(JSRuntime);
                     init = false;
-                    ObjRef = JSReferenceFactory.CreateDotNetObjectRef(interop);
+                    ObjRef = DotNetObjectReference.Create(interop);
                     await JSRuntime.InvokeAsync<object>("rpedrettiBlazorComponents.suggestbox.initSuggestBox", ObjRef, SuggestBoxId);
                 }
                 AnnounceA11Y = false;
-                await base.OnAfterRenderAsync();
+                await base.OnAfterRenderAsync(firstRender);
             }
         }
 
@@ -272,12 +269,12 @@ namespace RPedretti.RazorComponents.Input.SuggestBox
             StateHasChanged();
         }
 
-        public async void Dispose()
+        public async ValueTask DisposeAsync()
         {
-            if (ComponentContext.IsConnected)
+            if (ObjRef != null)
             {
                 await JSRuntime.InvokeAsync<object>("rpedrettiBlazorComponents.suggestbox.unregisterSuggestBox", SuggestBoxId);
-                JSReferenceFactory.DisposeDotNetObjectRef(ObjRef);
+                ObjRef.Dispose();
             }
         }
 

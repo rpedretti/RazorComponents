@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 using RPedretti.RazorComponents.Shared.Components;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -29,7 +30,7 @@ namespace RPedretti.RazorComponents.Input.Radio
             await t;
         }
 
-        protected async Task KeyDown(UIKeyboardEventArgs args, RadioButton button)
+        protected async Task KeyDown(KeyboardEventArgs args, RadioButton button)
         {
             var t = button.Disabled ? Task.CompletedTask : HandleKeyPress(args, () => SelectButton(button));
             await t;

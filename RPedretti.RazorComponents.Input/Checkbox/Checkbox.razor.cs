@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 using RPedretti.RazorComponents.Shared.Components;
 using System;
 using System.Threading.Tasks;
@@ -27,7 +28,7 @@ namespace RPedretti.RazorComponents.Input.Checkbox
 
         #region Methods
 
-        protected async Task KeyDown(UIKeyboardEventArgs args)
+        protected async Task KeyDown(KeyboardEventArgs args)
         {
             await (Disabled ? Task.CompletedTask : HandleKeyPress(args, ToggleCheck));
         }

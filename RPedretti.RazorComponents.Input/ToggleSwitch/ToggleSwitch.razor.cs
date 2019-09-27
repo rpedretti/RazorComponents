@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 using RPedretti.RazorComponents.Shared.Components;
 using System.Threading.Tasks;
 
@@ -28,13 +29,13 @@ namespace RPedretti.RazorComponents.Input.ToggleSwitch
 
         #region Methods
 
-        protected async Task HandleChanged(UIChangeEventArgs a)
+        protected async Task HandleChanged(ChangeEventArgs a)
         {
             Checked = (bool)a.Value;
             await CheckedChanged.InvokeAsync(Checked);
         }
 
-        protected async Task KeyDown(UIKeyboardEventArgs args)
+        protected async Task KeyDown(KeyboardEventArgs args)
         {
             await (!Disabled ? HandleKeyPress(args, ToggleChecked) : Task.CompletedTask);
         }
