@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace RPedretti.RazorComponents.Sensors.Geolocation
 {
-    public class GeolocationBase : BaseComponent, IAsyncDisposable
+    public class GeolocationBase : BaseComponent, IDisposable
     {
         #region Fields
 
@@ -22,7 +22,7 @@ namespace RPedretti.RazorComponents.Sensors.Geolocation
         #region Properties
 
         [Inject] private IJSRuntime JSRuntime { get; set; }
-        [Inject] private GeolocationSensorService geolocationSensorService { get; set; }
+        [Inject] private GeolocationSensorService GeolocationSensorService { get; set; }
         [Inject] private ILogger<LightSensor> Logger { get; set; }
 
         [Parameter] public EventCallback<PositionError> OnError { get; set; }
@@ -66,37 +66,34 @@ namespace RPedretti.RazorComponents.Sensors.Geolocation
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            if (!firstRender)
+            if (!init)
             {
-                if (!init)
+                init = true;
+                thisRef = DotNetObjectReference.Create(this);
+            }
+            if (Watching != _internalWatching)
+            {
+                if (Watching)
                 {
-                    init = true;
-                    thisRef = DotNetObjectReference.Create(this);
+                    await StartWatch();
                 }
-                if (Watching != _internalWatching)
+                else
                 {
-                    if (Watching)
-                    {
-                        await StartWatch();
-                    }
-                    else
-                    {
-                        await StopWatch();
-                    }
-                    _internalWatching = Watching;
+                    await StopWatch();
                 }
+                _internalWatching = Watching;
             }
 
             await base.OnAfterRenderAsync(firstRender);
         }
 
-        public async ValueTask DisposeAsync()
+        public void Dispose()
         {
             if (watchId.HasValue)
             {
-                await StopWatch();
+                StopWatch().ContinueWith(_ => thisRef.Dispose());
             }
-            if (thisRef != null)
+            else
             {
                 thisRef.Dispose();
             }
@@ -105,14 +102,14 @@ namespace RPedretti.RazorComponents.Sensors.Geolocation
         [JSInvokable]
         public async Task WatchPositionError(PositionError error)
         {
-            geolocationSensorService.NotifyPositionError(error);
+            GeolocationSensorService.NotifyPositionError(error);
             await OnError.InvokeAsync(error);
         }
 
         [JSInvokable]
         public async Task WatchPositionResponse(Position position)
         {
-            geolocationSensorService.NotifyPositionResponse(position);
+            GeolocationSensorService.NotifyPositionResponse(position);
             await OnValue.InvokeAsync(position);
         }
 

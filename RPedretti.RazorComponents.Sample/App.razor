@@ -1,10 +1,5 @@
-﻿@using RPedretti.RazorComponents.Sensors.AmbientLight
-@using RPedretti.RazorComponents.Sensors.Geolocation
-
-<Router AppAssembly="typeof(Startup).Assembly">
+﻿<Router AppAssembly="typeof(Startup).Assembly">
     <Found Context="routeData">
-        <Geolocation Watching="true" />
-        <LightSensor PollTime="1" />
         <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
     </Found>
     <NotFound>

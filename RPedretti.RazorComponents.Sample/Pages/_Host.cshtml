@@ -1,7 +1,12 @@
 ﻿@page "/"
 @namespace RPedretti.RazorComponents.Sample.Pages
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-
+@{
+    var min = "";
+#if RELEASE
+    min = ".min";
+#endif
+}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,18 +24,18 @@
               crossorigin="anonymous"
               integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" />
     </environment>
-    <link rel="stylesheet" href="_content/rpedretti.razorcomponents.input/css/all.css" />
-    <link rel="stylesheet" href="_content/rpedretti.razorcomponents.layout/css/all.css" />
+    <link rel="stylesheet" href="_content/rpedretti.razorcomponents.input/css/all@(min).css" />
+    <link rel="stylesheet" href="_content/rpedretti.razorcomponents.layout/css/all@(min).css" />
     <link rel="stylesheet" href="lib/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="css/all.css" />
+    <link rel="stylesheet" href="css/all@(min).css" />
     <script src="lib/js/jquery.min.js"></script>
     <script src="lib/js/bootstrap.min.js"></script>
     <script src="lib/js/popper.min.js"></script>
-    <script src="_content/rpedretti.razorcomponents.input/js/init-namespaces.js"></script>
-    <script src="_content/rpedretti.razorcomponents.input/js/suggest-box.js"></script>
-    <script src="_content/rpedretti.razorcomponents.sensors/js/init-namespaces.js"></script>
-    <script src="_content/rpedretti.razorcomponents.sensors/js/lightsensor.js"></script>
-    <script src="_content/rpedretti.razorcomponents.sensors/js/geolocation.js"></script>
+    <script src="_content/rpedretti.razorcomponents.input/js/init-namespaces@(min).js"></script>
+    <script src="_content/rpedretti.razorcomponents.input/js/suggest-box@(min).js"></script>
+    <script src="_content/rpedretti.razorcomponents.sensors/js/init-namespaces@(min).js"></script>
+    <script src="_content/rpedretti.razorcomponents.sensors/js/lightsensor@(min).js"></script>
+    <script src="_content/rpedretti.razorcomponents.sensors/js/geolocation@(min).js"></script>
 </head>
 <body>
     <app>@(await Html.RenderComponentAsync<App>(RenderMode.Server))</app>

@@ -18,6 +18,8 @@ namespace RPedretti.RazorComponents.Sample.Pages.Inputs
 
         private string _query;
 
+        private string _selectedSuggestion;
+        
         private RadioButton _selectedRadioButton1;
 
         private RadioButton _selectedRadioButton2;
@@ -79,6 +81,12 @@ namespace RPedretti.RazorComponents.Sample.Pages.Inputs
             set => SetParameter(ref _query, value);
         }
 
+        public string SelectedSuggestion
+        {
+            get => _selectedSuggestion;
+            set => SetParameter(ref _selectedSuggestion, value);
+        }
+
         public RadioButton[] RadioButtons { get; set; } = new RadioButton[]
         {
             new RadioButton { Label = "Button 1", Value = 4 },
@@ -137,6 +145,7 @@ namespace RPedretti.RazorComponents.Sample.Pages.Inputs
         {
             FilteredList = null;
             Query = suggestion;
+            SelectedSuggestion = suggestion;
         }
 
         #endregion Methods

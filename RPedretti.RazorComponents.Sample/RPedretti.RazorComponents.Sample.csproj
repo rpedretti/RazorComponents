@@ -1,14 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <ItemGroup>
-    <Content Remove="compilerconfig.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="compilerconfig.json" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\RPedretti.RazorComponents.Input\RPedretti.RazorComponents.Input.csproj" />
     <ProjectReference Include="..\RPedretti.RazorComponents.Layout\RPedretti.RazorComponents.Layout.csproj" />
     <ProjectReference Include="..\RPedretti.RazorComponents.Sensors\RPedretti.RazorComponents.Sensors.csproj" />
@@ -18,7 +10,6 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="3.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="3.0.0" />
     <PackageReference Include="Microsoft.Web.LibraryManager.Build" Version="2.0.76" />
-    <PackageReference Include="Microsoft.AspNetCore.Blazor.HttpClient" Version="3.0.0-preview8.19405.7" PrivateAssets="all" />
   </ItemGroup>
 
   <PropertyGroup>

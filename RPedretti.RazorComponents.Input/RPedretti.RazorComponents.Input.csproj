@@ -6,7 +6,6 @@
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
     <DefaultItemExcludes>${DefaultItemExcludes};node_modules\**</DefaultItemExcludes>
     <NoWarn>CS2008</NoWarn>
-    <DisableFastUpToDateCheck>true</DisableFastUpToDateCheck>
     <TypeScriptToolsVersion>3.5</TypeScriptToolsVersion>
   </PropertyGroup>
 
@@ -19,21 +18,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <WebpackInputs Include="ts\**\*.ts" Exclude="wwwroot\**;node_modules\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="3.0.0" />
   </ItemGroup>
 
-  <Target Name="EnsureNpmRestored" Condition="!Exists('node_modules')">
-    <Message Importance="high" Text="Restoring dependencies using 'npm'. This may take several minutes..." />
-    <Exec Command="npm install" />
-  </Target>
-
-  <Target Name="RunWebpack" AfterTargets="ResolveReferences" Inputs="@(WebpackInputs)" Outputs="wwwroot\js\input.js" DependsOnTargets="EnsureNpmRestored">
-    <Exec Command="npm run build:debug" Condition="'$(Configuration)' == 'Debug'" />
-    <Exec Command="npm run build:production" Condition="'$(Configuration)' != 'Debug'" />
-  </Target>
-
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
 </Project>

@@ -1,8 +1,8 @@
-using Microsoft.AspNetCore.Components;
 using RPedretti.RazorComponents.Sample.Data;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Text.Json;
 
 namespace RPedretti.RazorComponents.Sample.HttpClients
 {
@@ -28,7 +28,9 @@ namespace RPedretti.RazorComponents.Sample.HttpClients
 
         public async Task<WeatherForecast[]> GetWeather()
         {
-            return await httpClient.GetJsonAsync<WeatherForecast[]>("/sample-data/weather.json");
+            var response = await httpClient.GetAsync("/sample-data/weather.json");
+            var content = await response.Content.ReadAsStreamAsync();
+            return await JsonSerializer.DeserializeAsync<WeatherForecast[]>(content);
         }
 
         #endregion Methods

@@ -10,6 +10,7 @@
 <div class="inputs-page">
     <div class="accordeon-container suggest-box-container">
         <Accordeon Title="Suggestbox" CenterTitle>
+            <p>Selected suggestion: @(string.IsNullOrEmpty(SelectedSuggestion) ? "Not selected" : SelectedSuggestion)</p>
             <SuggestBox Suggestions="FilteredList"
                         TItem="string"
                         Query="@Query"

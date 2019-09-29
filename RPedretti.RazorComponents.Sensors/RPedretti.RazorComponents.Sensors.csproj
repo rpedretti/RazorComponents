@@ -18,18 +18,4 @@
     <ProjectReference Include="..\RPedretti.RazorComponents.Shared\RPedretti.RazorComponents.Shared.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <WebpackInputs Include="ts\**\*.ts" Exclude="wwwroot\**;node_modules\**" />
-  </ItemGroup>
-
-  <Target Name="EnsureNpmRestored" Condition="!Exists('node_modules')">
-    <Message Importance="high" Text="Restoring dependencies using 'npm'. This may take several minutes..." />
-    <Exec Command="npm install" />
-  </Target>
-
-  <Target Name="RunWebpack" AfterTargets="ResolveReferences" Inputs="@(WebpackInputs)" Outputs="wwwroot\js\input.js" DependsOnTargets="EnsureNpmRestored">
-    <Exec Command="npm run build:debug" Condition="'$(Configuration)' == 'Debug'" />
-    <Exec Command="npm run build:production" Condition="'$(Configuration)' != 'Debug'" />
-  </Target>
-
 </Project>

@@ -1,7 +1,13 @@
 ﻿@page "/sensors"
 @using System.Text.Json;
 @using RPedretti.RazorComponents.Input.Spinner
+@using RPedretti.RazorComponents.Sensors.AmbientLight
+@using RPedretti.RazorComponents.Sensors.Geolocation
+@using RPedretti.RazorComponents.Input.ToggleSwitch
 @inherits SensorsBase
+
+<Geolocation Watching="@Watching" />
+<LightSensor PollTime="1" />
 
 <div class="sensors">
     <div class="sensors-ambientlight">
@@ -10,15 +16,14 @@
     </div>
     <div class="sensors-geolocation">
         <h1>Position</h1>
-        @*<div class="sensors-geolocation-controls">
-            <button type="button" class="btn" @onclick="@StartWatch" disabled="@Watching">Start Watch</button>
-            <button type="button" class="btn" @onclick="@StopWatch" disabled="@((!Watching))">Stop Watch</button>
-        </div>*@
+        <div class="sensors-geolocation-controls">
+            <ToggleSwitch @bind-Checked="@Watching" Label="Watch Position"></ToggleSwitch>
+        </div>
         @if (Watching & Position == null)
         {
             <Spinner Centered Active />
         }
-        else if (Position != null)
+        else if (Watching && Position != null)
         {
             <pre>@(JsonSerializer.Serialize(Position, new JsonSerializerOptions { WriteIndented = true }))</pre>
         }

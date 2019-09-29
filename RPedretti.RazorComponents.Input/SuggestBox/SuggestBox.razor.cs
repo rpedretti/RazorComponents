@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace RPedretti.RazorComponents.Input.SuggestBox
 {
-    public class SuggestBoxBase<T> : BaseComponent, IAsyncDisposable
+    public class SuggestBoxBase<T> : BaseComponent, IDisposable
     {
         #region Fields
 
@@ -21,6 +21,7 @@ namespace RPedretti.RazorComponents.Input.SuggestBox
         private bool _shouldRender;
         private bool init = true;
         private string originalQuery;
+        private bool ignoreValue;
         private DebounceDispatcher queryDispatcher = new DebounceDispatcher();
         protected readonly string directions = "Keyboard users, use up and down arrows to review and enter to select. Touch device users, explore by touch or with swipe gestures.";
         protected List<SuggestionItem<T>> _suggestionItems = new List<SuggestionItem<T>>();
@@ -232,19 +233,20 @@ namespace RPedretti.RazorComponents.Input.SuggestBox
         protected async Task InternalSuggestionSelected(SuggestionItem<T> item)
         {
             internalQuery = item.Value.ToString();
+            originalQuery = internalQuery;
             _suggestionItems.Clear();
             OpenSuggestion = false;
             await SuggestionSelected.InvokeAsync(item.Value);
             AnnounceA11Y = true;
             A11yLabel = null;
-            await JSRuntime.InvokeAsync<int>("rpedrettiBlazorComponents.suggestbox.focusById", SuggestBoxId);
+            await JSRuntime.InvokeAsync<object>("rpedrettiBlazorComponents.suggestbox.setSuggestion", SuggestBoxId);
             _shouldRender = true;
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            if (!firstRender)
-            {
+            //if (!firstRender)
+            //{
                 if (init)
                 {
                     init = false;
@@ -253,7 +255,7 @@ namespace RPedretti.RazorComponents.Input.SuggestBox
                 }
                 AnnounceA11Y = false;
                 await base.OnAfterRenderAsync(firstRender);
-            }
+            //}
         }
 
         protected override void OnInitialized() => SuggestBoxId = $"suggestbox-{Guid.NewGuid()}";
@@ -269,12 +271,12 @@ namespace RPedretti.RazorComponents.Input.SuggestBox
             StateHasChanged();
         }
 
-        public async ValueTask DisposeAsync()
+        public void Dispose()
         {
             if (ObjRef != null)
             {
-                await JSRuntime.InvokeAsync<object>("rpedrettiBlazorComponents.suggestbox.unregisterSuggestBox", SuggestBoxId);
-                ObjRef.Dispose();
+                JSRuntime.InvokeAsync<object>("rpedrettiBlazorComponents.suggestbox.unregisterSuggestBox", SuggestBoxId)
+                    .AsTask().ContinueWith(t => ObjRef.Dispose());
             }
         }
 

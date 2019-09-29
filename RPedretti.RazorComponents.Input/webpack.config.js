@@ -1,18 +1,18 @@
 ﻿const path = require("path");
-const webpack = require("webpack");
 
+const devMode = process.env.NODE_ENV !== "production";
 module.exports = {
-    mode: 'development',
+    mode: devMode ? "development" : "production",
     optimization: {
-        minimize: false,
+        minimize: !devMode,
         splitChunks: {
             chunks: 'all'
         }
-	},
+    },
     resolve: {
         extensions: [".ts", ".js"]
     },
-    devtool: "inline-source-map",
+    devtool: devMode ? "inline-source-map" : "",
     module: {
         rules: [
             {
@@ -27,6 +27,6 @@ module.exports = {
     },
     output: {
         path: path.join(__dirname, "/wwwroot/js"),
-        filename: "[name].js"
+        filename: devMode ? "[name].js" : "[name].min.js"
     }
 };

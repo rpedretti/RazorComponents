@@ -1,13 +1,12 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 using Microsoft.JSInterop;
-using RPedretti.RazorComponents.Sensors.AmbientLight;
 using System;
 using System.Threading.Tasks;
 
 namespace RPedretti.RazorComponents.Sensors.AmbientLight
 {
-    public abstract class LightSensorBase : ComponentBase, IAsyncDisposable
+    public abstract class LightSensorBase : ComponentBase, IDisposable
     {
         #region Fields
 
@@ -33,7 +32,7 @@ namespace RPedretti.RazorComponents.Sensors.AmbientLight
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            if (!firstRender && !init)
+            if (!init)
             {
                 init = true;
                 thisRef = DotNetObjectReference.Create(this);
@@ -42,14 +41,14 @@ namespace RPedretti.RazorComponents.Sensors.AmbientLight
             await base.OnAfterRenderAsync(firstRender);
         }
 
-        public async ValueTask DisposeAsync()
+        public void Dispose()
         {
             try
             {
                 if (thisRef != null)
                 {
-                    await JSRuntime.InvokeAsync<object>("rpedrettiBlazorSensors.lightSensor.stopSensor", thisRef);
-                    thisRef.Dispose();
+                    JSRuntime.InvokeAsync<object>("rpedrettiBlazorSensors.lightSensor.stopSensor", thisRef).AsTask()
+                        .ContinueWith(t => thisRef.Dispose());
                 }
                 init = false;
             }
