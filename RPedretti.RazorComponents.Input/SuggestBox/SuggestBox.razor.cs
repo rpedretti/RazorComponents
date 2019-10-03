@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.Extensions.Logging;
-using Microsoft.JSInterop;
-using RPedretti.RazorComponents.Shared.Components;
 using RPedretti.RazorComponents.Shared.Operators;
 using System;
 using System.Collections.Generic;
@@ -11,18 +9,16 @@ using System.Threading.Tasks;
 
 namespace RPedretti.RazorComponents.Input.SuggestBox
 {
-    public class SuggestBoxBase<T> : BaseComponent, IDisposable
+    public class SuggestBoxBase<T> : SuggestBoxBaseJSInterop
     {
         #region Fields
 
-        private readonly SuggestBoxBaseJSInterop interop = new SuggestBoxBaseJSInterop();
+        private readonly DebounceDispatcher _queryDispatcher = new DebounceDispatcher();
         private string _a11ylabel;
+        private bool _init = true;
         private bool _loading;
+        private string _originalQuery;
         private bool _shouldRender;
-        private bool init = true;
-        private string originalQuery;
-        private bool ignoreValue;
-        private DebounceDispatcher queryDispatcher = new DebounceDispatcher();
         protected readonly string directions = "Keyboard users, use up and down arrows to review and enter to select. Touch device users, explore by touch or with swipe gestures.";
         protected List<SuggestionItem<T>> _suggestionItems = new List<SuggestionItem<T>>();
         protected List<T> _suggestions;
@@ -34,9 +30,7 @@ namespace RPedretti.RazorComponents.Input.SuggestBox
 
         #region Properties
 
-        [Inject] private IJSRuntime JSRuntime { get; set; }
         [Inject] private ILogger<SuggestBoxBase<T>> Logger { get; set; }
-        private DotNetObjectReference<SuggestBoxBaseJSInterop> ObjRef { get; set; }
 
         protected string A11yLabel
         {
@@ -50,8 +44,7 @@ namespace RPedretti.RazorComponents.Input.SuggestBox
 
         protected bool OpenSuggestion { get; set; }
 
-        internal string SuggestBoxId { get; set; }
-
+        [Parameter] public int DebounceTime { get; set; } = 500;
         [Parameter] public string Description { get; set; }
 
         [Parameter]
@@ -79,8 +72,8 @@ namespace RPedretti.RazorComponents.Input.SuggestBox
                 if (SetParameter(ref internalQuery, value))
                 {
                     Logger.LogDebug($"setting query: {value}");
-                    queryDispatcher.Debounce(1000, (v) => InvokeAsync(() => QueryChanged.InvokeAsync(v as string)), value);
-                    originalQuery = internalQuery;
+                    _queryDispatcher.Debounce(DebounceTime, (v) => InvokeAsync(() => QueryChanged.InvokeAsync(v as string)), value);
+                    _originalQuery = internalQuery;
                 }
             }
         }
@@ -99,7 +92,7 @@ namespace RPedretti.RazorComponents.Input.SuggestBox
                     _suggestions = value;
                     if (_suggestions != null)
                     {
-                        Logger.LogDebug($"suggestions: {string.Join(',', value)}");
+                        Logger.LogDebug($"suggestions: {string.Join(",", value)}");
                         _suggestionItems = _suggestions.Select(s => new SuggestionItem<T>
                         {
                             Selected = false,
@@ -124,7 +117,7 @@ namespace RPedretti.RazorComponents.Input.SuggestBox
 
         public SuggestBoxBase()
         {
-            interop.ClearSelectionEvent += (s, e) => ClearSelection();
+            ClearSelectionEvent += (s, e) => ClearSuggestSelection();
         }
 
         #endregion Constructors
@@ -233,51 +226,41 @@ namespace RPedretti.RazorComponents.Input.SuggestBox
         protected async Task InternalSuggestionSelected(SuggestionItem<T> item)
         {
             internalQuery = item.Value.ToString();
-            originalQuery = internalQuery;
+            _originalQuery = internalQuery;
             _suggestionItems.Clear();
             OpenSuggestion = false;
             await SuggestionSelected.InvokeAsync(item.Value);
             AnnounceA11Y = true;
             A11yLabel = null;
-            await JSRuntime.InvokeAsync<object>("rpedrettiBlazorComponents.suggestbox.setSuggestion", SuggestBoxId);
+            await SetSuggestionAsync();
             _shouldRender = true;
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            //if (!firstRender)
-            //{
-                if (init)
-                {
-                    init = false;
-                    ObjRef = DotNetObjectReference.Create(interop);
-                    await JSRuntime.InvokeAsync<object>("rpedrettiBlazorComponents.suggestbox.initSuggestBox", ObjRef, SuggestBoxId);
-                }
-                AnnounceA11Y = false;
-                await base.OnAfterRenderAsync(firstRender);
-            //}
+            await base.OnAfterRenderAsync(firstRender);
+            if (_init)
+            {
+                _init = false;
+                await InitAsync();
+            }
+            AnnounceA11Y = false;
         }
 
-        protected override void OnInitialized() => SuggestBoxId = $"suggestbox-{Guid.NewGuid()}";
+        protected override void OnInitialized()
+        {
+            SuggestBoxId = $"suggestbox-{Guid.NewGuid()}";
+        }
 
         protected override bool ShouldRender() => _shouldRender;
 
-        public void ClearSelection()
+        public void ClearSuggestSelection()
         {
             _suggestionItems.ForEach(s => s.Selected = false);
-            internalQuery = originalQuery;
+            internalQuery = _originalQuery;
             OpenSuggestion = false;
             Logger.LogDebug($"Clear selection: {internalQuery}");
             StateHasChanged();
-        }
-
-        public void Dispose()
-        {
-            if (ObjRef != null)
-            {
-                JSRuntime.InvokeAsync<object>("rpedrettiBlazorComponents.suggestbox.unregisterSuggestBox", SuggestBoxId)
-                    .AsTask().ContinueWith(t => ObjRef.Dispose());
-            }
         }
 
         #endregion Methods

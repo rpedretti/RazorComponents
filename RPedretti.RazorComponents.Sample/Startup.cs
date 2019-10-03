@@ -5,7 +5,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using RPedretti.RazorComponents.Sample.HttpClients;
-using RPedretti.RazorComponents.Sample.Services;
+using RPedretti.RazorComponents.Sample.Shared.HttpClients;
+using RPedretti.RazorComponents.Sample.Shared.Services;
 
 namespace RPedretti.RazorComponents.Sample
 {

@@ -10,7 +10,7 @@ namespace RPedretti.RazorComponents.Input.Checkbox
     {
         #region Properties
 
-        protected string CheckboxId { get; set; } = Guid.NewGuid().ToString().Replace("-", "", StringComparison.InvariantCulture);
+        protected string CheckboxId { get; set; } = Guid.NewGuid().ToString().Replace("-", "");
 
         [Parameter] public bool Checked { get; set; }
 

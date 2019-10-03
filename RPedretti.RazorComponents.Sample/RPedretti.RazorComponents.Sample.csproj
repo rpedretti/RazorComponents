@@ -3,7 +3,9 @@
   <ItemGroup>
     <ProjectReference Include="..\RPedretti.RazorComponents.Input\RPedretti.RazorComponents.Input.csproj" />
     <ProjectReference Include="..\RPedretti.RazorComponents.Layout\RPedretti.RazorComponents.Layout.csproj" />
+    <ProjectReference Include="..\RPedretti.RazorComponents.Sample.Shared\RPedretti.RazorComponents.Sample.Shared.csproj" />
     <ProjectReference Include="..\RPedretti.RazorComponents.Sensors\RPedretti.RazorComponents.Sensors.csproj" />
+    <ProjectReference Include="..\RPedretti.RazorComponents.Shared\RPedretti.RazorComponents.Shared.csproj" />
   </ItemGroup>
 
   <ItemGroup>

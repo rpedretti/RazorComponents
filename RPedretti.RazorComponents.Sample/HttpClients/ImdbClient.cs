@@ -1,5 +1,6 @@
 using Microsoft.Extensions.Logging;
-using RPedretti.RazorComponents.Sample.Domain;
+using RPedretti.RazorComponents.Sample.Shared.Domain;
+using RPedretti.RazorComponents.Sample.Shared.HttpClients;
 using System;
 using System.Net.Http;
 using System.Text.Json;

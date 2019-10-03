@@ -1,0 +1,14 @@
+﻿@using RPedretti.RazorComponents.Sample.Shared.Pages.Inputs
+@using RPedretti.RazorComponents.Sample.Shared.Shared
+<Router AppAssembly="typeof(Program).Assembly" AdditionalAssemblies="new[] { typeof(Inputs).Assembly }">
+    <Found Context="routeData">
+        <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
+    </Found>
+    <NotFound>
+        <CascadingAuthenticationState>
+            <LayoutView Layout="@typeof(MainLayout)">
+                <p>Sorry, there's nothing at this address.</p>
+            </LayoutView>
+        </CascadingAuthenticationState>
+    </NotFound>
+</Router>
