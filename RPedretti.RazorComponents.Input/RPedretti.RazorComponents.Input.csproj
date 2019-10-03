@@ -10,6 +10,8 @@
     <ApplicationIcon />
     <OutputType>Library</OutputType>
     <StartupObject />
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageProjectUrl>https://github.com/rpedretti/RazorComponents</PackageProjectUrl>
   </PropertyGroup>
 
   <ItemGroup>

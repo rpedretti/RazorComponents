@@ -5,6 +5,7 @@
     <RazorLangVersion>3.0</RazorLangVersion>
     <LangVersion>preview</LangVersion>
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
+    <PackageProjectUrl>https://github.com/rpedretti/RazorComponents</PackageProjectUrl>
   </PropertyGroup>
 
   <ItemGroup>
