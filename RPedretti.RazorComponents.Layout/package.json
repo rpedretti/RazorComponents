@@ -3,20 +3,27 @@
   "name": "rpedretti.razorcomponents",
   "private": true,
   "scripts": {
-    "dev": "run-s clean watch:scss",
-    "build:debug": "run-s clean debug:scss",
-    "build:prod": "run-s clean prod:scss mv",
+    "dev": "npm-run-all clean --parallel watch:*",
+    "build:debug": "npm-run-all clean --parallel debug:*",
+    "build:prod": "npm-run-all clean --parallel prod:* --sequential mv",
+    "debug:js": "cross-env NODE_ENV=development webpack",
     "debug:scss": "node-sass --output-style nested --indent-type tab --indent-width 1 -o wwwroot/css ./scss/",
-    "prod:scss": "node-sass --output-style compressed -o wwwroot/css ./scss/",
+    "prod:js": "cross-env NODE_ENV=production webpack",
+    "prod:scss": "node-sass --output-style compressed -o wwwroot/css ./scss",
+    "watch:js": "npm run debug:js -- --watch",
     "watch:scss": "run-s debug:scss \"debug:scss -- --watch\"",
     "mv": "move-cli wwwroot/css/all.css wwwroot/css/all.min.css",
-    "clean": "del-cli wwwroot/css"
+    "clean": "del-cli wwwroot/css wwwroot/js"
   },
   "devDependencies": {
     "cross-env": "^6.0.0",
     "del-cli": "^3.0.0",
     "move-cli": "^1.2.1",
     "node-sass": "^4.12.0",
-    "npm-run-all": "^4.1.5"
+    "npm-run-all": "^4.1.5",
+    "ts-loader": "^4.4.2",
+    "typescript": "^3.5.3",
+    "webpack": "^4.16.3",
+    "webpack-cli": "^3.3.9"
   }
 }

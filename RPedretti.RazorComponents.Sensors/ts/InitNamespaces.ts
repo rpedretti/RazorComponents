@@ -12,4 +12,4 @@ declare global {
     }
 }
 
-window.rpedrettiBlazorSensors = rpedrettiBlazorSensors;
+window.rpedrettiBlazorSensors = Object.assign(window.rpedrettiBlazorSensors || {},  rpedrettiBlazorSensors);

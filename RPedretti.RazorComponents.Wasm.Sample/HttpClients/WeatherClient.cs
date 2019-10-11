@@ -4,6 +4,8 @@ using System.Threading.Tasks;
 using System.Text.Json;
 using RPedretti.RazorComponents.Sample.Shared.HttpClients;
 using RPedretti.RazorComponents.Sample.Shared.Data;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.FileProviders;
 
 namespace RPedretti.RazorComponents.Wasm.Sample.HttpClients
 {
@@ -11,16 +13,17 @@ namespace RPedretti.RazorComponents.Wasm.Sample.HttpClients
     {
         #region Fields
 
-        private readonly HttpClient httpClient;
+        private readonly string _filePath;
+        private readonly IFileProvider _fileProvider;
 
         #endregion Fields
 
         #region Constructors
 
-        public WeatherClient(HttpClient httpClient)
+        public WeatherClient(WeatherConfig configuration, IFileProvider fileProvider)
         {
-            this.httpClient = httpClient;
-            this.httpClient.BaseAddress = new Uri("https://localhost:5003");
+            _filePath = configuration.Filepath;
+            _fileProvider = fileProvider;
         }
 
         #endregion Constructors
@@ -29,9 +32,11 @@ namespace RPedretti.RazorComponents.Wasm.Sample.HttpClients
 
         public async Task<WeatherForecast[]> GetWeather()
         {
-            var response = await httpClient.GetAsync("/sample-data/weather.json");
-            var content = await response.Content.ReadAsStreamAsync();
-            return await JsonSerializer.DeserializeAsync<WeatherForecast[]>(content);
+            var info = _fileProvider.GetFileInfo(_filePath);
+            using(var content = info.CreateReadStream())
+            {
+                return await JsonSerializer.DeserializeAsync<WeatherForecast[]>(content);
+            }
         }
 
         #endregion Methods

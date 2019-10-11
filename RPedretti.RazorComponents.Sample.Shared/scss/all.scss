@@ -1,4 +1,4 @@
-@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.min.css');
 
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -143,6 +143,7 @@ app {
     }
 }
 
+@import "../Modals/HelloModal/helloModal";
 @import "../Pages/Inputs/inputs";
 @import "../Pages/Loaders/loaders";
 @import "../Pages/Movies/movies";

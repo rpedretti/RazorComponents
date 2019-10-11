@@ -3,6 +3,23 @@
   "defaultProvider": "cdnjs",
   "libraries": [
     {
+      "library": "font-awesome@5.11.2",
+      "files": [ "css/fontawesome.min.css", "css/regular.min.css", "css/solid.min.css" ],
+      "destination": "wwwroot/lib"
+    },
+    {
+      "library": "font-awesome@5.11.2",
+      "files": [
+        "webfonts/fa-regular-400.woff",
+        "webfonts/fa-regular-400.woff2",
+        "webfonts/fa-regular-400.ttf",
+        "webfonts/fa-solid-900.woff",
+        "webfonts/fa-solid-900.woff2",
+        "webfonts/fa-solid-900.ttf"
+      ],
+      "destination": "wwwroot/lib"
+    },
+    {
       "library": "jquery@3.3.1",
       "files": [ "jquery.min.js", "jquery.min.map" ],
       "destination": "wwwroot/lib/js"

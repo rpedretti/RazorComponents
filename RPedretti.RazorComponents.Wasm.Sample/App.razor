@@ -1,5 +1,6 @@
 ﻿@using RPedretti.RazorComponents.Sample.Shared.Pages.Inputs
 @using RPedretti.RazorComponents.Sample.Shared.Shared
+
 <Router AppAssembly="typeof(Program).Assembly" AdditionalAssemblies="new[] { typeof(Inputs).Assembly }">
     <Found Context="routeData">
         <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />

@@ -13,10 +13,36 @@
     <PackageReference Include="Microsoft.AspNetCore.Blazor.Build" Version="3.0.0-preview9.19465.2" PrivateAssets="all" />
     <PackageReference Include="Microsoft.AspNetCore.Blazor.HttpClient" Version="3.0.0-preview9.19465.2" />
     <PackageReference Include="Microsoft.AspNetCore.Blazor.DevServer" Version="3.0.0-preview9.19465.2" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="3.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="3.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="3.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.0.0" />
+    <PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="3.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <BlazorLinkerDescriptor Include="Linker.xml" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\RPedretti.RazorComponents.Sample.Shared\RPedretti.RazorComponents.Sample.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Configuration/Debug/appsettings.json" />
+    <Content Remove="Configuration/Release/appsettings.json" />
+    <Content Remove="sample-data/weather.json" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <EmbeddedResource Include="sample-data/weather.json">
+      <Link>weather.json</Link>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Configuration/$(Configuration)/appsettings.json">
+      <Link>appsettings.json</Link>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>

@@ -10,6 +10,6 @@ declare global {
     }
 }
 
-window.rpedrettiBlazorComponents = rpedrettiBlazorComponents;
+window.rpedrettiBlazorComponents = Object.assign(window.rpedrettiBlazorComponents || {}, rpedrettiBlazorComponents);
 
 $(document).on('click', rpedrettiBlazorComponents.suggestbox.clearSelection);
