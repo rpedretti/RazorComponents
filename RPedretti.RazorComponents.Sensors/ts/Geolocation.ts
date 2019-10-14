@@ -51,4 +51,7 @@ export class Geolocation {
             navigator.geolocation.clearWatch(watchId);
         }
     }
-};
+}
+
+window.rpedrettiBlazorSensors = window.rpedrettiBlazorSensors || {};
+window.rpedrettiBlazorSensors.geolocation = new Geolocation();

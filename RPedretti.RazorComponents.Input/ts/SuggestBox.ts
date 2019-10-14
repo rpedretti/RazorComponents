@@ -1,7 +1,7 @@
-﻿import { Helpers } from "./helpers";
+﻿import { Helpers } from "./Helpers";
 
 export class Suggestbox {
-    
+
     private readonly registeredSuggestboxes = new Map<string, any>();
     private readonly suggestboxesToClear = new Map<string, boolean>();
 
@@ -52,3 +52,7 @@ export class Suggestbox {
     }
 }
 
+window.rpedrettiBlazorComponents = window.rpedrettiBlazorComponents || {};
+window.rpedrettiBlazorComponents.suggestbox = new Suggestbox();
+
+$(document).on('click', window.rpedrettiBlazorComponents.suggestbox.clearSelection);

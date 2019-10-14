@@ -1,6 +1,7 @@
 ﻿@inherits ModalBase
 
 <div class="m_modal"
+     id="@Id"
      hidden="@(!Show)"
      aria-label="@A11yLabel">
     <div class="overlay" @onclick="@Hide" aria-hidden="true"></div>

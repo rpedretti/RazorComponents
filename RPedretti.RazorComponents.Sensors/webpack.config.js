@@ -23,8 +23,7 @@ module.exports = {
     },
     entry: {
         "geolocation": "./ts/Geolocation.ts",
-        "lightsensor": "./ts/LightSensor.ts",
-        "init-namespaces": "./ts/InitNamespaces.ts"
+        "lightsensor": "./ts/LightSensor.ts"
     },
     output: {
         path: path.join(__dirname, "/wwwroot/js"),

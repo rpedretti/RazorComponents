@@ -22,3 +22,6 @@
         sensor.stop();
     }
 }
+
+window.rpedrettiBlazorSensors = window.rpedrettiBlazorSensors || {};
+window.rpedrettiBlazorSensors.lightSensor = new LightSensor();

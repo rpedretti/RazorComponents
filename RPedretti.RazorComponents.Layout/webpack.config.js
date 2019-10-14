@@ -22,8 +22,7 @@ module.exports = {
         ]
     },
     entry: {
-        "modal": "./ts/Modal.ts",
-        "init-namespaces": "./ts/InitNamespaces.ts"
+        "modal": "./ts/Modal.ts"
     },
     output: {
         path: path.join(__dirname, "/wwwroot/js"),

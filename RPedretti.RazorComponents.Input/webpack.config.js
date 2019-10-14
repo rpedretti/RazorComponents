@@ -22,8 +22,7 @@ module.exports = {
         ]
     },
     entry: {
-        "suggest-box": "./ts/SuggestBox.ts",
-        "init-namespaces": "./ts/InitNamespaces.ts"
+        "suggest-box": "./ts/SuggestBox.ts"
     },
     output: {
         path: path.join(__dirname, "/wwwroot/js"),

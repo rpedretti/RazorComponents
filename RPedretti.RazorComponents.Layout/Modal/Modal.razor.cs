@@ -16,6 +16,8 @@ namespace RPedretti.RazorComponents.Layout.Modal
         [Inject] private IModalService ModalService { get; set; }
         [Inject] private IJSRuntime JSRuntime { get; set; }
 
+        protected readonly string Id = $"modal-{Guid.NewGuid().ToString().Replace("-", "")}";
+
         protected override void OnAfterRender(bool firstRender)
         {
             if (!firstRender)
@@ -42,7 +44,7 @@ namespace RPedretti.RazorComponents.Layout.Modal
             CloseOnOnverlayClick = args.CloseOnOverlayClick;
             Content = args.Content;
             LockScroll = args.LockScroll;
-            JSRuntime.InvokeVoidAsync("rpedrettiBlazorComponents.modal.setScroll", !Show || !args.LockScroll);
+            JSRuntime.InvokeVoidAsync("rpedrettiBlazorComponents.modal.updateView", Show, args.LockScroll, Id);
             StateHasChanged();
         }
 

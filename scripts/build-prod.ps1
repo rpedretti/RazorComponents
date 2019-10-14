@@ -1,4 +1,8 @@
-[string[]]$Paths = "RPedretti.RazorComponents.Input", "RPedretti.RazorComponents.Layout", "RPedretti.RazorComponents.Sample", "RPedretti.RazorComponents.Wasm.Sample", "RPedretti.RazorComponents.Sensors"
+[string[]]$Paths = 
+	"RPedretti.RazorComponents.Sample.Shared",
+	"RPedretti.RazorComponents.Input",
+	"RPedretti.RazorComponents.Layout", 
+	"RPedretti.RazorComponents.Sensors"
 
 pushd "../"
 
