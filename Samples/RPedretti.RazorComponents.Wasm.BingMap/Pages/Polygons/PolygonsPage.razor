@@ -1,0 +1,21 @@
+﻿@page "/polygons"
+@inherits PolygonsPageBase
+@using RPedretti.RazorComponents.BingMap
+
+<div class="polygons-page">
+    <BingMap Id="@BingMapId"
+             ApiKey="AkUyQ5km3V0tUHk_BL1gRFWunbT1x6dlbH_0mUHDREAHPgsJ1LlpS0ma2-0SIvV7"
+             @ref="bingMap"
+             Entities="@Entities"
+             MapsConfig="@MapConfig"
+             ViewConfig="@MapViewConfig"
+             MapLoaded="@MapLoaded" />
+    <div class="events">
+        <p class="@(Click ? "-active" : "")">click</p>
+        <p class="@(DoubleClick ? "-active" : "")">double click</p>
+        <p class="@(MouseOver ? "-active" : "")">mouse over</p>
+        <p class="@(MouseOut ? "-active" : "")">mouse out</p>
+        <p class="@(MouseDown ? "-active" : "")">mouse down</p>
+        <p class="@(MouseUp ? "-active" : "")">mouse up</p>
+    </div>
+</div>
