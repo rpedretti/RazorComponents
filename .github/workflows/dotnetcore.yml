@@ -15,6 +15,6 @@ jobs:
     - name: Setup Node.js for use with actions
       uses: actions/setup-node@v1.1.0
     - name: Build with Node
-      run: ./scripts/build-prod.sh
+      run: chmod +x ./scripts/build-prod.sh && sh ./scripts/build-prod.sh
     - name: Build with dotnet
       run: dotnet build --configuration Release
