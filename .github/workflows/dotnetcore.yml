@@ -4,7 +4,7 @@ on: [push]
 
 jobs:
   build_fe:
-    runs-on: [windows]
+    runs-on: windows-latest
     steps:
       - uses: actions/checkout@v2
       - name: Build TS and CSS
