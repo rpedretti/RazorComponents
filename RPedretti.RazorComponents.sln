@@ -16,7 +16,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{FB467F61-8C1A-4D85-A226-B557D0F5341B}"
 	ProjectSection(SolutionItems) = preProject
 		scripts\build-debug.ps1 = scripts\build-debug.ps1
-		scripts\build-debug.sh = scripts\build-debug.sh
 		scripts\build-prod.ps1 = scripts\build-prod.ps1
 		scripts\build-prod.sh = scripts\build-prod.sh
 	EndProjectSection
