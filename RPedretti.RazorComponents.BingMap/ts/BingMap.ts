@@ -94,16 +94,18 @@ export class BingMap {
             mapScriptTag.type = 'text/javascript';
             document.head.appendChild(mapScriptTag);
             const language = mapLanguage || window.navigator.language;
-            mapScriptTag.src = `https://www.bing.com/api/maps/mapcontrol?callback=getBingMaps&key=${apiKey}&setLang=${language}`;
+            mapScriptTag.defer = true;
+            mapScriptTag.async = true;
+            mapScriptTag.src = `https://www.bing.com/api/maps/mapcontrol?callback=getBingMap&key=${apiKey}&setLang=${language}`;
             this._mapLoaded = true;
         } else {
-            window.getBingMaps()
+            window.getBingMap()
         }
         
         return 1;
     }
 
-    public initMaps = async (): Promise<number> => {
+    public initMap = async (): Promise<number> => {
         for (var { mapId, mapRef, config } of this._notInit) {
             if (config.backgroundColor) {
                 config.backgroundColor = Helpers.parseColor(config.backgroundColor);
@@ -333,9 +335,7 @@ export class BingMap {
 
     public clearItems = (mapId: string) => {
         const mapObj = this._maps.get(mapId);
-        if (!!mapObj) {
-            mapObj.map.entities.clear();
-        }
+        mapObj?.map.entities.clear();
 
         return 1;
     }
@@ -343,16 +343,16 @@ export class BingMap {
     public addLayer = (mapId: string, id) => {
         const mapObj = this._maps.get(mapId);
         const layerObj = this._layers.get(id);
-        if (!!mapObj && !!layerObj) {
-            mapObj.map.layers.insert(layerObj.layerInstance);
+        if (!!layerObj) {
+            mapObj?.map.layers.insert(layerObj.layerInstance);
         }
     }
 
     public removeLayer = (mapId: string, id: string) => {
         const mapObj = this._maps.get(mapId);
         const layerObj = this._layers.get(id);
-        if (!!mapObj && !!layerObj) {
-            mapObj.map.layers.remove(layerObj.layerInstance);
+        if (!!layerObj) {
+            mapObj?.map.layers.remove(layerObj.layerInstance);
         }
     }
 
@@ -439,6 +439,6 @@ window.rpedrettiBlazorComponents.bingMap = window.rpedrettiBlazorComponents.bing
 window.rpedrettiBlazorComponents.bingMap.map = new BingMap();
 
 
-window.getBingMaps = function () {
-    window.rpedrettiBlazorComponents.bingMap.map.initMaps();
+window.getBingMap = function () {
+    window.rpedrettiBlazorComponents.bingMap.map.initMap();
 }

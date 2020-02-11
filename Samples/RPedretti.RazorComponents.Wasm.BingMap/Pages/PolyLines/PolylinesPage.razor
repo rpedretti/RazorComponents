@@ -1,6 +1,8 @@
 ﻿@page "/polylines"
-@inherits PolyLinesPageBase
 @using RPedretti.RazorComponents.BingMap
+@using RPedretti.RazorComponents.Shared.Components
+
+@inherits BaseComponent
 
 <div class="polylines-page">
     <BingMap Id="@BingMapId"
@@ -9,7 +11,9 @@
              Entities="@Entities"
              MapsConfig="@MapConfig"
              ViewConfig="@MapViewConfig"
-             MapLoaded="@MapLoaded" />
+             MapLoaded="@MapLoaded"
+             Click="@OnMapClick"
+             RightClick="@OnMapRightClick" />
     <div class="events">
         <p class="@(Click ? "-active" : "")">click</p>
         <p class="@(DoubleClick ? "-active" : "")">double click</p>

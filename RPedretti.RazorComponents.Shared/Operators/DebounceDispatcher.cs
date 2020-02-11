@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 
 namespace RPedretti.RazorComponents.Shared.Operators
@@ -7,15 +8,9 @@ namespace RPedretti.RazorComponents.Shared.Operators
     {
         #region Fields
 
-        private Timer _timer;
+        private Timer? _timer;
 
         #endregion Fields
-
-        #region Properties
-
-        private DateTime _timerStarted { get; set; } = DateTime.UtcNow.AddYears(-1);
-
-        #endregion Properties
 
         #region Methods
 
@@ -26,19 +21,36 @@ namespace RPedretti.RazorComponents.Shared.Operators
         /// <param name="obj">Your object</param>
         /// <param name="interval">Milisecond interval</param>
         /// <param name="debounceAction">Called when last item call this method and after interval was finished</param>
-        public void Debounce(int interval, Action<object> action, object param = null)
+        public void Debounce<T>(int interval, Action<T> action, [AllowNull] T param)
         {
             _timer?.Dispose();
             _timer = new Timer(state =>
             {
-                _timer.Dispose();
+                _timer!.Dispose();
                 if (_timer != null)
                 {
-                    action?.Invoke(param);
+#pragma warning disable CS8604 // Possible null reference argument.
+                    action.Invoke(param);
+#pragma warning restore CS8604 // Possible null reference argument.
                 }
 
                 _timer = null;
             }, param, interval, interval);
+        }
+
+        public void Debounce(int interval, Action action)
+        {
+            _timer?.Dispose();
+            _timer = new Timer(state =>
+            {
+                _timer!.Dispose();
+                if (_timer != null)
+                {
+                    action.Invoke();
+                }
+
+                _timer = null;
+            }, null, interval, interval);
         }
 
         #endregion Methods

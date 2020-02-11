@@ -108,7 +108,6 @@ export class Polyline {
     }
 
     public remove = (polylineId: string) => {
-        const instance = this._polylines.get(polylineId);
         this.clearEvents(polylineId);
         this._polylines.delete(polylineId);
         return 1;

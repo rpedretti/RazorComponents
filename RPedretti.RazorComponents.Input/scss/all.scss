@@ -1,9 +1,9 @@
 @import "colors";
 @import "mixins";
 @import "animations";
-@import "../Checkbox/checkbox";
-@import "../ProgressBar/progress-bar";
-@import "../Radio/radio-group";
-@import "../Spinner/spinner";
-@import "../SuggestBox/suggest-box";
-@import "../ToggleSwitch/toggle-switch";
+@import "../Checkbox/Checkbox.razor.scss";
+@import "../ProgressBar/ProgressBar.razor.scss";
+@import "../Radio/RadioGroup.razor.scss";
+@import "../Spinner/Spinner.razor.scss";
+@import "../SuggestBox/SuggestBox.razor.scss";
+@import "../ToggleSwitch/ToggleSwitch.razor.scss";

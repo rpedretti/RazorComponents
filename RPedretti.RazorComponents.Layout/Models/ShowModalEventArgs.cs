@@ -4,9 +4,13 @@ namespace RPedretti.RazorComponents.Layout.Models
 {
     public sealed class ShowModalEventArgs
     {
-        public bool Show { get; set; }
-        public bool LockScroll { get; set; } = true;
+        #region Properties
+
         public bool CloseOnOverlayClick { get; set; }
         public RenderFragment Content { get; set; }
+        public bool LockScroll { get; set; } = true;
+        public bool Show { get; set; }
+
+        #endregion Properties
     }
 }

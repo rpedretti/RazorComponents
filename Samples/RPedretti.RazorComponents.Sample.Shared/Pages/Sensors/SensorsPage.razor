@@ -1,11 +1,13 @@
 ﻿@namespace RPedretti.RazorComponents.Sample.Shared.Pages.Sensors
-@page "/sensors"
 @using System.Text.Json;
 @using RPedretti.RazorComponents.Input.Spinner
 @using RPedretti.RazorComponents.Sensors.AmbientLight
 @using RPedretti.RazorComponents.Sensors.Geolocation
 @using RPedretti.RazorComponents.Input.ToggleSwitch
-@inherits SensorsBase
+@using RPedretti.RazorComponents.Shared.Components
+
+@page "/sensors"
+@inherits BaseComponent
 
 <Geolocation Watching="@Watching" />
 <LightSensor PollTime="1" />

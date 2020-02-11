@@ -1,12 +1,11 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 using RPedretti.RazorComponents.Sample.Shared.Models;
-using RPedretti.RazorComponents.Shared.Components;
 using System.Threading.Tasks;
 
 namespace RPedretti.RazorComponents.Sample.Shared.Components.MoviePoster
 {
-    public class MoviePosterBase : BaseAccessibleComponent
+    public partial class MoviePoster
     {
         #region Fields
 
@@ -17,8 +16,10 @@ namespace RPedretti.RazorComponents.Sample.Shared.Components.MoviePoster
 
         #region Properties
 
-        [Inject] protected ILogger<MoviePosterBase> Logger { get; set; }
+#pragma warning disable CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
+        [Inject] protected ILogger<MoviePoster> Logger { get; set; }
         [Parameter] public MoviePosterModel Movie { get; set; }
+#pragma warning restore CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
         [Parameter] public EventCallback OnClick { get; set; }
 
         #endregion Properties

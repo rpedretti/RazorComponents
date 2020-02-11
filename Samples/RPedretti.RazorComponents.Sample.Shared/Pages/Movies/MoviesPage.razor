@@ -1,9 +1,11 @@
-﻿@page "/movies"
-@inherits MoviesBase
-@using RPedretti.RazorComponents.Sample.Shared.Models;
+﻿@using RPedretti.RazorComponents.Sample.Shared.Models;
 @using RPedretti.RazorComponents.Layout.PagedGrid;
 @using RPedretti.RazorComponents.Input.Spinner;
 @using RPedretti.RazorComponents.Sample.Shared.Components.MoviePoster;
+@using RPedretti.RazorComponents.Shared.Components;
+
+@page "/movies"
+@inherits BaseComponent
 
 <div class="input-group mb-3">
     <input type="text"

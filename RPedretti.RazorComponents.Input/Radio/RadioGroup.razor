@@ -1,4 +1,5 @@
-﻿@inherits RadioGroupBase
+﻿@using RPedretti.RazorComponents.Shared.Components;
+@inherits BaseAccessibleComponent
 
 <div class="@($"radio-group -{Orientation.ToString().ToLower()}")" role="radiogroup">
     @foreach (var button in Buttons)

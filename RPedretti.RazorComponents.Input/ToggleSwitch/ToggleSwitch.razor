@@ -1,20 +1,19 @@
-﻿@inherits ToggleSwitchBase
+﻿@using RPedretti.RazorComponents.Shared.Components;
+@inherits BaseAccessibleComponent
 
 <div class="@($"toggle-switch{(Inline ? " -inline" : null)} -{Size.ToString().ToLower()}{(Disabled ? " -disabled": null)}")">
     <label aria-hidden="true" class="@($"label{(Fill ? " -fill" : null)}")">@Label</label>
     <label class="switch">
-        <input
-            type="checkbox"
-            checked="@Checked"
-            disabled="@Disabled"
-            @onchange="@HandleChanged" />
-        <span
-            tabindex="0"
-            role="checkbox"
-            aria-label="@(A11yLabel ?? Label)"
-            aria-checked="@Checked.ToString().ToLower()"
-            aria-disabled="@Disabled.ToString().ToLower()"
-            class="@($"slider{(Round ? " -round" : null)}")"
-            @onkeydown="@KeyDown"></span>
+        <input type="checkbox"
+               checked="@Checked"
+               disabled="@Disabled"
+               @onchange="@HandleChanged" />
+        <span tabindex="0"
+              role="checkbox"
+              aria-label="@(A11yLabel ?? Label)"
+              aria-checked="@Checked.ToString().ToLower()"
+              aria-disabled="@Disabled.ToString().ToLower()"
+              class="@($"slider{(Round ? " -round" : null)}")"
+              @onkeydown="@KeyDown"></span>
     </label>
 </div>

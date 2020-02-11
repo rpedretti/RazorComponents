@@ -16,44 +16,16 @@ namespace RPedretti.RazorComponents.BingMap.Entities.Polygon
         #region Events
 
         private event EventHandler<MouseEventArgs<BingMapPolygon>> _onClick;
+
         private event EventHandler<MouseEventArgs<BingMapPolygon>> _onDoubleClick;
+
         private event EventHandler<MouseEventArgs<BingMapPolygon>> _onMouseDown;
+
         private event EventHandler<MouseEventArgs<BingMapPolygon>> _onMouseOut;
+
         private event EventHandler<MouseEventArgs<BingMapPolygon>> _onMouseOver;
+
         private event EventHandler<MouseEventArgs<BingMapPolygon>> _onMouseUp;
-
-        #endregion Events
-
-        #region Methods
-
-        [JSInvokable]
-        public Task EmitPolygonEvent(MouseEventArgs<BingMapPolygon> args)
-        {
-            switch (args.EventName)
-            {
-                case PolygonEvents.Click:
-                    _onClick?.Invoke(this, args);
-                    break;
-                case PolygonEvents.DoubleClick:
-                    _onDoubleClick?.Invoke(this, args);
-                    break;
-                case PolygonEvents.MouseDown:
-                    _onMouseDown?.Invoke(this, args);
-                    break;
-                case PolygonEvents.MouseOut:
-                    _onMouseOut?.Invoke(this, args);
-                    break;
-                case PolygonEvents.MouseOver:
-                    _onMouseOver?.Invoke(this, args);
-                    break;
-                case PolygonEvents.MouseUp:
-                    _onMouseUp?.Invoke(this, args);
-                    break;
-            }
-            return Task.CompletedTask;
-        }
-
-        #endregion Methods
 
         public event EventHandler<MouseEventArgs<BingMapPolygon>> OnClick
         {
@@ -186,5 +158,43 @@ namespace RPedretti.RazorComponents.BingMap.Entities.Polygon
                 CheckThisRef();
             }
         }
+
+        #endregion Events
+
+        #region Methods
+
+        [JSInvokable]
+        public Task EmitPolygonEvent(MouseEventArgs<BingMapPolygon> args)
+        {
+            switch (args.EventName)
+            {
+                case PolygonEvents.Click:
+                    _onClick?.Invoke(this, args);
+                    break;
+
+                case PolygonEvents.DoubleClick:
+                    _onDoubleClick?.Invoke(this, args);
+                    break;
+
+                case PolygonEvents.MouseDown:
+                    _onMouseDown?.Invoke(this, args);
+                    break;
+
+                case PolygonEvents.MouseOut:
+                    _onMouseOut?.Invoke(this, args);
+                    break;
+
+                case PolygonEvents.MouseOver:
+                    _onMouseOver?.Invoke(this, args);
+                    break;
+
+                case PolygonEvents.MouseUp:
+                    _onMouseUp?.Invoke(this, args);
+                    break;
+            }
+            return Task.CompletedTask;
+        }
+
+        #endregion Methods
     }
 }

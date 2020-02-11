@@ -1,22 +1,55 @@
 ﻿using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace RPedretti.RazorComponents.BingMap.Entities.InfoBox
 {
     public class InfoboxOptions
     {
+        #region Properties
+
+        [JsonPropertyName("action")]
         public InfoboxAction[] Actions { get; set; }
+
+        [JsonPropertyName("closeDelayTime")]
         public int? CloseDelayTime { get; set; }
+
+        [JsonPropertyName("description")]
         public string Description { get; set; }
+
+        [JsonPropertyName("htmlContent")]
         public string HtmlContent { get; set; }
+
+        [JsonPropertyName("location")]
         public Location Location { get; set; }
+
+        [JsonPropertyName("maxHeight")]
         public double? MaxHeight { get; set; }
+
+        [JsonPropertyName("maxWidth")]
         public double? MaxWidth { get; set; }
+
+        [JsonPropertyName("offset")]
         public GeolocatonPoint Offset { get; set; }
+
+        [JsonPropertyName("showCloseButton")]
         public bool? ShowCloseButton { get; set; }
+
+        [JsonPropertyName("showPointer")]
         public bool? ShowPointer { get; set; }
+
+        [JsonPropertyName("title")]
         public string Title { get; set; }
+
+        [JsonPropertyName("visible")]
         public bool? Visible { get; set; }
+
+        [JsonPropertyName("zIndex")]
         public int? ZIndex { get; set; }
+
+
+        #endregion Properties
+
+        #region Methods
 
         public override bool Equals(object obj)
         {
@@ -38,21 +71,23 @@ namespace RPedretti.RazorComponents.BingMap.Entities.InfoBox
 
         public override int GetHashCode()
         {
-            var hashCode = 459946268;
-            hashCode = hashCode * -1521134295 + EqualityComparer<InfoboxAction[]>.Default.GetHashCode(Actions);
-            hashCode = hashCode * -1521134295 + CloseDelayTime.GetHashCode();
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Description);
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(HtmlContent);
-            hashCode = hashCode * -1521134295 + EqualityComparer<Location>.Default.GetHashCode(Location);
-            hashCode = hashCode * -1521134295 + MaxHeight.GetHashCode();
-            hashCode = hashCode * -1521134295 + MaxWidth.GetHashCode();
-            hashCode = hashCode * -1521134295 + EqualityComparer<GeolocatonPoint>.Default.GetHashCode(Offset);
-            hashCode = hashCode * -1521134295 + ShowCloseButton.GetHashCode();
-            hashCode = hashCode * -1521134295 + ShowPointer.GetHashCode();
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Title);
-            hashCode = hashCode * -1521134295 + Visible.GetHashCode();
-            hashCode = hashCode * -1521134295 + ZIndex.GetHashCode();
-            return hashCode;
+            System.HashCode hash = new System.HashCode();
+            hash.Add(Actions);
+            hash.Add(CloseDelayTime);
+            hash.Add(Description);
+            hash.Add(HtmlContent);
+            hash.Add(Location);
+            hash.Add(MaxHeight);
+            hash.Add(MaxWidth);
+            hash.Add(Offset);
+            hash.Add(ShowCloseButton);
+            hash.Add(ShowPointer);
+            hash.Add(Title);
+            hash.Add(Visible);
+            hash.Add(ZIndex);
+            return hash.ToHashCode();
         }
+
+        #endregion Methods
     }
 }

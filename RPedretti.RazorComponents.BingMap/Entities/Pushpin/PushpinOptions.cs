@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
+using System.Text.Json.Serialization;
 
 namespace RPedretti.RazorComponents.BingMap.Entities.Pushpin
 {
@@ -8,19 +8,48 @@ namespace RPedretti.RazorComponents.BingMap.Entities.Pushpin
     {
         #region Properties
 
-        public Point Anchor { get; set; }
+        [JsonPropertyName("anchor")]
+        public GeolocatonPoint Anchor { get; set; }
+
+        [JsonPropertyName("color")]
         public Color Color { get; set; }
+
+        [JsonPropertyName("cursor")]
         public string Cursor { get; set; }
+
+        [JsonPropertyName("draggable")]
         public bool? Draggable { get; set; }
+
+        [JsonPropertyName("enableClickedStyle")]
         public bool? EnableClickedStyle { get; set; }
+
+        [JsonPropertyName("enableHoverStyle")]
         public bool? EnableHoverStyle { get; set; }
+
+        [JsonPropertyName("icon")]
         public string Icon { get; set; }
+
+        [JsonPropertyName("roundClickableArea")]
         public bool? RoundClickableArea { get; set; }
+
+        [JsonPropertyName("subTitle")]
         public string SubTitlte { get; set; }
+
+        [JsonPropertyName("text")]
         public string Text { get; set; }
-        public Point TextOffset { get; set; }
+
+        [JsonPropertyName("textOffset")]
+        public GeolocatonPoint TextOffset { get; set; }
+
+        [JsonPropertyName("title")]
         public string Titlte { get; set; }
+
+        [JsonPropertyName("visible")]
         public bool? Visible { get; set; }
+
+        #endregion Properties
+
+        #region Methods
 
         public object Clone()
         {
@@ -29,9 +58,8 @@ namespace RPedretti.RazorComponents.BingMap.Entities.Pushpin
 
         public override bool Equals(object obj)
         {
-            var options = obj as PushpinOptions;
-            return options != null &&
-                   EqualityComparer<Point>.Default.Equals(Anchor, options.Anchor) &&
+            return obj is PushpinOptions options &&
+                   EqualityComparer<GeolocatonPoint>.Default.Equals(Anchor, options.Anchor) &&
                    EqualityComparer<Color>.Default.Equals(Color, options.Color) &&
                    Cursor == options.Cursor &&
                    EqualityComparer<bool?>.Default.Equals(Draggable, options.Draggable) &&
@@ -41,30 +69,30 @@ namespace RPedretti.RazorComponents.BingMap.Entities.Pushpin
                    EqualityComparer<bool?>.Default.Equals(RoundClickableArea, options.RoundClickableArea) &&
                    SubTitlte == options.SubTitlte &&
                    Text == options.Text &&
-                   EqualityComparer<Point>.Default.Equals(TextOffset, options.TextOffset) &&
+                   EqualityComparer<GeolocatonPoint>.Default.Equals(TextOffset, options.TextOffset) &&
                    Titlte == options.Titlte &&
                    EqualityComparer<bool?>.Default.Equals(Visible, options.Visible);
         }
 
         public override int GetHashCode()
         {
-            var hashCode = 1655777802;
-            hashCode = hashCode * -1521134295 + EqualityComparer<Point>.Default.GetHashCode(Anchor);
-            hashCode = hashCode * -1521134295 + EqualityComparer<Color>.Default.GetHashCode(Color);
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Cursor);
-            hashCode = hashCode * -1521134295 + EqualityComparer<bool?>.Default.GetHashCode(Draggable);
-            hashCode = hashCode * -1521134295 + EqualityComparer<bool?>.Default.GetHashCode(EnableClickedStyle);
-            hashCode = hashCode * -1521134295 + EqualityComparer<bool?>.Default.GetHashCode(EnableHoverStyle);
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Icon);
-            hashCode = hashCode * -1521134295 + EqualityComparer<bool?>.Default.GetHashCode(RoundClickableArea);
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(SubTitlte);
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Text);
-            hashCode = hashCode * -1521134295 + EqualityComparer<Point>.Default.GetHashCode(TextOffset);
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Titlte);
-            hashCode = hashCode * -1521134295 + EqualityComparer<bool?>.Default.GetHashCode(Visible);
-            return hashCode;
+            HashCode hash = new HashCode();
+            hash.Add(Anchor);
+            hash.Add(Color);
+            hash.Add(Cursor);
+            hash.Add(Draggable);
+            hash.Add(EnableClickedStyle);
+            hash.Add(EnableHoverStyle);
+            hash.Add(Icon);
+            hash.Add(RoundClickableArea);
+            hash.Add(SubTitlte);
+            hash.Add(Text);
+            hash.Add(TextOffset);
+            hash.Add(Titlte);
+            hash.Add(Visible);
+            return hash.ToHashCode();
         }
 
-        #endregion Properties
+        #endregion Methods
     }
 }

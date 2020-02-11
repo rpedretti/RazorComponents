@@ -15,27 +15,28 @@ using System.Threading.Tasks;
 
 namespace RPedretti.RazorComponents.BingMap
 {
-    public partial class BingMapBase : ComponentBase, IDisposable
+    public partial class BingMap : IDisposable
     {
         #region Fields
 
         private const string _mapNamespace = "rpedrettiBlazorComponents.bingMap.map";
+        private readonly DotNetObjectReference<BingMap> thisRef;
         private BingMapEntityList _entities;
         private BingMapLayerList _layers;
         private ObservableCollection<IBingMapModule> _modules;
         private bool _shouldRender;
         private BingMapsViewConfig _viewConfig;
         private bool modulesLoaded;
-        private DotNetObjectReference<BingMapBase> thisRef;
-
         protected bool init;
 
         #endregion Fields
 
         #region Properties
 
-        [Inject] private IJSRuntime JSRuntime { get; set; }
-        [Inject] private ILogger<BingMapBase> Logger { get; set; }
+        [Inject] private IJSRuntime _jSRuntime { get; set; }
+        [Inject] private ILogger<BingMap> _logger { get; set; }
+
+        [Parameter] public string ApiKey { get; set; }
 
         [Parameter]
         public BingMapEntityList Entities
@@ -51,14 +52,18 @@ namespace RPedretti.RazorComponents.BingMap
                         _entities.BeforeRemove -= EntitiesRemoved;
                         _entities.BeforeRemoveRange -= BeforeRemoveRange;
                         _entities.ListRangeChanged -= EntitiesRangeChanged;
+#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
                         ClearItems();
+#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
                     }
 
                     _entities = value;
 
                     if (_entities != null)
                     {
+#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
                         AddItems(0, Entities.Count);
+#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
                         _entities.ListChanged += EntitiesChanged;
                         _entities.BeforeRemove += EntitiesRemoved;
                         _entities.BeforeRemoveRange += BeforeRemoveRange;
@@ -95,7 +100,6 @@ namespace RPedretti.RazorComponents.BingMap
         [Parameter] public string MapLanguage { get; set; }
         [Parameter] public Func<Task> MapLoaded { get; set; }
         [Parameter] public BingMapConfig MapsConfig { get; set; } = new BingMapConfig();
-        [Parameter] public string ApiKey { get; set; }
 
         [Parameter]
         public ObservableCollection<IBingMapModule> Modules
@@ -132,7 +136,7 @@ namespace RPedretti.RazorComponents.BingMap
 
         #region Constructors
 
-        public BingMapBase()
+        public BingMap()
         {
             thisRef = DotNetObjectReference.Create(this);
         }
@@ -145,7 +149,7 @@ namespace RPedretti.RazorComponents.BingMap
         {
             try
             {
-                await JSRuntime.InvokeAsync<object>($"{_mapNamespace}.addItem", Id, baseBingMapEntity);
+                await _jSRuntime.InvokeAsync<object>($"{_mapNamespace}.addItem", Id, baseBingMapEntity);
             }
             catch (Exception e)
             {
@@ -155,21 +159,23 @@ namespace RPedretti.RazorComponents.BingMap
 
         private async Task AddItems(int start, int count)
         {
-            await JSRuntime.InvokeAsync<object>($"{_mapNamespace}.addItems", Id, Entities.Skip(start).Take(count));
+            var entities = Entities.Skip(start).Take(count).Select(e => e as object);
+            await _jSRuntime.InvokeAsync<object>($"{_mapNamespace}.addItems", Id, entities);
         }
 
         private async void BeforeRemoveRange(object sender, IEnumerable<BaseBingMapEntity> e)
         {
-            await JSRuntime.InvokeAsync<object>($"{_mapNamespace}.removeItems", e);
+            await _jSRuntime.InvokeAsync<object>($"{_mapNamespace}.removeItems", e.Select(_e => _e as object));
         }
 
         private async Task ClearItems()
         {
-            await JSRuntime.InvokeAsync<object>($"{_mapNamespace}.clearItems");
+            await _jSRuntime.InvokeAsync<object>($"{_mapNamespace}.clearItems");
         }
 
         private void EntitiesChanged(object sender, ListChangedEventArgs e)
         {
+#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
             switch (e.ListChangedType)
             {
                 case ListChangedType.ItemAdded:
@@ -180,23 +186,26 @@ namespace RPedretti.RazorComponents.BingMap
                     UpdateItemAsync(_entities[e.NewIndex]);
                     break;
             }
+#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
         }
 
         private void EntitiesRangeChanged(object sender, RangeChangdEventArgs e)
         {
+#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
             switch (e.Type)
             {
                 case RangeChangeType.Add:
                     AddItems(e.StartIndex, e.Ammount);
                     break;
             }
+#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
         }
 
         private async void EntitiesRemoved(object sender, BaseBingMapEntity removed)
         {
             try
             {
-                await JSRuntime.InvokeAsync<object>("rpedrettiBlazorComponents.bingMap.map.removeItem", Id, removed);
+                await _jSRuntime.InvokeAsync<object>("rpedrettiBlazorComponents.bingMap.map.removeItem", Id, removed as object);
             }
             catch (Exception e)
             {
@@ -208,7 +217,7 @@ namespace RPedretti.RazorComponents.BingMap
         {
             try
             {
-                await JSRuntime.InvokeAsync<object>("rpedrettiBlazorComponents.bingMap.map.removeLayer", Id, removed);
+                await _jSRuntime.InvokeAsync<object>("rpedrettiBlazorComponents.bingMap.map.removeLayer", Id, removed as object);
             }
             catch (Exception e)
             {
@@ -223,7 +232,7 @@ namespace RPedretti.RazorComponents.BingMap
                 switch (e.ListChangedType)
                 {
                     case ListChangedType.ItemAdded:
-                        await JSRuntime.InvokeAsync<object>("rpedrettiBlazorComponents.bingMap.map.addLayer", Id, _layers[e.NewIndex].Id);
+                        await _jSRuntime.InvokeAsync<object>("rpedrettiBlazorComponents.bingMap.map.addLayer", Id, _layers[e.NewIndex].Id);
                         break;
 
                     case ListChangedType.ItemChanged:
@@ -251,7 +260,7 @@ namespace RPedretti.RazorComponents.BingMap
         {
             try
             {
-                await JSRuntime.InvokeAsync<object>("rpedrettiBlazorComponents.bingMap.map.removeItem", Id, baseBingMapEntity);
+                await _jSRuntime.InvokeAsync<object>("rpedrettiBlazorComponents.bingMap.map.removeItem", Id, baseBingMapEntity as object);
             }
             catch (Exception e)
             {
@@ -277,7 +286,7 @@ namespace RPedretti.RazorComponents.BingMap
             try
             {
                 var b = System.Text.Json.JsonSerializer.Serialize(baseBingMapEntity);
-                await JSRuntime.InvokeAsync<object>("rpedrettiBlazorComponents.bingMap.map.updateItem", Id, baseBingMapEntity);
+                await _jSRuntime.InvokeAsync<object>("rpedrettiBlazorComponents.bingMap.map.updateItem", Id, baseBingMapEntity as object);
             }
             catch (Exception e)
             {
@@ -287,7 +296,7 @@ namespace RPedretti.RazorComponents.BingMap
 
         private void UpdateView(BingMapsViewConfig viewConfig)
         {
-            JSRuntime.InvokeAsync<object>("rpedrettiBlazorComponents.bingMap.map.updateView", Id, viewConfig);
+            _jSRuntime.InvokeAsync<object>("rpedrettiBlazorComponents.bingMap.map.updateView", Id, viewConfig as object);
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -295,8 +304,8 @@ namespace RPedretti.RazorComponents.BingMap
             if (!init)
             {
                 init = true;
-                BaseBingMapEntity.JSRuntime = JSRuntime;
-                await JSRuntime.InvokeAsync<object>("rpedrettiBlazorComponents.bingMap.map.getMap", thisRef, Id, MapsConfig, ApiKey, MapLanguage);
+                BaseBingMapEntity.JSRuntime = _jSRuntime;
+                await _jSRuntime.InvokeAsync<object>("rpedrettiBlazorComponents.bingMap.map.getMap", thisRef, Id, MapsConfig, ApiKey, MapLanguage);
             }
 
             UpdateView(ViewConfig);
@@ -316,17 +325,17 @@ namespace RPedretti.RazorComponents.BingMap
             MapLoaded = null;
 
             thisRef.Dispose();
-            JSRuntime.InvokeAsync<object>("rpedrettiBlazorComponents.bingMap.map.unloadMap", Id);
+            _jSRuntime.InvokeAsync<object>("rpedrettiBlazorComponents.bingMap.map.unloadMap", Id);
         }
 
         public async Task<LocationRectangle> GetBoundsAsync()
         {
-            return await JSRuntime.InvokeAsync<LocationRectangle>($"{_mapNamespace}.getBounds", Id);
+            return await _jSRuntime.InvokeAsync<LocationRectangle>($"{_mapNamespace}.getBounds", Id);
         }
 
         public async Task<Geocoordinate> GetCenterAsync()
         {
-            return await JSRuntime.InvokeAsync<Geocoordinate>($"{_mapNamespace}.getCenter", Id);
+            return await _jSRuntime.InvokeAsync<Geocoordinate>($"{_mapNamespace}.getCenter", Id);
         }
 
         [JSInvokable]
@@ -336,7 +345,7 @@ namespace RPedretti.RazorComponents.BingMap
             {
                 foreach (var module in Modules)
                 {
-                    Logger.LogDebug($"init module [{module}]");
+                    _logger.LogDebug($"init module [{module}]");
                     await module.InitAsync(Id);
                 }
             }

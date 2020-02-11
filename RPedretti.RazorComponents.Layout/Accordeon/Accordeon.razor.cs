@@ -1,12 +1,11 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
-using RPedretti.RazorComponents.Shared.Components;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace RPedretti.RazorComponents.Layout.Accordeon
 {
-    public class AccordeonBase : BaseComponent
+    public partial class Accordeon
     {
         #region Fields
 
@@ -17,8 +16,7 @@ namespace RPedretti.RazorComponents.Layout.Accordeon
 
         #region Properties
 
-        [Inject]
-        private ILogger<AccordeonBase> Logger { get; set; }
+        [Inject] private ILogger<Accordeon> _logger { get; set; }
 
         [Parameter] public bool CenterTitle { get; set; }
         [Parameter] public RenderFragment ChildContent { get; set; }
@@ -29,7 +27,7 @@ namespace RPedretti.RazorComponents.Layout.Accordeon
             get => _expanded;
             set
             {
-                Logger.LogDebug($"expanded: {value}");
+                _logger.LogDebug($"expanded: {value}");
                 SetParameter(ref _expanded, value, () =>
                 {
                     var delay = !value ? 600 : 0;

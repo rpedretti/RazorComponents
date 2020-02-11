@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace RPedretti.RazorComponents.BingMap.Entities
 {
@@ -6,9 +7,18 @@ namespace RPedretti.RazorComponents.BingMap.Entities
     {
         #region Properties
 
+        [JsonPropertyName("center")]
         public Geocoordinate Center { get; set; }
+
+        [JsonPropertyName("height")]
         public double Height { get; set; }
+
+        [JsonPropertyName("width")]
         public double Width { get; set; }
+
+        #endregion Properties
+
+        #region Methods
 
         public override bool Equals(object obj)
         {
@@ -20,13 +30,9 @@ namespace RPedretti.RazorComponents.BingMap.Entities
 
         public override int GetHashCode()
         {
-            var hashCode = 2049175893;
-            hashCode = hashCode * -1521134295 + EqualityComparer<Geocoordinate>.Default.GetHashCode(Center);
-            hashCode = hashCode * -1521134295 + Height.GetHashCode();
-            hashCode = hashCode * -1521134295 + Width.GetHashCode();
-            return hashCode;
+            return System.HashCode.Combine(Center, Height, Width);
         }
 
-        #endregion Properties
+        #endregion Methods
     }
 }

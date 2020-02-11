@@ -1,12 +1,11 @@
 ﻿using RPedretti.RazorComponents.Input.Radio;
-using RPedretti.RazorComponents.Shared.Components;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace RPedretti.RazorComponents.Sample.Shared.Pages.Inputs
 {
-    public class InputsBase : BaseComponent
+    public partial class InputsPage
     {
         #region Fields
 
@@ -16,16 +15,12 @@ namespace RPedretti.RazorComponents.Sample.Shared.Pages.Inputs
 
         private bool _loadingSuggestions;
 
-        private string _query;
+        private string? _query;
 
-        private string _selectedSuggestion;
-        
-        private RadioButton _selectedRadioButton1;
-
-        private RadioButton _selectedRadioButton2;
-
-        private RadioButton _selectedRadioButton3;
-
+        private RadioButton? _selectedRadioButton1;
+        private RadioButton? _selectedRadioButton2;
+        private RadioButton? _selectedRadioButton3;
+        private string? _selectedSuggestion;
         private bool _someChecked;
 
         private bool _someChecked2;
@@ -38,7 +33,7 @@ namespace RPedretti.RazorComponents.Sample.Shared.Pages.Inputs
 
         #region Properties
 
-        protected List<string> FilteredList { get; set; }
+        protected List<string>? FilteredList { get; set; }
 
         protected bool HasSelection =>
             SelectedRadioButton1 != null ||
@@ -75,16 +70,10 @@ namespace RPedretti.RazorComponents.Sample.Shared.Pages.Inputs
             set => SetParameter(ref _someToggled2, value, StateHasChanged);
         }
 
-        public string Query
+        public string? Query
         {
             get => _query;
             set => SetParameter(ref _query, value);
-        }
-
-        public string SelectedSuggestion
-        {
-            get => _selectedSuggestion;
-            set => SetParameter(ref _selectedSuggestion, value);
         }
 
         public RadioButton[] RadioButtons { get; set; } = new RadioButton[]
@@ -95,22 +84,28 @@ namespace RPedretti.RazorComponents.Sample.Shared.Pages.Inputs
             new RadioButton { Label = "Button 4", Value = false }
         };
 
-        public RadioButton SelectedRadioButton1
+        public RadioButton? SelectedRadioButton1
         {
             get => _selectedRadioButton1;
             set => SetParameter(ref _selectedRadioButton1, value);
         }
 
-        public RadioButton SelectedRadioButton2
+        public RadioButton? SelectedRadioButton2
         {
             get => _selectedRadioButton2;
             set => SetParameter(ref _selectedRadioButton2, value);
         }
 
-        public RadioButton SelectedRadioButton3
+        public RadioButton? SelectedRadioButton3
         {
             get => _selectedRadioButton3;
             set => SetParameter(ref _selectedRadioButton3, value);
+        }
+
+        public string? SelectedSuggestion
+        {
+            get => _selectedSuggestion;
+            set => SetParameter(ref _selectedSuggestion, value);
         }
 
         #endregion Properties
@@ -141,7 +136,7 @@ namespace RPedretti.RazorComponents.Sample.Shared.Pages.Inputs
             SelectedRadioButton3 = null;
         }
 
-        protected void SuggestionSelected(string suggestion)
+        protected void SuggestionSelected(string? suggestion)
         {
             FilteredList = null;
             Query = suggestion;

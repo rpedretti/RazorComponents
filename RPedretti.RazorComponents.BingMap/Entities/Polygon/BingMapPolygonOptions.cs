@@ -1,17 +1,36 @@
 ﻿using System.Collections.Generic;
-using System.Drawing;
+using System.Text.Json.Serialization;
 
 namespace RPedretti.RazorComponents.BingMap.Entities.Polygon
 {
     public class BingMapPolygonOptions
     {
+        #region Properties
+
+        [JsonPropertyName("cursor")]
         public string Cursor { get; set; }
-        public bool? Generalizable { get; set; }
+
+        [JsonPropertyName("fillColor")]
         public Color FillColor { get; set; }
+
+        [JsonPropertyName("generalizable")]
+        public bool? Generalizable { get; set; }
+
+        [JsonPropertyName("strokeColor")]
         public Color StrokeColor { get; set; }
+
+        [JsonPropertyName("strokeDashArray")]
         public int[] StrokeDashArray { get; set; }
+
+        [JsonPropertyName("strokeThickness")]
         public int? StrokeThickness { get; set; }
+
+        [JsonPropertyName("visible")]
         public bool? Visible { get; set; }
+
+        #endregion Properties
+
+        #region Methods
 
         public override bool Equals(object obj)
         {
@@ -27,15 +46,9 @@ namespace RPedretti.RazorComponents.BingMap.Entities.Polygon
 
         public override int GetHashCode()
         {
-            var hashCode = 1232602982;
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Cursor);
-            hashCode = hashCode * -1521134295 + EqualityComparer<bool?>.Default.GetHashCode(Generalizable);
-            hashCode = hashCode * -1521134295 + EqualityComparer<Color>.Default.GetHashCode(FillColor);
-            hashCode = hashCode * -1521134295 + EqualityComparer<Color>.Default.GetHashCode(StrokeColor);
-            hashCode = hashCode * -1521134295 + EqualityComparer<int[]>.Default.GetHashCode(StrokeDashArray);
-            hashCode = hashCode * -1521134295 + EqualityComparer<int?>.Default.GetHashCode(StrokeThickness);
-            hashCode = hashCode * -1521134295 + EqualityComparer<bool?>.Default.GetHashCode(Visible);
-            return hashCode;
+            return System.HashCode.Combine(Cursor, Generalizable, FillColor, StrokeColor, StrokeDashArray, StrokeThickness, Visible);
         }
+
+        #endregion Methods
     }
 }

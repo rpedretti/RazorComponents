@@ -2,23 +2,25 @@
 using Microsoft.Extensions.Logging;
 using RPedretti.RazorComponents.Sensors.AmbientLight;
 using RPedretti.RazorComponents.Sensors.Geolocation;
-using RPedretti.RazorComponents.Shared.Components;
 using System;
 
 namespace RPedretti.RazorComponents.Sample.Shared.Pages.Sensors
 {
-    public class SensorsBase : BaseComponent, IDisposable
+    public partial class SensorsPage : IDisposable
     {
         #region Properties
 
-        [Inject] protected AmbientLightSensorService ambientLighSensorService { get; set; }
-        [Inject] protected GeolocationSensorService geolocationSensorService { get; set; }
-        [Inject] protected ILogger<SensorsBase> Logger { get; set; }
+#pragma warning disable CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
+        [Inject] private AmbientLightSensorService _ambientLighSensorService { get; set; }
+        [Inject] private GeolocationSensorService _geolocationSensorService { get; set; }
+        [Inject] private ILogger<SensorsPage> _logger { get; set; }
+#pragma warning restore CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
+
         public int Light { get; set; }
 
-        public string LightError { get; set; }
+        public string? LightError { get; set; }
 
-        public Position Position { get; set; }
+        public Position? Position { get; set; }
 
         public bool WaitFirstLoad { get; private set; }
 
@@ -30,10 +32,10 @@ namespace RPedretti.RazorComponents.Sample.Shared.Pages.Sensors
 
         protected override void OnInitialized()
         {
-            ambientLighSensorService.OnError += OnLightError;
-            ambientLighSensorService.OnReading += OnLightReading;
-            geolocationSensorService.OnPositionError += OnLocationError;
-            geolocationSensorService.OnPositionUpdate += OnLocationReading;
+            _ambientLighSensorService.OnError += OnLightError;
+            _ambientLighSensorService.OnReading += OnLightReading;
+            _geolocationSensorService.OnPositionError += OnLocationError;
+            _geolocationSensorService.OnPositionUpdate += OnLocationReading;
             base.OnInitialized();
         }
 
@@ -56,7 +58,7 @@ namespace RPedretti.RazorComponents.Sample.Shared.Pages.Sensors
 
         protected void OnLocationError(object _, PositionError error)
         {
-            Logger.LogError(error.Message);
+            _logger.LogError(error.Message);
             StateHasChanged();
         }
 
@@ -68,10 +70,10 @@ namespace RPedretti.RazorComponents.Sample.Shared.Pages.Sensors
 
         public void Dispose()
         {
-            ambientLighSensorService.OnError -= OnLightError;
-            ambientLighSensorService.OnReading -= OnLightReading;
-            geolocationSensorService.OnPositionError -= OnLocationError;
-            geolocationSensorService.OnPositionUpdate -= OnLocationReading;
+            _ambientLighSensorService.OnError -= OnLightError;
+            _ambientLighSensorService.OnReading -= OnLightReading;
+            _geolocationSensorService.OnPositionError -= OnLocationError;
+            _geolocationSensorService.OnPositionUpdate -= OnLocationReading;
         }
 
         #endregion Methods

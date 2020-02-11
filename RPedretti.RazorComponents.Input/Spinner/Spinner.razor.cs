@@ -10,7 +10,7 @@ namespace RPedretti.RazorComponents.Input.Spinner
         LARGE
     }
 
-    public class SpinnerBase : ComponentBase
+    public partial class Spinner
     {
         #region Properties
 

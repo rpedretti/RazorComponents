@@ -9,6 +9,6 @@ declare global {
                 devTools: DevTools
             }
         };
-        getBingMaps: Function
+        getBingMap: Function
     }
 }

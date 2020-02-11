@@ -9,19 +9,21 @@ using System.Threading.Tasks;
 
 namespace RPedretti.RazorComponents.Sample.Shared.Pages.Movies
 {
-    public class MoviesBase : ComponentBase
+    public partial class MoviesPage
     {
         #region Fields
 
-        private Dictionary<int, IEnumerable<MoviePosterModel>> CachedMovies = new Dictionary<int, IEnumerable<MoviePosterModel>>();
+        private readonly Dictionary<int, IEnumerable<MoviePosterModel>> CachedMovies = new Dictionary<int, IEnumerable<MoviePosterModel>>();
 
-        private CancellationTokenSource requestToken;
+        private CancellationTokenSource? _requestToken;
 
         #endregion Fields
 
         #region Properties
 
+#pragma warning disable CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
         [Inject] private IMovieService _movieService { get; set; }
+#pragma warning restore CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
 
         protected int CurrentPage { get; set; }
 
@@ -35,7 +37,7 @@ namespace RPedretti.RazorComponents.Sample.Shared.Pages.Movies
 
         protected int PageCount { get; set; }
 
-        protected string SearchMovieTitle { get; set; }
+        protected string? SearchMovieTitle { get; set; }
 
         #endregion Properties
 
@@ -62,14 +64,14 @@ namespace RPedretti.RazorComponents.Sample.Shared.Pages.Movies
             {
                 try
                 {
-                    if (requestToken != null)
+                    if (_requestToken != null)
                     {
-                        requestToken.Cancel();
+                        _requestToken.Cancel();
                     }
 
-                    requestToken = new CancellationTokenSource();
+                    _requestToken = new CancellationTokenSource();
 
-                    var moviesResult = await _movieService.FindMoviesByPattern(SearchMovieTitle, page, requestToken.Token);
+                    var moviesResult = await _movieService.FindMoviesByPattern(SearchMovieTitle, page, _requestToken.Token);
 
                     if (bool.Parse(moviesResult.Response))
                     {

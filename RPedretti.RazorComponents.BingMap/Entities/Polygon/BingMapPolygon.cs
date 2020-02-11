@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace RPedretti.RazorComponents.BingMap.Entities.Polygon
@@ -23,6 +24,7 @@ namespace RPedretti.RazorComponents.BingMap.Entities.Polygon
 
         #region Properties
 
+        [JsonPropertyName("coordinates")]
         public BindingList<Geocoordinate> Coordinates
         {
             get => _coordinates;
@@ -45,14 +47,17 @@ namespace RPedretti.RazorComponents.BingMap.Entities.Polygon
             }
         }
 
+        [JsonPropertyName("metadata")]
         public string Metadata { get; set; }
 
+        [JsonPropertyName("options")]
         public BingMapPolygonOptions Options
         {
             get => _options;
             set => SetParameter(ref _options, value, () => MergeSnapshot(value));
         }
 
+        [JsonIgnore]
         public BingMapPolygonOptions OptionsSnapshot { get; set; } = new BingMapPolygonOptions
         {
             Cursor = "pointer",
@@ -60,6 +65,7 @@ namespace RPedretti.RazorComponents.BingMap.Entities.Polygon
             Visible = true
         };
 
+        [JsonPropertyName("rings")]
         public BindingList<Geocoordinate[]> Rings
         {
             get => _rings;

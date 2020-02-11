@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace RPedretti.RazorComponents.Sensors.AmbientLight
 {
-    public abstract class LightSensorBase : ComponentBase, IDisposable
+    public partial class LightSensor : IDisposable
     {
         #region Fields
 
         private bool init;
-        private DotNetObjectReference<LightSensorBase> thisRef;
+        private DotNetObjectReference<LightSensor> thisRef;
 
         #endregion Fields
 

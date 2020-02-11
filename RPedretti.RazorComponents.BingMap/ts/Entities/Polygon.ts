@@ -130,7 +130,6 @@ export class Polygon {
     };
 
     public remove = (polygonId: string) => {
-        const instance = this._polygons.get(polygonId);
         this.clearEvents(polygonId);
         this._polygons.delete(polygonId);
         return 1;

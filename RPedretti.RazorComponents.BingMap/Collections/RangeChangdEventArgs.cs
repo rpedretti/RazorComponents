@@ -2,6 +2,18 @@
 {
     public class RangeChangdEventArgs
     {
+        #region Properties
+
+        public int Ammount { get; set; }
+
+        public int StartIndex { get; set; }
+
+        public RangeChangeType Type { get; set; }
+
+        #endregion Properties
+
+        #region Constructors
+
         public RangeChangdEventArgs(int startIndex, int ammount, RangeChangeType type)
         {
             StartIndex = startIndex;
@@ -9,8 +21,6 @@
             Type = type;
         }
 
-        public RangeChangeType Type { get; set; }
-        public int StartIndex { get; set; }
-        public int Ammount { get; set; }
+        #endregion Constructors
     }
 }

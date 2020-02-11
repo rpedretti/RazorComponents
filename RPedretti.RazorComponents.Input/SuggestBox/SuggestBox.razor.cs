@@ -4,34 +4,36 @@ using Microsoft.Extensions.Logging;
 using RPedretti.RazorComponents.Shared.Operators;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace RPedretti.RazorComponents.Input.SuggestBox
 {
-    public class SuggestBoxBase<T> : SuggestBoxBaseJSInterop
+    public partial class SuggestBox<TItem>
     {
         #region Fields
 
         private readonly DebounceDispatcher _queryDispatcher = new DebounceDispatcher();
-        private string _a11ylabel;
+        private string? _a11ylabel;
         private bool _init = true;
         private bool _loading;
-        private string _originalQuery;
+        private string? _originalQuery;
         private bool _shouldRender;
         protected readonly string directions = "Keyboard users, use up and down arrows to review and enter to select. Touch device users, explore by touch or with swipe gestures.";
-        protected List<SuggestionItem<T>> _suggestionItems = new List<SuggestionItem<T>>();
-        protected List<T> _suggestions;
+        protected List<SuggestionItem<TItem>> _suggestionItems = new List<SuggestionItem<TItem>>();
+        protected List<TItem>? _suggestions;
         protected bool AnnounceA11Y = false;
         protected ElementReference input;
-        protected string internalQuery;
+        protected string? internalQuery;
 
         #endregion Fields
 
         #region Properties
 
-        [Inject] private ILogger<SuggestBoxBase<T>> Logger { get; set; }
+        [Inject] private ILogger<SuggestBox<TItem>> _logger { get; set; }
 
+        [MaybeNull, AllowNull]
         protected string A11yLabel
         {
             get => _a11ylabel;
@@ -40,12 +42,10 @@ namespace RPedretti.RazorComponents.Input.SuggestBox
 
         protected bool HasFocus { get; set; }
 
-        protected string ListId { get; set; }
-
         protected bool OpenSuggestion { get; set; }
 
         [Parameter] public int DebounceTime { get; set; } = 500;
-        [Parameter] public string Description { get; set; }
+        [Parameter] public string? Description { get; set; }
 
         [Parameter]
         public bool LoadingSuggestion
@@ -64,24 +64,24 @@ namespace RPedretti.RazorComponents.Input.SuggestBox
         [Parameter] public int MaxSuggestions { get; set; }
 
         [Parameter]
-        public string Query
+        public string? Query
         {
             get => internalQuery;
             set
             {
                 if (SetParameter(ref internalQuery, value))
                 {
-                    Logger.LogDebug($"setting query: {value}");
-                    _queryDispatcher.Debounce(DebounceTime, (v) => InvokeAsync(() => QueryChanged.InvokeAsync(v as string)), value);
+                    _logger.LogDebug($"setting query: {value}");
+                    _queryDispatcher.Debounce(DebounceTime, (v) => InvokeAsync(() => QueryChanged.InvokeAsync(v)), value);
                     _originalQuery = internalQuery;
                 }
             }
         }
 
-        [Parameter] public EventCallback<string> QueryChanged { get; set; }
+        [Parameter] public EventCallback<string?> QueryChanged { get; set; }
 
         [Parameter]
-        public List<T> Suggestions
+        public List<TItem>? Suggestions
         {
             get => _suggestions;
             set
@@ -92,8 +92,8 @@ namespace RPedretti.RazorComponents.Input.SuggestBox
                     _suggestions = value;
                     if (_suggestions != null)
                     {
-                        Logger.LogDebug($"suggestions: {string.Join(",", value)}");
-                        _suggestionItems = _suggestions.Select(s => new SuggestionItem<T>
+                        _logger.LogDebug($"suggestions: {string.Join(",", value)}");
+                        _suggestionItems = _suggestions.Select(s => new SuggestionItem<TItem>
                         {
                             Selected = false,
                             Value = s
@@ -107,15 +107,18 @@ namespace RPedretti.RazorComponents.Input.SuggestBox
             }
         }
 
-        [Parameter] public EventCallback<T> SuggestionSelected { get; set; }
+        [Parameter] public EventCallback<TItem> SuggestionSelected { get; set; }
 
-        [Parameter] public RenderFragment<SuggestionItem<T>> SuggestionTemplate { get; set; }
+        [Parameter] public RenderFragment<SuggestionItem<TItem>>? SuggestionTemplate { get; set; }
 
         #endregion Properties
 
         #region Constructors
 
-        public SuggestBoxBase()
+#pragma warning disable CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
+
+        public SuggestBox()
+#pragma warning restore CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
         {
             ClearSelectionEvent += (s, e) => ClearSuggestSelection();
         }
@@ -137,7 +140,7 @@ namespace RPedretti.RazorComponents.Input.SuggestBox
         {
             if (_suggestionItems.Any())
             {
-                SuggestionItem<T> newSelected;
+                SuggestionItem<TItem> newSelected;
                 switch (args.Key)
                 {
                     case "Enter":
@@ -178,7 +181,7 @@ namespace RPedretti.RazorComponents.Input.SuggestBox
                                 newSelected = _suggestionItems.Last();
                             }
 
-                            internalQuery = newSelected.Value.ToString();
+                            internalQuery = newSelected.Value?.ToString();
                             newSelected.Selected = true;
                         }
                         _shouldRender = true;
@@ -207,7 +210,7 @@ namespace RPedretti.RazorComponents.Input.SuggestBox
                             }
 
                             newSelected.Selected = true;
-                            internalQuery = newSelected.Value.ToString();
+                            internalQuery = newSelected.Value?.ToString();
                             _shouldRender = true;
                         }
 
@@ -223,9 +226,9 @@ namespace RPedretti.RazorComponents.Input.SuggestBox
             }
         }
 
-        protected async Task InternalSuggestionSelected(SuggestionItem<T> item)
+        protected async Task InternalSuggestionSelected(SuggestionItem<TItem> item)
         {
-            internalQuery = item.Value.ToString();
+            internalQuery = item.Value!.ToString();
             _originalQuery = internalQuery;
             _suggestionItems.Clear();
             OpenSuggestion = false;
@@ -259,7 +262,7 @@ namespace RPedretti.RazorComponents.Input.SuggestBox
             _suggestionItems.ForEach(s => s.Selected = false);
             internalQuery = _originalQuery;
             OpenSuggestion = false;
-            Logger.LogDebug($"Clear selection: {internalQuery}");
+            _logger.LogDebug($"Clear selection: {internalQuery}");
             StateHasChanged();
         }
 

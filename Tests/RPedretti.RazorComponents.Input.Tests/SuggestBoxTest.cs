@@ -1,7 +1,4 @@
 ﻿using Microsoft.AspNetCore.Components.Testing;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
 
 namespace RPedretti.RazorComponents.Input.Tests
