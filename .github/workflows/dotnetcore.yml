@@ -16,5 +16,6 @@ jobs:
       uses: actions/setup-node@v1.1.0
     - name: Build with Node
       run: chmod +x ./scripts/build-prod.sh && sh ./scripts/build-prod.sh
+      shell: bash
     - name: Build with dotnet
       run: dotnet build --configuration Release
