@@ -3,6 +3,13 @@ name: .NET Core
 on: [push]
 
 jobs:
+  build_fe:
+    runs-on: [windows]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build TS and CSS
+        run: ./scripts/build-prod.ps1
+        shell: powershell
   build:
 
     runs-on: ubuntu-latest
