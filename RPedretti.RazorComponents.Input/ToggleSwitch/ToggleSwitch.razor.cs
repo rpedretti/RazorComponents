@@ -8,8 +8,7 @@ namespace RPedretti.RazorComponents.Input.ToggleSwitch
     {
         SMALL,
         MEDIUM,
-        LARGE,
-        NONE
+        LARGE
     }
 
     public partial class ToggleSwitch

@@ -9,7 +9,7 @@ namespace RPedretti.RazorComponents.Shared.Components
     {
         #region Properties
 
-        private T? _interop { get; set; }
+        private T? Interop { get; set; }
         protected DotNetObjectReference<T>? JsInteropRef { get; set; }
 
         #endregion Properties
@@ -20,7 +20,7 @@ namespace RPedretti.RazorComponents.Shared.Components
         {
             if (JsInteropRef == null)
             {
-                JsInteropRef = DotNetObjectReference.Create(_interop!);
+                JsInteropRef = DotNetObjectReference.Create(Interop!);
             }
 
             return base.OnAfterRenderAsync(firstRender);
@@ -33,7 +33,7 @@ namespace RPedretti.RazorComponents.Shared.Components
 
         public void SetInterop(T interop)
         {
-            _interop = interop;
+            Interop = interop;
         }
 
         #endregion Methods

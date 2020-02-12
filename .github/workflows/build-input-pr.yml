@@ -1,6 +1,7 @@
 name: Build Input PR
 
 on:
+  push:
   pull_request:
     types: [opened, synchronize, reopened]
     branches-ignore: 
