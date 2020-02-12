@@ -15,9 +15,24 @@ namespace RPedretti.RazorComponents.BingMap.Entities.Layer
 
         private const string layerNamespace = "rpedrettiBlazorComponents.bingMap.map.layer";
         private readonly BingMapEntityList _items = new BingMapEntityList();
-        private DotNetObjectReference<BingMapLayer> thisRef;
+        private readonly DotNetObjectReference<BingMapLayer> thisRef;
 
         #endregion Fields
+
+        #region Constructors
+
+        public BingMapLayer(string id = null)
+        {
+            Id = id ?? Guid.NewGuid().ToString();
+            thisRef = DotNetObjectReference.Create(this);
+            _items.ListChanged += ItemsChanged;
+            _items.BeforeRemoveRange += BeforeRemoveRange;
+            _items.ListRangeChanged += ListRangeChanged;
+            _items.BeforeRemove += ItemRemoved;
+            JSRuntime.InvokeAsync<object>(layerNamespace + ".init", Id, thisRef);
+        }
+
+        #endregion Constructors
 
         #region Methods
 
@@ -52,30 +67,15 @@ namespace RPedretti.RazorComponents.BingMap.Entities.Layer
 
         private void ListRangeChanged(object sender, RangeChangdEventArgs e)
         {
+#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
             switch (e.Type)
             {
                 case RangeChangeType.Add:
                     AddItems(e.StartIndex, e.Ammount);
                     break;
             }
+#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
         }
-
-        #endregion Methods
-
-        #region Constructors
-
-        public BingMapLayer(string id = null)
-        {
-            Id = id ?? Guid.NewGuid().ToString();
-            thisRef = DotNetObjectReference.Create(this);
-            _items.ListChanged += ItemsChanged;
-            _items.BeforeRemoveRange += BeforeRemoveRange;
-            _items.ListRangeChanged += ListRangeChanged;
-            _items.BeforeRemove += ItemRemoved;
-            JSRuntime.InvokeAsync<object>(layerNamespace + ".init", Id, thisRef);
-        }
-
-        #endregion Constructors
 
         public void Add(BaseBingMapEntity item)
         {
@@ -87,19 +87,9 @@ namespace RPedretti.RazorComponents.BingMap.Entities.Layer
             _items.AddRange(items);
         }
 
-        public void RemoveRange(int start, int ammount)
-        {
-            _items.RemoveRange(start, ammount);
-        }
-
         public override void Dispose()
         {
             thisRef.Dispose();
-        }
-
-        public void Remove(BaseBingMapEntity item)
-        {
-            _items.Remove(item);
         }
 
         public IEnumerator<BaseBingMapEntity> GetEnumerator()
@@ -107,9 +97,21 @@ namespace RPedretti.RazorComponents.BingMap.Entities.Layer
             return _items.GetEnumerator();
         }
 
+        public void Remove(BaseBingMapEntity item)
+        {
+            _items.Remove(item);
+        }
+
+        public void RemoveRange(int start, int ammount)
+        {
+            _items.RemoveRange(start, ammount);
+        }
+
         IEnumerator IEnumerable.GetEnumerator()
         {
             return _items.GetEnumerator();
         }
+
+        #endregion Methods
     }
 }

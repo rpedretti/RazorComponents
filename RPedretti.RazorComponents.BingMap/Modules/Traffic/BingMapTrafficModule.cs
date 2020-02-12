@@ -10,10 +10,6 @@ namespace RPedretti.RazorComponents.BingMap.Modules.Traffic
         private const string ModuleId = "Microsoft.Maps.Traffic";
         private string _mapId;
 
-        public BingMapTrafficModule(IJSRuntime jSRuntime) : base(jSRuntime)
-        {
-        }
-
         #endregion Fields
 
         #region Properties
@@ -22,6 +18,14 @@ namespace RPedretti.RazorComponents.BingMap.Modules.Traffic
             "rpedrettiBlazorComponents.bingMap.map.modules.traffic.init";
 
         #endregion Properties
+
+        #region Constructors
+
+        public BingMapTrafficModule(IJSRuntime jSRuntime) : base(jSRuntime)
+        {
+        }
+
+        #endregion Constructors
 
         #region Methods
 

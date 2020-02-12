@@ -6,7 +6,7 @@
       "library": "font-awesome@5.11.2",
       "files": [
         "css/fontawesome.min.css",
-        "css/regular.min.css", 
+        "css/regular.min.css",
         "css/solid.min.css",
         "webfonts/fa-regular-400.woff",
         "webfonts/fa-regular-400.woff2",

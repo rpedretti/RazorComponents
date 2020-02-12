@@ -1,13 +1,20 @@
 using Microsoft.AspNetCore.Components.Builder;
-using Microsoft.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
+using RPedretti.RazorComponents.BingMap;
 
 namespace RPedretti.RazorComponents.Wasm.BingMap
 {
     public class Startup
     {
+        #region Methods
+
+        public void Configure(IComponentsApplicationBuilder app)
+        {
+            app.AddComponent<App>("app");
+        }
+
         public void ConfigureServices(IServiceCollection services)
         {
             var fileProvider = new EmbeddedFileProvider(this.GetType().Assembly);
@@ -16,11 +23,9 @@ namespace RPedretti.RazorComponents.Wasm.BingMap
                 .Build();
 
             services.AddSingleton<IConfiguration>(configuration);
+            services.AddSingleton<DevToolService>();
         }
 
-        public void Configure(IComponentsApplicationBuilder app)
-        {
-            app.AddComponent<App>("app");
-        }
+        #endregion Methods
     }
 }

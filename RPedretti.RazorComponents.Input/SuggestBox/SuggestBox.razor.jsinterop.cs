@@ -8,8 +8,7 @@ namespace RPedretti.RazorComponents.Input.SuggestBox
 {
     public class SuggestBoxBaseJSInterop : BaseInteropComponent<SuggestBoxBaseJSInterop>
     {
-        [Inject]
-        private IJSRuntime JSRuntime { get; set; }
+        [Inject] private IJSRuntime JSRuntime { get; set; }
 
         public string SuggestBoxId { get; set; }
 
@@ -21,7 +20,10 @@ namespace RPedretti.RazorComponents.Input.SuggestBox
 
         #region Methods
 
+#pragma warning disable CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
+
         public SuggestBoxBaseJSInterop()
+#pragma warning restore CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
         {
             SetInterop(this);
         }
@@ -30,6 +32,7 @@ namespace RPedretti.RazorComponents.Input.SuggestBox
         {
             await JSRuntime.InvokeAsync<object>("rpedrettiBlazorComponents.suggestbox.setSuggestion", SuggestBoxId);
         }
+
         public async ValueTask InitAsync()
         {
             await JSRuntime.InvokeAsync<object>("rpedrettiBlazorComponents.suggestbox.initSuggestBox", JsInteropRef, SuggestBoxId);

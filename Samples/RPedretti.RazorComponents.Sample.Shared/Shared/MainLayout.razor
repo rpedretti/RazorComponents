@@ -1,4 +1,4 @@
-﻿@inherits MainLayoutBase
+﻿@inherits LayoutComponentBase
 @using RPedretti.RazorComponents.Sensors.AmbientLight
 @using RPedretti.RazorComponents.Input.ToggleSwitch
 @using RPedretti.RazorComponents.Layout.Modal
@@ -8,7 +8,7 @@
     <NavMenu />
 </div>
 
-<div class="main @(Checked ? "dark" : "light")" style="overflow: @((ModalService.IsOpen) ? "none" : "auto")">
+<div class="main @(Checked ? "dark" : "light")" style="overflow: @((_modalService.IsOpen) ? "none" : "auto")">
     <div class="top-row px-4">
         <ToggleSwitch @bind-Checked="@Checked" />
     </div>

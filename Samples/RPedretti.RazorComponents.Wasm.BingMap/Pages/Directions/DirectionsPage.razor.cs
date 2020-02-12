@@ -4,14 +4,13 @@ using Microsoft.JSInterop;
 using RPedretti.RazorComponents.BingMap.Entities;
 using RPedretti.RazorComponents.BingMap.Modules;
 using RPedretti.RazorComponents.BingMap.Modules.Directions;
-using RPedretti.RazorComponents.Shared.Components;
 using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
 namespace RPedretti.RazorComponents.Wasm.BingMap.Pages.Directions
 {
-    public class DirectionsPageBase : BaseComponent
+    public partial class DirectionsPage
     {
         #region Fields
 
@@ -24,8 +23,8 @@ namespace RPedretti.RazorComponents.Wasm.BingMap.Pages.Directions
 
         #region Properties
 
-        [Inject] private IJSRuntime JSRuntime { get; set; }
-        [Inject] protected ILogger<DirectionsPageBase> Logger { get; set; }
+        [Inject] private IJSRuntime _jsRuntime { get; set; }
+        [Inject] private ILogger<DirectionsPage> _logger { get; set; }
 
         protected BingMapConfig MapsConfig { get; set; } = new BingMapConfig
         {
@@ -54,7 +53,7 @@ namespace RPedretti.RazorComponents.Wasm.BingMap.Pages.Directions
 
         protected Task MapLoaded()
         {
-            Logger.LogDebug("MapLoaded");
+            _logger.LogDebug("MapLoaded");
             return Task.CompletedTask;
         }
 
@@ -62,8 +61,8 @@ namespace RPedretti.RazorComponents.Wasm.BingMap.Pages.Directions
         {
             if (firstRender)
             {
-                Logger.LogDebug("Map rendered");
-                _directionsModule = new BingMapDirectionsModule(JSRuntime)
+                _logger.LogDebug("Map rendered");
+                _directionsModule = new BingMapDirectionsModule(_jsRuntime)
                 {
                     InputPanelId = "inputPannel",
                     ItineraryPanelId = "itineraryPanel"

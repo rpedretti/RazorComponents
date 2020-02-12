@@ -1,10 +1,7 @@
-using System;
-using System.Net.Http;
 using System.Threading.Tasks;
 using System.Text.Json;
 using RPedretti.RazorComponents.Sample.Shared.HttpClients;
 using RPedretti.RazorComponents.Sample.Shared.Data;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.FileProviders;
 
 namespace RPedretti.RazorComponents.Wasm.Sample.HttpClients
@@ -33,10 +30,8 @@ namespace RPedretti.RazorComponents.Wasm.Sample.HttpClients
         public async Task<WeatherForecast[]> GetWeather()
         {
             var info = _fileProvider.GetFileInfo(_filePath);
-            using(var content = info.CreateReadStream())
-            {
-                return await JsonSerializer.DeserializeAsync<WeatherForecast[]>(content);
-            }
+            using var content = info.CreateReadStream();
+            return await JsonSerializer.DeserializeAsync<WeatherForecast[]>(content);
         }
 
         #endregion Methods

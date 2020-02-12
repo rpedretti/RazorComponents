@@ -1,12 +1,11 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using RPedretti.RazorComponents.Shared.Components;
 using System;
 using System.Threading.Tasks;
 
 namespace RPedretti.RazorComponents.Input.Checkbox
 {
-    public class CheckboxBase : BaseAccessibleComponent
+    public partial class Checkbox
     {
         #region Properties
 
@@ -20,7 +19,7 @@ namespace RPedretti.RazorComponents.Input.Checkbox
 
         [Parameter] public bool Inline { get; set; }
 
-        [Parameter] public string Label { get; set; }
+        [Parameter] public string Label { get; set; } = "";
 
         [Parameter] public CheckboxSize Size { get; set; } = CheckboxSize.REGULAR;
 

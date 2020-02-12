@@ -142,11 +142,11 @@ app {
     }
 }
 
-@import "../Pages/Directions/directions-page";
-@import "../Pages/Polygons/polygons-page";
-@import "../Pages/PolyLines/polylines-page";
-@import "../Pages/PushPins/pushpins-page";
-@import "../Pages/Traffic/traffic-page";
+@import "../Pages/Directions/DirectionsPage.razor.scss";
+@import "../Pages/Polygons/PolygonsPage.razor.scss";
+@import "../Pages/PolyLines/PolylinesPage.razor.scss";
+@import "../Pages/PushPins/PushpinsPage.razor.scss";
+@import "../Pages/Traffic/TrafficPage.razor.scss";
 
 .dark .checkbox {
     --label-color: red;

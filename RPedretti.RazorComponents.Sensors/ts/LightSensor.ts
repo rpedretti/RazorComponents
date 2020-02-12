@@ -19,7 +19,7 @@
 
     public stopSensor = (sensorRef) => {
         const sensor = this.sensors.get(sensorRef);
-        sensor.stop();
+        sensor?.stop();
     }
 }
 

@@ -1,12 +1,21 @@
-﻿namespace RPedretti.RazorComponents.BingMap.Entities
+﻿using System.Text.Json.Serialization;
+
+namespace RPedretti.RazorComponents.BingMap.Entities
 {
     public class Geocoordinate
     {
         #region Properties
 
+        [JsonPropertyName("altitude")]
         public double Altitude { get; set; }
+
+        [JsonPropertyName("altitudeReference")]
         public double AltitudeReference { get; set; } = -1;
+
+        [JsonPropertyName("latitude")]
         public double Latitude { get; set; }
+
+        [JsonPropertyName("longitude")]
         public double Longitude { get; set; }
 
         #endregion Properties
@@ -24,12 +33,7 @@
 
         public override int GetHashCode()
         {
-            var hashCode = -1575447554;
-            hashCode = hashCode * -1521134295 + Latitude.GetHashCode();
-            hashCode = hashCode * -1521134295 + Longitude.GetHashCode();
-            hashCode = hashCode * -1521134295 + Altitude.GetHashCode();
-            hashCode = hashCode * -1521134295 + AltitudeReference.GetHashCode();
-            return hashCode;
+            return System.HashCode.Combine(Latitude, Longitude, Altitude, AltitudeReference);
         }
 
         #endregion Methods

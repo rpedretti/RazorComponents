@@ -148,12 +148,12 @@ app > .spinner-wrapper {
     }
 }
 
-@import "../Modals/HelloModal/helloModal";
-@import "../Pages/Inputs/inputs";
-@import "../Pages/Loaders/loaders";
-@import "../Pages/Movies/movies";
-@import "../Components/MoviePoster/movie-poster";
-@import "../Pages/Sensors/sensors";
+@import "../Modals/HelloModal/HelloModal.razor.scss";
+@import "../Pages/Inputs/InputsPage.razor.scss";
+@import "../Pages/Loaders/LoadersPage.razor.scss";
+@import "../Pages/Movies/MoviesPage.razor.scss";
+@import "../Pages/Sensors/SensorsPage.razor.scss";
+@import "../Components/MoviePoster/MoviePoster.razor.scss";
 
 .dark .checkbox {
     --label-color: red;

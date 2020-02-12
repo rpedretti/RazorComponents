@@ -1,6 +1,7 @@
-﻿@typeparam TItem
-@inherits PagedGridBase
+﻿@using RPedretti.RazorComponents.Shared.Components
 @using RPedretti.RazorComponents.Layout.Pager
+@typeparam TItem
+@inherits BaseAccessibleComponent
 
 <div class="paged-grid">
     @if (HasContent)
@@ -33,18 +34,3 @@
         <p>@NoContentTemplate</p>
     }
 </div>
-
-@code {
-    [Parameter] public IEnumerable<TItem> Items { get; set; }
-    [Parameter] public RenderFragment<PagedGridContext> ItemTemplate { get; set; }
-    [Parameter] public RenderFragment NoContentTemplate { get; set; }
-    [Parameter] public RenderFragment LoadingTemplate { get; set; }
-    [Parameter] public string ListClasses { get; set; }
-    [Parameter] public string ItemClasses { get; set; }
-
-    public class PagedGridContext
-    {
-        public TItem Item { get; set; }
-        public int Index { get; set; }
-    }
-}

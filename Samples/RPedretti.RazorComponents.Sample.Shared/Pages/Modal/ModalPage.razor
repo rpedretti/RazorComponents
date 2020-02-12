@@ -1,11 +1,8 @@
 ﻿@page "/modal"
 @using RPedretti.RazorComponents.Sample.Shared.Modals.HelloModal
-@using RPedretti.RazorComponents.Layout.Services
-
-@inject IModalService ModalService
 
 @{
-    ModalContent = @<HelloModal OnClose="Close" />;
+    _modalContent = @<HelloModal OnClose="Close" />;
 }
 
 <div class="modal-page">
@@ -27,21 +24,3 @@
     <p>5</p>
     <p>6</p>
 </div>
-
-@code {
-    private RenderFragment ModalContent { get; set; }
-
-    private void Close()
-    {
-        ModalService.Hide();
-    }
-
-    public void OpenModal(bool overlayClose)
-    {
-        ModalService.Show(new Layout.Models.ModalConfig
-        {
-            CloseOnOverlayClick = overlayClose,
-            Content = ModalContent
-        });
-    }
-}

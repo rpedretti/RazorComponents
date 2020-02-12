@@ -1,7 +1,10 @@
+#nullable enable
+
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 
 namespace RPedretti.RazorComponents.Shared.Components
@@ -10,15 +13,15 @@ namespace RPedretti.RazorComponents.Shared.Components
     {
         #region Methods
 
-        protected async Task HandleKeyPress(KeyboardEventArgs args, Func<Task> action)
+        protected async Task HandleKeyPress(KeyboardEventArgs args, Func<Task>? action)
         {
-            if (args.Key == " " || args.Key == "Enter")
+            if ((args.Key == " " || args.Key == "Enter") && action != null)
             {
-                await action?.Invoke();
+                await action.Invoke();
             }
         }
 
-        public bool SetParameter<T>(ref T prop, T value, Action onChange = null)
+        public bool SetParameter<T>([MaybeNull] ref T prop, [MaybeNull] T value, Action? onChange = null)
         {
             if (EqualityComparer<T>.Default.Equals(prop, value))
             {
@@ -34,3 +37,5 @@ namespace RPedretti.RazorComponents.Shared.Components
         #endregion Methods
     }
 }
+
+#nullable restore

@@ -1,6 +1,6 @@
-﻿using Microsoft.Extensions.Logging;
-using RPedretti.RazorComponents.Sample.Shared.Domain;
+﻿using RPedretti.RazorComponents.Sample.Shared.Domain;
 using RPedretti.RazorComponents.Sample.Shared.HttpClients;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -10,52 +10,49 @@ namespace RPedretti.RazorComponents.Sample.Shared.Services
     {
         #region Fields
 
-        private readonly IImdbClient imdbClient;
-
-        private readonly ILogger<ImdbService> logger;
+        private readonly IImdbClient _imdbClient;
 
         #endregion Fields
 
         #region Constructors
 
-        public ImdbService(IImdbClient imdbClient, ILogger<ImdbService> logger)
+        public ImdbService(IImdbClient imdbClient)
         {
-            this.imdbClient = imdbClient;
-            this.logger = logger;
+            this._imdbClient = imdbClient;
         }
 
         #endregion Constructors
 
         #region Methods
 
-        public async Task<MovieSearchResult> FindMoviesByPattern(string pattern, int page)
+        public async Task<MovieSearchResult> FindMoviesByPattern([DisallowNull] string pattern, int page)
         {
             return await FindMoviesByPattern(pattern, page, CancellationToken.None);
         }
 
-        public async Task<MovieSearchResult> FindMoviesByPattern(string pattern, int page, CancellationToken cancelationToken)
+        public async Task<MovieSearchResult> FindMoviesByPattern([DisallowNull] string pattern, int page, CancellationToken cancelationToken)
         {
-            return await imdbClient.GetMoviesByPattern(pattern, page, cancelationToken);
+            return await _imdbClient.GetMoviesByPattern(pattern, page, cancelationToken);
         }
 
-        public async Task<Movie> GetMovieById(string id)
+        public async Task<Movie> GetMovieById([DisallowNull] string id)
         {
             return await GetMovieById(id, CancellationToken.None);
         }
 
-        public async Task<Movie> GetMovieById(string id, CancellationToken cancelationToken)
+        public async Task<Movie> GetMovieById([DisallowNull] string id, CancellationToken cancelationToken)
         {
-            return await imdbClient.GetMovieById(id, cancelationToken);
+            return await _imdbClient.GetMovieById(id, cancelationToken);
         }
 
-        public async Task<Movie> GetMovieByTitle(string title)
+        public async Task<Movie> GetMovieByTitle([DisallowNull] string title)
         {
             return await GetMovieByTitle(title, CancellationToken.None);
         }
 
         public async Task<Movie> GetMovieByTitle(string title, CancellationToken cancelationToken)
         {
-            return await imdbClient.GetMovieByTitle(title, cancelationToken);
+            return await _imdbClient.GetMovieByTitle(title, cancelationToken);
         }
 
         #endregion Methods

@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Drawing;
+using System.Text.Json.Serialization;
 
 namespace RPedretti.RazorComponents.BingMap.Entities
 {
@@ -7,43 +7,109 @@ namespace RPedretti.RazorComponents.BingMap.Entities
     {
         #region Properties
 
+        [JsonPropertyName("allowHidingLabelsOfRoad")]
         public bool? AllowHidingLabelsOfRoad { get; set; }
+
+        [JsonPropertyName("allowInfoboxOverflow")]
         public bool? AllowInfoboxOverflow { get; set; }
-        public Color BackgroundColor { get; set; } = Color.FromArgb(0xFF, 0xEA, 0x8E, 0xE1);
+
+        [JsonPropertyName("backgroundColor")]
+        public Color BackgroundColor { get; set; } = new Color(0xFF, 0xEA, 0x8E, 0xE1);
+
+        [JsonPropertyName("credentials")]
         public string Credentials { get; set; }
+
+        [JsonPropertyName("disableBirdseye")]
         public bool? DisableBirdseye { get; set; }
+
+        [JsonPropertyName("disableKeyboardInput")]
         public bool? DisableKeyboardInput { get; set; }
+
+        [JsonPropertyName("disableMapTypeSelectorMouseOver")]
         public bool? DisableMapTypeSelectorMouseOver { get; set; }
+
+        [JsonPropertyName("disablePanning")]
         public bool? DisablePanning { get; set; }
+
+        [JsonPropertyName("disableScrollWheelZoom")]
         public bool? DisableScrollWheelZoom { get; set; }
+
+        [JsonPropertyName("disableStreetside")]
         public bool? DisableStreetside { get; set; }
+
+        [JsonPropertyName("disableStreetsideAutoCoverage")]
         public bool? DisableStreetsideAutoCoverage { get; set; }
+
+        [JsonPropertyName("disableZooming")]
         public bool? DisableZooming { get; set; }
+
+        [JsonPropertyName("enableClickableLogo")]
         public bool? EnableClickableLogo { get; set; }
+
+        [JsonPropertyName("enableCORS")]
         public bool? EnableCORS { get; set; }
+
+        [JsonPropertyName("enableHighDpi")]
         public bool? EnableHighDpi { get; set; }
+
+        [JsonPropertyName("enableInertia")]
         public bool? EnableInertia { get; set; }
+
+        [JsonPropertyName("liteMode")]
         public bool? LiteMode { get; set; }
+
+        [JsonPropertyName("maxBounds")]
         public LocationRectangle MaxBounds { get; set; }
+
+        [JsonPropertyName("maxZoom")]
         public int? MaxZoom { get; set; }
+
+        [JsonPropertyName("minZoom")]
         public int? MinZoom { get; set; }
+
+        [JsonPropertyName("navigationBarMode")]
         public byte? NavigationBarMode { get; set; }
+
+        [JsonPropertyName("navigationBarOrientation")]
         public byte? NavigationBarOrientation { get; set; }
+
+        [JsonPropertyName("showBreadcrumb")]
         public bool? ShowBreadcrumb { get; set; }
+
+        [JsonPropertyName("showDashboard")]
         public bool? ShowDashboard { get; set; }
+
+        [JsonPropertyName("showLocateMeButton")]
         public bool? ShowLocateMeButton { get; set; }
+
+        [JsonPropertyName("showMapTypeSelector")]
         public bool? ShowMapTypeSelector { get; set; }
+
+        [JsonPropertyName("showScalebar")]
         public bool? ShowScalebar { get; set; }
+
+        [JsonPropertyName("showTermsLink")]
         public bool? ShowTermsLink { get; set; }
+
+        [JsonPropertyName("showTrafficButton")]
         public bool? ShowTrafficButton { get; set; }
+
+        [JsonPropertyName("showZoomButtons")]
         public bool? ShowZoomButtons { get; set; }
+
+        [JsonPropertyName("streetsideOptions")]
         public StreetsideOptions StreetsideOptions { get; set; }
+
+        [JsonPropertyName("supportedMapTypes")]
         public string[] SupportedMapTypes { get; set; }
+
+        #endregion Properties
+
+        #region Methods
 
         public override bool Equals(object obj)
         {
-            var config = obj as BingMapConfig;
-            return config != null &&
+            return obj is BingMapConfig config &&
                    base.Equals(obj) &&
                    EqualityComparer<bool?>.Default.Equals(AllowHidingLabelsOfRoad, config.AllowHidingLabelsOfRoad) &&
                    EqualityComparer<bool?>.Default.Equals(AllowInfoboxOverflow, config.AllowInfoboxOverflow) &&
@@ -81,43 +147,43 @@ namespace RPedretti.RazorComponents.BingMap.Entities
 
         public override int GetHashCode()
         {
-            var hashCode = -138834109;
-            hashCode = hashCode * -1521134295 + base.GetHashCode();
-            hashCode = hashCode * -1521134295 + EqualityComparer<bool?>.Default.GetHashCode(AllowHidingLabelsOfRoad);
-            hashCode = hashCode * -1521134295 + EqualityComparer<bool?>.Default.GetHashCode(AllowInfoboxOverflow);
-            hashCode = hashCode * -1521134295 + EqualityComparer<Color>.Default.GetHashCode(BackgroundColor);
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Credentials);
-            hashCode = hashCode * -1521134295 + EqualityComparer<bool?>.Default.GetHashCode(DisableBirdseye);
-            hashCode = hashCode * -1521134295 + EqualityComparer<bool?>.Default.GetHashCode(DisableKeyboardInput);
-            hashCode = hashCode * -1521134295 + EqualityComparer<bool?>.Default.GetHashCode(DisableMapTypeSelectorMouseOver);
-            hashCode = hashCode * -1521134295 + EqualityComparer<bool?>.Default.GetHashCode(DisablePanning);
-            hashCode = hashCode * -1521134295 + EqualityComparer<bool?>.Default.GetHashCode(DisableScrollWheelZoom);
-            hashCode = hashCode * -1521134295 + EqualityComparer<bool?>.Default.GetHashCode(DisableStreetside);
-            hashCode = hashCode * -1521134295 + EqualityComparer<bool?>.Default.GetHashCode(DisableStreetsideAutoCoverage);
-            hashCode = hashCode * -1521134295 + EqualityComparer<bool?>.Default.GetHashCode(DisableZooming);
-            hashCode = hashCode * -1521134295 + EqualityComparer<bool?>.Default.GetHashCode(EnableClickableLogo);
-            hashCode = hashCode * -1521134295 + EqualityComparer<bool?>.Default.GetHashCode(EnableCORS);
-            hashCode = hashCode * -1521134295 + EqualityComparer<bool?>.Default.GetHashCode(EnableHighDpi);
-            hashCode = hashCode * -1521134295 + EqualityComparer<bool?>.Default.GetHashCode(EnableInertia);
-            hashCode = hashCode * -1521134295 + EqualityComparer<bool?>.Default.GetHashCode(LiteMode);
-            hashCode = hashCode * -1521134295 + EqualityComparer<LocationRectangle>.Default.GetHashCode(MaxBounds);
-            hashCode = hashCode * -1521134295 + EqualityComparer<int?>.Default.GetHashCode(MaxZoom);
-            hashCode = hashCode * -1521134295 + EqualityComparer<int?>.Default.GetHashCode(MinZoom);
-            hashCode = hashCode * -1521134295 + EqualityComparer<byte?>.Default.GetHashCode(NavigationBarMode);
-            hashCode = hashCode * -1521134295 + EqualityComparer<byte?>.Default.GetHashCode(NavigationBarOrientation);
-            hashCode = hashCode * -1521134295 + EqualityComparer<bool?>.Default.GetHashCode(ShowBreadcrumb);
-            hashCode = hashCode * -1521134295 + EqualityComparer<bool?>.Default.GetHashCode(ShowDashboard);
-            hashCode = hashCode * -1521134295 + EqualityComparer<bool?>.Default.GetHashCode(ShowLocateMeButton);
-            hashCode = hashCode * -1521134295 + EqualityComparer<bool?>.Default.GetHashCode(ShowMapTypeSelector);
-            hashCode = hashCode * -1521134295 + EqualityComparer<bool?>.Default.GetHashCode(ShowScalebar);
-            hashCode = hashCode * -1521134295 + EqualityComparer<bool?>.Default.GetHashCode(ShowTermsLink);
-            hashCode = hashCode * -1521134295 + EqualityComparer<bool?>.Default.GetHashCode(ShowTrafficButton);
-            hashCode = hashCode * -1521134295 + EqualityComparer<bool?>.Default.GetHashCode(ShowZoomButtons);
-            hashCode = hashCode * -1521134295 + EqualityComparer<StreetsideOptions>.Default.GetHashCode(StreetsideOptions);
-            hashCode = hashCode * -1521134295 + EqualityComparer<string[]>.Default.GetHashCode(SupportedMapTypes);
-            return hashCode;
+            System.HashCode hash = new System.HashCode();
+            hash.Add(base.GetHashCode());
+            hash.Add(AllowHidingLabelsOfRoad);
+            hash.Add(AllowInfoboxOverflow);
+            hash.Add(BackgroundColor);
+            hash.Add(Credentials);
+            hash.Add(DisableBirdseye);
+            hash.Add(DisableKeyboardInput);
+            hash.Add(DisableMapTypeSelectorMouseOver);
+            hash.Add(DisablePanning);
+            hash.Add(DisableScrollWheelZoom);
+            hash.Add(DisableStreetside);
+            hash.Add(DisableStreetsideAutoCoverage);
+            hash.Add(DisableZooming);
+            hash.Add(EnableClickableLogo);
+            hash.Add(EnableCORS);
+            hash.Add(EnableHighDpi);
+            hash.Add(EnableInertia);
+            hash.Add(LiteMode);
+            hash.Add(MaxBounds);
+            hash.Add(MaxZoom);
+            hash.Add(MinZoom);
+            hash.Add(NavigationBarMode);
+            hash.Add(NavigationBarOrientation);
+            hash.Add(ShowBreadcrumb);
+            hash.Add(ShowDashboard);
+            hash.Add(ShowLocateMeButton);
+            hash.Add(ShowMapTypeSelector);
+            hash.Add(ShowScalebar);
+            hash.Add(ShowTermsLink);
+            hash.Add(ShowTrafficButton);
+            hash.Add(ShowZoomButtons);
+            hash.Add(StreetsideOptions);
+            hash.Add(SupportedMapTypes);
+            return hash.ToHashCode();
         }
 
-        #endregion Properties
+        #endregion Methods
     }
 }

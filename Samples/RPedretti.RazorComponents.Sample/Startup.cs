@@ -68,6 +68,7 @@ namespace RPedretti.RazorComponents.Sample
             services.AddSingleton<IForecastService, ForecastService>();
             services.AddSingleton<IMovieService, ImdbService>();
             services.AddSingleton<IForecastService, ForecastService>();
+            services.AddModalService();
             services.AddAmbientLightSensor();
             services.AddGeolocationSensor();
         }

@@ -3,22 +3,21 @@ using Microsoft.Extensions.Logging;
 using RPedretti.RazorComponents.BingMap.Collections;
 using RPedretti.RazorComponents.BingMap.Entities;
 using RPedretti.RazorComponents.BingMap.Entities.Polygon;
-using RPedretti.RazorComponents.Shared.Components;
 using RPedretti.RazorComponents.Shared.Operators;
+using System;
 using System.ComponentModel;
-using System.Drawing;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace RPedretti.RazorComponents.Wasm.BingMap.Pages.Polygons
 {
-    public class PolygonsPageBase : BaseComponent
+    public partial class PolygonsPage : IDisposable
     {
         #region Fields
 
-        private Timer changePolygonTimer;
-        private BingMapPolygon polygon;
+        private Timer _changePolygonTimer;
+        private BingMapPolygon _polygon;
         protected RazorComponents.BingMap.BingMap bingMap;
         protected string BingMapId = $"bing-map-polygons";
         protected DebounceDispatcher clickDispatcher = new DebounceDispatcher();
@@ -32,7 +31,7 @@ namespace RPedretti.RazorComponents.Wasm.BingMap.Pages.Polygons
 
         #region Properties
 
-        [Inject] protected ILogger<PolygonsPageBase> Logger { get; set; }
+        [Inject] protected ILogger<PolygonsPage> Logger { get; set; }
 
         protected BingMapConfig MapConfig { get; set; } = new BingMapConfig
         {
@@ -64,21 +63,21 @@ namespace RPedretti.RazorComponents.Wasm.BingMap.Pages.Polygons
         private void Polygon_OnClick(object sender, MouseEventArgs<BingMapPolygon> e)
         {
             Click = true;
-            clickDispatcher.Debounce(2000, (o) => { Click = false; StateHasChanged(); });
+            clickDispatcher.Debounce(2000, () => { Click = false; StateHasChanged(); });
             StateHasChanged();
         }
 
         private void Polygon_OnDoubleClick(object sender, MouseEventArgs<BingMapPolygon> e)
         {
             DoubleClick = true;
-            doubleClickDispatcher.Debounce(2000, (o) => { DoubleClick = false; StateHasChanged(); });
+            doubleClickDispatcher.Debounce(2000, () => { DoubleClick = false; StateHasChanged(); });
             StateHasChanged();
         }
 
         private void Polygon_OnMouseDown(object sender, MouseEventArgs<BingMapPolygon> e)
         {
             MouseDown = true;
-            downDispatcher.Debounce(2000, (o) => { MouseDown = false; StateHasChanged(); });
+            downDispatcher.Debounce(2000, () => { MouseDown = false; StateHasChanged(); });
             StateHasChanged();
         }
 
@@ -86,7 +85,7 @@ namespace RPedretti.RazorComponents.Wasm.BingMap.Pages.Polygons
         {
             MouseOver = false;
             MouseOut = true;
-            outDispatcher.Debounce(2000, (o) => { MouseOut = false; StateHasChanged(); });
+            outDispatcher.Debounce(2000, () => { MouseOut = false; StateHasChanged(); });
 
             StateHasChanged();
         }
@@ -101,7 +100,7 @@ namespace RPedretti.RazorComponents.Wasm.BingMap.Pages.Polygons
         private void Polygon_OnMouseUp(object sender, MouseEventArgs<BingMapPolygon> e)
         {
             MouseUp = true;
-            upDispatcher.Debounce(2000, (o) => { MouseUp = false; StateHasChanged(); });
+            upDispatcher.Debounce(2000, () => { MouseUp = false; StateHasChanged(); });
             StateHasChanged();
         }
 
@@ -115,7 +114,7 @@ namespace RPedretti.RazorComponents.Wasm.BingMap.Pages.Polygons
             var latitude = bounds.Center.Latitude;
             var longitude = bounds.Center.Longitude;
 
-            polygon = new BingMapPolygon
+            _polygon = new BingMapPolygon
             {
                 Coordinates = new BindingList<Geocoordinate>
                 {
@@ -126,34 +125,34 @@ namespace RPedretti.RazorComponents.Wasm.BingMap.Pages.Polygons
                 },
                 Options = new BingMapPolygonOptions
                 {
-                    FillColor = Color.FromArgb(0x7F, Color.Blue),
+                    FillColor = Color.FromSystemColor(System.Drawing.Color.FromArgb(0x7F, System.Drawing.Color.Blue)),
                     StrokeThickness = 2,
-                    StrokeColor = Color.Red
+                    StrokeColor = Color.FromSystemColor(System.Drawing.Color.Red)
                 }
             };
 
-            polygon.OnClick += Polygon_OnClick;
-            polygon.OnDoubleClick += Polygon_OnDoubleClick;
-            polygon.OnMouseDown += Polygon_OnMouseDown;
-            polygon.OnMouseOut += Polygon_OnMouseOut;
-            polygon.OnMouseOver += Polygon_OnMouseOver;
-            polygon.OnMouseUp += Polygon_OnMouseUp;
+            _polygon.OnClick += Polygon_OnClick;
+            _polygon.OnDoubleClick += Polygon_OnDoubleClick;
+            _polygon.OnMouseDown += Polygon_OnMouseDown;
+            _polygon.OnMouseOut += Polygon_OnMouseOut;
+            _polygon.OnMouseOver += Polygon_OnMouseOver;
+            _polygon.OnMouseUp += Polygon_OnMouseUp;
 
-            var coords = JsonSerializer.Serialize(polygon.Coordinates);
-            var rings = JsonSerializer.Serialize(polygon.Rings);
-            var a = JsonSerializer.Serialize(polygon.Options.FillColor);
-            var b = JsonSerializer.Serialize(polygon.OptionsSnapshot);
-            var c = JsonSerializer.Serialize(polygon.Metadata);
+            var coords = JsonSerializer.Serialize(_polygon.Coordinates);
+            var rings = JsonSerializer.Serialize(_polygon.Rings);
+            var a = JsonSerializer.Serialize(_polygon.Options.FillColor);
+            var b = JsonSerializer.Serialize(_polygon.OptionsSnapshot);
+            var c = JsonSerializer.Serialize(_polygon.Metadata);
 
-            Entities.Add(polygon);
+            Entities.Add(_polygon);
 
-            changePolygonTimer = new Timer(async o =>
+            _changePolygonTimer = new Timer(async o =>
             {
                 bounds = await bingMap.GetBoundsAsync();
 
                 latitude = bounds.Center.Latitude;
                 longitude = bounds.Center.Longitude;
-                polygon.Rings = new BindingList<Geocoordinate[]>
+                _polygon.Rings = new BindingList<Geocoordinate[]>
                 {
                     new Geocoordinate[]
                     {
@@ -176,14 +175,14 @@ namespace RPedretti.RazorComponents.Wasm.BingMap.Pages.Polygons
 
         public void Dispose()
         {
-            changePolygonTimer?.Dispose();
-            polygon.OnClick -= Polygon_OnClick;
-            polygon.OnDoubleClick -= Polygon_OnDoubleClick;
-            polygon.OnMouseDown -= Polygon_OnMouseDown;
-            polygon.OnMouseOut -= Polygon_OnMouseOut;
-            polygon.OnMouseOver -= Polygon_OnMouseOver;
-            polygon.OnMouseUp -= Polygon_OnMouseUp;
-            polygon.Dispose();
+            _changePolygonTimer?.Dispose();
+            _polygon.OnClick -= Polygon_OnClick;
+            _polygon.OnDoubleClick -= Polygon_OnDoubleClick;
+            _polygon.OnMouseDown -= Polygon_OnMouseDown;
+            _polygon.OnMouseOut -= Polygon_OnMouseOut;
+            _polygon.OnMouseOver -= Polygon_OnMouseOver;
+            _polygon.OnMouseUp -= Polygon_OnMouseUp;
+            _polygon.Dispose();
         }
 
         #endregion Methods

@@ -1,9 +1,9 @@
+using RPedretti.RazorComponents.Sample.Shared.Data;
+using RPedretti.RazorComponents.Sample.Shared.HttpClients;
 using System;
 using System.Net.Http;
-using System.Threading.Tasks;
 using System.Text.Json;
-using RPedretti.RazorComponents.Sample.Shared.HttpClients;
-using RPedretti.RazorComponents.Sample.Shared.Data;
+using System.Threading.Tasks;
 
 namespace RPedretti.RazorComponents.Sample.HttpClients
 {

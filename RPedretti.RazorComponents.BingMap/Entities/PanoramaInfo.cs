@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace RPedretti.RazorComponents.BingMap.Entities
 {
@@ -6,12 +7,16 @@ namespace RPedretti.RazorComponents.BingMap.Entities
     {
         #region Properties
 
+        [JsonPropertyName("cd")]
         public string Cd { get; set; }
+
+        #endregion Properties
+
+        #region Methods
 
         public override bool Equals(object obj)
         {
-            var info = obj as PanoramaInfo;
-            return info != null &&
+            return obj is PanoramaInfo info &&
                    Cd == info.Cd;
         }
 
@@ -20,6 +25,6 @@ namespace RPedretti.RazorComponents.BingMap.Entities
             return -1896984974 + EqualityComparer<string>.Default.GetHashCode(Cd);
         }
 
-        #endregion Properties
+        #endregion Methods
     }
 }

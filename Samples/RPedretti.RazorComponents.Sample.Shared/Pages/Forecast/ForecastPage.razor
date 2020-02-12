@@ -1,0 +1,66 @@
+@namespace RPedretti.RazorComponents.Sample.Shared.Pages.Forecast
+@using RPedretti.RazorComponents.Shared.Components;
+@using System.Linq
+@using RPedretti.RazorComponents.Input.ToggleSwitch
+@using RPedretti.RazorComponents.Input.Spinner
+@using RPedretti.RazorComponents.Layout.DynamicTable
+@using RPedretti.RazorComponents.Sample.Shared.Data
+
+@page "/forecast"
+@inherits BaseComponent
+
+<h1>Weather forecast</h1>
+<ToggleSwitch Round
+              Label="Grouped"
+              @bind-Checked="@Grouped" />
+
+@foreach (var header in Headers)
+{
+    var h = header;
+    <button type="button" class="btn" @onclick="@(() => ToggleColumn(h))">@(h.Hidden ? "Show" : "Hide") @(h.Title)</button>
+}
+
+@{
+    RenderFragment<WeatherForecast> dateTemplate = (w) => @<span>@w.Date.ToString("dd/MM HH:00")</span>;
+RenderFragment<WeatherForecast> tempTemplate = (w) => @<span>@w.Temperature</span>;
+RenderFragment<WeatherForecast> rainChanceTemplate = (w) => @<span>@w.RainChangePercent</span>;
+RenderFragment<WeatherForecast> rainAmmountTemplate = (w) => @<span>@w.RainAmmount</span>;
+RenderFragment<DynamicTableGroup<WeatherForecast>> groupHeaderTemplate = (g) => @<span class="@g.Classes">@g.Rows.Average(f => f.Context.Temperature)</span>;
+
+Columns = new List<DynamicTableColumn<WeatherForecast>>
+{
+        new DynamicTableColumn<WeatherForecast> { SortProp = nameof(WeatherForecast.Date), Classes = "-l", Template = dateTemplate },
+        new DynamicTableColumn<WeatherForecast> { SortProp = nameof(WeatherForecast.Temperature), Classes = "-l", Template = tempTemplate },
+        new DynamicTableColumn<WeatherForecast> { SortProp = nameof(WeatherForecast.RainChangePercent), Classes = "-r", Template = rainChanceTemplate },
+        new DynamicTableColumn<WeatherForecast> { SortProp = nameof(WeatherForecast.RainAmmount), Classes = "-r", Template = rainAmmountTemplate }
+    };
+}
+
+@if (Grouped)
+{
+    <DynamicGroupedTable Headers="@Headers"
+                         TItem="WeatherForecast"
+                         Groups="@GroupedForecast"
+                         GroupHeaderTemplate="groupHeaderTemplate"
+                         Columns="@Columns"
+                         Loading="@Loading">
+        <LoadingTemplate>
+            <Spinner Centered Active Size="SpinnerSize.MEDIUM" />
+        </LoadingTemplate>
+    </DynamicGroupedTable>
+}
+else
+{
+    <DynamicTable Classes="table-bordered"
+                  Headers="@Headers"
+                  TItem="WeatherForecast"
+                  Rows="@Forecasts"
+                  Columns="@Columns"
+                  Loading="@Loading"
+                  SortRequest="@Sort"
+                  OnRowClick="@RowClicked">
+        <LoadingTemplate>
+            <Spinner Centered Active Size="SpinnerSize.MEDIUM" />
+        </LoadingTemplate>
+    </DynamicTable>
+}
