@@ -2,10 +2,14 @@ name: Build BingMap
 
 on:
   push:
-    branches: 
-      - 'feature/**'
-    paths: RazorComponents/RPedretti.RazorComponents.BingMap/**
-
+    branches-ignore:
+      - master
+    paths: '**/RPedretti.RazorComponents.BingMap'
+  pull_request:
+    branches-ignore: 
+      - master
+    paths: '**/RPedretti.RazorComponents.BingMap'
+    
 jobs:
   build:
     runs-on: ubuntu-latest
