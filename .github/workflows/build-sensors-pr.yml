@@ -40,7 +40,7 @@ jobs:
       id: buildnumber
       with:
         token: ${{secrets.github_token}}
-        prefix: Sensors
+        prefix: sensors
         
     - name: Build Nuget
       run: dotnet pack -c Release -p:Version=1.1.0-build-$BUILD_NUMBER -o ../publish
