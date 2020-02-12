@@ -4,7 +4,7 @@ on:
   push:
     branches: 
       - 'feature/**'
-    paths: RazorComponents/RPedretti.RazorComponents.BingMap/**
+    paths: 'RazorComponents/RPedretti.RazorComponents.BingMap/**'
 
 jobs:
   build:
