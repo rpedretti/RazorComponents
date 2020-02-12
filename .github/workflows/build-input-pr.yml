@@ -3,9 +3,9 @@ name: 'Build Input'
 on:
   push:
     branches-ignore:
-    - master
+    - 'master'
     paths:
-    - 'RazorComponents/RPedretti.RazorComponents.Input/**'
+    - '**/RPedretti.RazorComponents.Input/**'
 
 jobs:
   build:
