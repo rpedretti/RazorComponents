@@ -43,13 +43,13 @@ jobs:
         prefix: bingmap
         
     - name: Build Nuget
-      run: dotnet pack -c Release -p:Version=1.1.0-build-$bingmap_BUILD_NUMBER -o ../publish
+      run: dotnet pack -c Release -p:Version=1.1.0-build-$BUILD_NUMBER -o ../publish
       working-directory: ./RPedretti.RazorComponents.BingMap
     - name: Upload nuget artifact
       uses: actions/upload-artifact@v1
       with:
         name: nugetFile
-        path: ./publish/RPedretti.RazorComponents.BingMap.1.1.0-build-$bingmap_BUILD_NUMBER.nupkg
+        path: ./publish/RPedretti.RazorComponents.BingMap.1.1.0-build-$BUILD_NUMBER.nupkg
     - name: Upload build number
       uses: actions/upload-artifact@v1
       with:
