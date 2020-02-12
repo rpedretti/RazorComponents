@@ -1,16 +1,19 @@
 name: Build BingMap
 
+env:
+  project: RPedretti.RazorComponents.BingMap
+
 on:
   push:
     branches-ignore:
     - master
     paths: 
-    - RPedretti.RazorComponents.BingMap/**
+    - {{ env.project }}/**
   pull_request:
     branches-ignore: 
       - master
     paths:
-    - RPedretti.RazorComponents.BingMap/**
+    - {{ env.project }}/**
     
 jobs:
   build:
@@ -29,15 +32,15 @@ jobs:
     
     - name: Install npm dependencies
       run: npm i
-      working-directory: ./RPedretti.RazorComponents.BingMap
+      working-directory: ./{{ env.project }}
       
     - name: Build with Node
       run: npm run build:prod
-      working-directory: ./RPedretti.RazorComponents.BingMap
+      working-directory: ./{{ env.project }}
             
     - name: Build with dotnet
       run: dotnet build --configuration Release
-      working-directory: ./RPedretti.RazorComponents.BingMap
+      working-directory: ./{{ env.project }}
     
     - name: Generate Nuget Version
       uses: emrekas/build-number@v3
@@ -48,13 +51,13 @@ jobs:
         
     - name: Build Nuget
       run: dotnet pack -c Release -p:Version=1.1.0-build-$BUILD_NUMBER -o ../publish
-      working-directory: ./RPedretti.RazorComponents.BingMap
+      working-directory: ./{{ env.project }}
       
     - name: Upload nuget artifact
       uses: actions/upload-artifact@v1
       with:
         name: nugetFile
-        path: ./publish/RPedretti.RazorComponents.BingMap.1.1.0-build-${{ env.BUILD_NUMBER }}.nupkg
+        path: ./publish/{{ env.project }}.1.1.0-build-${{ env.BUILD_NUMBER }}.nupkg
 
     - name: Upload build number
       uses: actions/upload-artifact@v1
