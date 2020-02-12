@@ -1,10 +1,10 @@
-name: Build Layout PR
+name: Build Layout
 
 on:
   push:
   pull_request:
     types: [opened, synchronize, reopened]
-    branches-ignore: 
+    branches: 
     - master
     paths:
     - RPedretti.RazorComponents.Layout/**
@@ -44,14 +44,14 @@ jobs:
         prefix: layout
         
     - name: Build Nuget
-      run: dotnet pack -c Release -p:Version=1.1.0-build-$BUILD_NUMBER -o ../publish
+      run: dotnet pack -c Release -p:Version=1.1.$BUILD_NUMBER -o ../publish
       working-directory: ./RPedretti.RazorComponents.Layout
       
     - name: Upload nuget artifact
       uses: actions/upload-artifact@v1
       with:
         name: nugetFile
-        path: ./publish/RPedretti.RazorComponents.Layout.1.1.0-build-${{ env.BUILD_NUMBER }}.nupkg
+        path: ./publish/RPedretti.RazorComponents.Layout.1.1.${{ env.BUILD_NUMBER }}.nupkg
 
     - name: Upload build number
       uses: actions/upload-artifact@v1
