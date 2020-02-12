@@ -9,6 +9,7 @@
     <NoWarn>CS2008</NoWarn>
     <DisableFastUpToDateCheck>true</DisableFastUpToDateCheck>
     <PackageProjectUrl>https://github.com/rpedretti/RazorComponents</PackageProjectUrl>
+    <PackageTags>Blazor</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>

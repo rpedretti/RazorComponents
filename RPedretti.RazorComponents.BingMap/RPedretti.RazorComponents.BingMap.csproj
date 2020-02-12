@@ -10,6 +10,7 @@
     <OutputType>Library</OutputType>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <PackageProjectUrl>https://github.com/rpedretti/RazorComponents</PackageProjectUrl>
+    <PackageTags>Blazor</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
