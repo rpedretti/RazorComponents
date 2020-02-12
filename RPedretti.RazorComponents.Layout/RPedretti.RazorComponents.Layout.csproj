@@ -5,6 +5,9 @@
     <RazorLangVersion>3.0</RazorLangVersion>
     <LangVersion>8.0</LangVersion>
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
+    <DefaultItemExcludes>${DefaultItemExcludes};node_modules\**</DefaultItemExcludes>
+    <NoWarn>CS2008</NoWarn>
+    <DisableFastUpToDateCheck>true</DisableFastUpToDateCheck>
     <PackageProjectUrl>https://github.com/rpedretti/RazorComponents</PackageProjectUrl>
   </PropertyGroup>
 

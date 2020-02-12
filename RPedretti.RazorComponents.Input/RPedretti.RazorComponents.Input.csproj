@@ -11,9 +11,7 @@
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
     <DefaultItemExcludes>${DefaultItemExcludes};node_modules\**</DefaultItemExcludes>
     <NoWarn>CS2008</NoWarn>
-    <ApplicationIcon />
     <OutputType>Library</OutputType>
-    <StartupObject />
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <PackageProjectUrl>https://github.com/rpedretti/RazorComponents</PackageProjectUrl>
   </PropertyGroup>
