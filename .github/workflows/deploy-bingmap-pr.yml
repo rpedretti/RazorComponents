@@ -1,6 +1,5 @@
 on:
-  pull_request:
-    types: [opened, synchronize, reopened]
+  push:
     branches: 
       - 'feature/**'
     paths: RazorComponents/RPedretti.RazorComponents.BingMap/**

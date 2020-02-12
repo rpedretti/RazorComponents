@@ -20,13 +20,13 @@ namespace RPedretti.RazorComponents.BingMap
         #region Fields
 
         private const string _mapNamespace = "rpedrettiBlazorComponents.bingMap.map";
-        private readonly DotNetObjectReference<BingMap> thisRef;
+        private readonly DotNetObjectReference<BingMap> _thisRef;
         private BingMapEntityList _entities;
         private BingMapLayerList _layers;
         private ObservableCollection<IBingMapModule> _modules;
         private bool _shouldRender;
         private BingMapsViewConfig _viewConfig;
-        private bool modulesLoaded;
+        private bool _modulesLoaded;
         protected bool init;
 
         #endregion Fields
@@ -138,7 +138,7 @@ namespace RPedretti.RazorComponents.BingMap
 
         public BingMap()
         {
-            thisRef = DotNetObjectReference.Create(this);
+            _thisRef = DotNetObjectReference.Create(this);
         }
 
         #endregion Constructors
@@ -247,7 +247,7 @@ namespace RPedretti.RazorComponents.BingMap
 
         private void ModulesChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            if (e.Action == NotifyCollectionChangedAction.Add && modulesLoaded)
+            if (e.Action == NotifyCollectionChangedAction.Add && _modulesLoaded)
             {
                 foreach (IBingMapModule module in e.NewItems)
                 {
@@ -305,7 +305,7 @@ namespace RPedretti.RazorComponents.BingMap
             {
                 init = true;
                 BaseBingMapEntity.JSRuntime = _jSRuntime;
-                await _jSRuntime.InvokeAsync<object>("rpedrettiBlazorComponents.bingMap.map.getMap", thisRef, Id, MapsConfig, ApiKey, MapLanguage);
+                await _jSRuntime.InvokeAsync<object>("rpedrettiBlazorComponents.bingMap.map.getMap", _thisRef, Id, MapsConfig, ApiKey, MapLanguage);
             }
 
             UpdateView(ViewConfig);
@@ -324,7 +324,7 @@ namespace RPedretti.RazorComponents.BingMap
             Layers = null;
             MapLoaded = null;
 
-            thisRef.Dispose();
+            _thisRef.Dispose();
             _jSRuntime.InvokeAsync<object>("rpedrettiBlazorComponents.bingMap.map.unloadMap", Id);
         }
 
@@ -351,7 +351,7 @@ namespace RPedretti.RazorComponents.BingMap
             }
             StateHasChanged();
             MapLoaded?.Invoke();
-            modulesLoaded = true;
+            _modulesLoaded = true;
         }
 
         #endregion Methods
