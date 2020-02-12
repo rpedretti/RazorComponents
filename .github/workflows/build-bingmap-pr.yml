@@ -1,7 +1,15 @@
 name: Build BingMap
 
-on: push
-
+on:
+  push:
+    branches-ignore:
+      - master
+    paths: '**/RPedretti.RazorComponents.BingMap'
+  pull_request:
+    branches-ignore: 
+      - master
+    paths: '**/RPedretti.RazorComponents.BingMap'
+    
 jobs:
   build:
     runs-on: ubuntu-latest
