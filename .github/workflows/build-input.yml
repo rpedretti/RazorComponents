@@ -1,7 +1,6 @@
 name: Build Input
 
 on:
-  push:
   pull_request:
     types: [opened, synchronize, reopened]
     branches: 
@@ -44,14 +43,14 @@ jobs:
         prefix: input
         
     - name: Build Nuget
-      run: dotnet pack -c Release -p:Version=1.1.0-build-$BUILD_NUMBER -o ../publish
+      run: dotnet pack -c Release -p:Version=1.1.$BUILD_NUMBER -o ../publish
       working-directory: ./RPedretti.RazorComponents.Input
       
     - name: Upload nuget artifact
       uses: actions/upload-artifact@v1
       with:
         name: nugetFile
-        path: ./publish/RPedretti.RazorComponents.Input.1.1.0-build-${{ env.BUILD_NUMBER }}.nupkg
+        path: ./publish/RPedretti.RazorComponents.Input.1.1.${{ env.BUILD_NUMBER }}.nupkg
 
     - name: Upload build number
       uses: actions/upload-artifact@v1

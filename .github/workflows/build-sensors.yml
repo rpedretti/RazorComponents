@@ -1,7 +1,6 @@
 name: Build Sensors
 
 on:
-  push:
   pull_request:
     types: [opened, synchronize, reopened]
     branches: 
