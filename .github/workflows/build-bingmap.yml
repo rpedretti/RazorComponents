@@ -1,8 +1,7 @@
 name: Build BingMap
 
 on:
-  pull_request:
-    types: [opened, synchronize, reopened]
+  push:
     branches: 
     - master
     paths:
