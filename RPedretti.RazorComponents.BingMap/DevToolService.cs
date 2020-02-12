@@ -10,8 +10,6 @@ namespace RPedretti.RazorComponents.BingMap
     {
         #region Properties
 
-
-
         public IJSRuntime JSRuntime { get; }
 
         #endregion Properties
