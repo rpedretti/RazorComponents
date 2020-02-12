@@ -2,7 +2,8 @@ name: 'Build Input'
 
 on:
   push:
-    branches-ignore: master
+    branches-ignore:
+    - master
     paths:
     - 'RazorComponents/RPedretti.RazorComponents.Input/**'
 
