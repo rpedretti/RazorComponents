@@ -1,11 +1,6 @@
 name: 'Build Input'
 
-on:
-  push:
-    branches-ignore:
-    - 'master'
-    paths:
-    - '**/RPedretti.RazorComponents.Input/**'
+on: push
 
 jobs:
   build:
