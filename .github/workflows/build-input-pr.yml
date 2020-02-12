@@ -3,7 +3,8 @@ name: 'Build Input'
 on:
   push:
     branches-ignore: master
-    paths: RazorComponents/RPedretti.RazorComponents.Input/**
+    paths: 
+      - 'RazorComponents/RPedretti.RazorComponents.Input/**'
 
 jobs:
   build:
