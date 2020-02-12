@@ -27,7 +27,7 @@ namespace RPedretti.RazorComponents.Layout.Services
 
         public void Show(ModalConfig config = null)
         {
-            var modalConfig = config ?? new ModalConfig();
+            var modalConfig = config ?? null;
             IsOpen = true;
             ShowChanged?.Invoke(this, new ShowModalEventArgs
             {

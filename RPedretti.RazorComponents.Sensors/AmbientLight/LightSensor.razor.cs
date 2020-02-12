@@ -10,8 +10,8 @@ namespace RPedretti.RazorComponents.Sensors.AmbientLight
     {
         #region Fields
 
-        private bool init;
-        private DotNetObjectReference<LightSensor> thisRef;
+        private bool _init;
+        private DotNetObjectReference<LightSensor> _thisRef;
 
         #endregion Fields
 
@@ -31,11 +31,11 @@ namespace RPedretti.RazorComponents.Sensors.AmbientLight
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            if (!init)
+            if (!_init)
             {
-                init = true;
-                thisRef = DotNetObjectReference.Create(this);
-                await JSRuntime.InvokeAsync<object>("rpedrettiBlazorSensors.lightSensor.initSensor", thisRef, PollTime);
+                _init = true;
+                _thisRef = DotNetObjectReference.Create(this);
+                await JSRuntime.InvokeAsync<object>("rpedrettiBlazorSensors.lightSensor.initSensor", _thisRef, PollTime);
             }
             await base.OnAfterRenderAsync(firstRender);
         }
@@ -44,12 +44,12 @@ namespace RPedretti.RazorComponents.Sensors.AmbientLight
         {
             try
             {
-                if (thisRef != null)
+                if (_thisRef != null)
                 {
-                    JSRuntime.InvokeAsync<object>("rpedrettiBlazorSensors.lightSensor.stopSensor", thisRef).AsTask()
-                        .ContinueWith(t => thisRef.Dispose());
+                    JSRuntime.InvokeAsync<object>("rpedrettiBlazorSensors.lightSensor.stopSensor", _thisRef).AsTask()
+                        .ContinueWith(t => _thisRef.Dispose());
                 }
-                init = false;
+                _init = false;
             }
             catch (Exception e)
             {

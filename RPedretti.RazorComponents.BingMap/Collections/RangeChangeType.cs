@@ -3,6 +3,7 @@
     public enum RangeChangeType
     {
         Add,
-        Remove
+        Remove,
+        None
     }
 }
