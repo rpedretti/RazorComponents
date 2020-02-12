@@ -2,7 +2,7 @@ on:
   pull_request:
     types: [opened, synchronize, reopened]
     branches: 
-      - !master
+      - 'feature/**'
     paths: RazorComponents/RPedretti.RazorComponents.BingMap/**
 
 jobs:
