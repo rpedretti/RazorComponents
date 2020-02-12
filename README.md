@@ -1,66 +1,76 @@
 # RazorComponents
 
-This project aims to provide reusable components foa Blazor application.
-
-As for now to be able to use these components the CI build nuget repository for Blazor must be configured. Directions [here](https://github.com/aspnet/Blazor#using-ci-builds-of-blazor)
+This project aims to provide reusable components for Blazor application.
 
 Live samples at
 
-https://blazorcomponents.azurewebsites.net/ for inputs, layouts, spinners, dynamic grid, dynamic (grouped) table and SignlR
-
-https://blazorbingmaps.azurewebsites.net/ for the bing maps component
+**TBD**
 
 ## Packages
 
-- Inputs: https://www.nuget.org/packages/RPedretti.Blazor.Components
-- Layouts: https://www.nuget.org/packages/RPedretti.Blazor.Components.Layout
-- Sensors: https://www.nuget.org/packages/RPedretti.Blazor.Sensors
-- BingMaps: https://www.nuget.org/packages/RPedretti.Blazor.BingMaps
+- Inputs: https://www.nuget.org/packages/RPedretti.RazorComponents.Input/
+- Layouts: https://www.nuget.org/packages/RPedretti.RazorComponents.Layout/
+- Sensors: https://www.nuget.org/packages/RPedretti.RazorComponents.Sensors/
+- BingMaps: https://www.nuget.org/packages/RPedretti.RazorComponents.BingMap/
 
 ## Inputs
 There are four custom inputs, with acessibility
 
 ### Usage
 
-- Checkbox: [sample](https://github.com/rpedretti/BlazorComponents/blob/ecaa7db9411fbe053adfceea27b46c7b36e7e0e6/Samples/RPedretti.Blazor.Components.Sample/Pages/Inputs/Inputs.cshtml#L22-L36)
-- RadioGroup: [sample](https://github.com/rpedretti/BlazorComponents/blob/ecaa7db9411fbe053adfceea27b46c7b36e7e0e6/Samples/RPedretti.Blazor.Components.Sample/Pages/Inputs/Inputs.cshtml#L72-L87)
-- SuggestBox: [sample](https://github.com/rpedretti/BlazorComponents/blob/ecaa7db9411fbe053adfceea27b46c7b36e7e0e6/Samples/RPedretti.Blazor.Components.Sample/Pages/Inputs/Inputs.cshtml#L10-L16)
-- ToggleSwitch: [sample](https://github.com/rpedretti/BlazorComponents/blob/ecaa7db9411fbe053adfceea27b46c7b36e7e0e6/Samples/RPedretti.Blazor.Components.Sample/Pages/Inputs/Inputs.cshtml#L41-L68)
-- ProgressBar: [sample](https://github.com/rpedretti/BlazorComponents/blob/ecaa7db9411fbe053adfceea27b46c7b36e7e0e6/Samples/RPedretti.Blazor.Components.Sample/Pages/Loaders/Loaders.cshtml#L8-L13)
-- Spinner: [sample](https://github.com/rpedretti/BlazorComponents/blob/ecaa7db9411fbe053adfceea27b46c7b36e7e0e6/Samples/RPedretti.Blazor.Components.Sample/Pages/Loaders/Loaders.cshtml#L14-L31)
+- Checkbox: [sample](https://github.com/rpedretti/RazorComponents/blob/master/Samples/RPedretti.RazorComponents.Sample.Shared/Pages/Inputs/InputsPage.razor#L29-L48)
+- RadioGroup: [sample](https://github.com/rpedretti/RazorComponents/blob/master/Samples/RPedretti.RazorComponents.Sample.Shared/Pages/Inputs/InputsPage.razor#L84-L101)
+- SuggestBox: [sample](https://github.com/rpedretti/RazorComponents/blob/master/Samples/RPedretti.RazorComponents.Sample.Shared/Pages/Inputs/InputsPage.razor#L12-L27)
+- ToggleSwitch: [sample](https://github.com/rpedretti/RazorComponents/blob/master/Samples/RPedretti.RazorComponents.Sample.Shared/Pages/Inputs/InputsPage.razor#L50-L82)
+- ProgressBar: [sample](https://github.com/rpedretti/RazorComponents/blob/master/Samples/RPedretti.RazorComponents.Sample.Shared/Pages/Loaders/LoadersPage.razor#L15)
+- Spinner: [sample](https://github.com/rpedretti/RazorComponents/blob/master/Samples/RPedretti.RazorComponents.Sample.Shared/Pages/Loaders/LoadersPage.razor#L18-L33)
 
 ## Layout
 
 ### Usage
 
-- Accordeon: There are many in [sample Input](https://github.com/rpedretti/BlazorComponents/blob/master/Samples/RPedretti.Blazor.Components.Sample/Pages/Inputs/Inputs.cshtml) page
-- DynamicGroupedTable: [sample](https://github.com/rpedretti/BlazorComponents/blob/ecaa7db9411fbe053adfceea27b46c7b36e7e0e6/Samples/RPedretti.Blazor.Components.Sample/Pages/Forecast/Forecast.cshtml#L18-L20)
-- DynamicTable: [sample](https://github.com/rpedretti/BlazorComponents/blob/ecaa7db9411fbe053adfceea27b46c7b36e7e0e6/Samples/RPedretti.Blazor.Components.Sample/Pages/Forecast/Forecast.cshtml#L24-L28)
-- PagedGrid: [sample](https://github.com/rpedretti/BlazorComponents/blob/ecaa7db9411fbe053adfceea27b46c7b36e7e0e6/Samples/RPedretti.Blazor.Components.Sample/Pages/Movies/Movies.cshtml#L24-L43)
-- Pager: [sample]()
+- Accordeon: There are many in [sample Input](https://github.com/rpedretti/RazorComponents/blob/master/Samples/RPedretti.RazorComponents.Sample.Shared/Pages/Inputs/InputsPage.razor) page
+- DynamicGroupedTable: [sample](https://github.com/rpedretti/RazorComponents/blob/master/Samples/RPedretti.RazorComponents.Sample.Shared/Pages/Forecast/ForecastPage.razor#L41-L50)
+- DynamicTable: [sample](https://github.com/rpedretti/RazorComponents/blob/master/Samples/RPedretti.RazorComponents.Sample.Shared/Pages/Forecast/ForecastPage.razor#L54-L65)
+- PagedGrid: [sample](https://github.com/rpedretti/RazorComponents/blob/master/Samples/RPedretti.RazorComponents.Sample.Shared/Pages/Movies/MoviesPage.razor#L29-L52)
 
 ## BingMaps
 
 ### Usage
 
-First add the TagHelper in your `_ViewImports.cshtml` 
+Load the maps script in your app at the index.html file.
 ```
-@addTagHelper *, RPedretti.Blazor.BingMap
+    <script src="_content/RPedretti.RazorComponents.BingMap/js/vendors~bing-map_v1.js"></script>
+    <script src="_content/RPedretti.RazorComponents.BingMap/js/bing-map_v1.js"></script>
+    <script src="_content/RPedretti.RazorComponents.BingMap/js/bing-map-devtool.js"></script>
 ```
 
-Then load the maps script in yoyr app. There is a extension method that do that. Just it at the `Startup.Configure` method:
+Add the map to your page
 
 ```
-public void Configure(IBlazorApplicationBuilder app)
-{
-    app.AddComponent<App>("app");
-    app.UseBingMaps("<your_maps_key>");
-}
+@page "/"
+@using RPedretti.RazorComponents.BingMap
+@using RPedretti.RazorComponents.Shared.Components
+
+@inherits BaseComponent
+
+<div class="directions-page">
+    <div class="directions-container" onclick="event.stopPropagation();">
+        <div class="inputPannel" id="inputPannel"></div>
+        <div class="itineraryPanel" id="itineraryPanel"></div>
+    </div>
+    <BingMap Id="@BingMapId"
+             ApiKey="<your_key"
+             MapsConfig="@MapsConfig"
+             ViewConfig="@MapsViewConfig"
+             MapLoaded="@MapLoaded"
+             Modules="@Modules" />
+</div>
 ```
 
 To acquire one key follow the instructions [here](https://msdn.microsoft.com/en-us/library/ff428642.aspx)
 
-The component supports dynamic modue loading. The [sample](https://github.com/rpedretti/BlazorComponents/tree/master/Samples/RPedretti.Blazor.BingMaps.Sample)
+The component supports dynamic modue loading. The [sample](https://github.com/rpedretti/RazorComponents/tree/master/Samples/RPedretti.RazorComponents.Wasm.BingMap/Pages/Directions)
 cover its features.
 
 ## Sensors
