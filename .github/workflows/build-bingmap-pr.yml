@@ -49,7 +49,8 @@ jobs:
       uses: actions/upload-artifact@v1
       with:
         name: nugetFile
-        path: ./publish/RPedretti.RazorComponents.BingMap.1.1.0-build-$BUILD_NUMBER.nupkg
+        path: ../publish/RPedretti.RazorComponents.BingMap.1.1.0-build-$BUILD_NUMBER.nupkg
+      working-directory: ./RPedretti.RazorComponents.BingMap:  
     - name: Upload build number
       uses: actions/upload-artifact@v1
       with:
