@@ -4,13 +4,9 @@ on:
   push:
     branches-ignore:
       - master
-    paths: 
-      - 'RPedretti.RazorComponents.BingMap/**'
   pull_request:
     branches-ignore: 
       - master
-    paths: 
-      - 'RPedretti.RazorComponents.BingMap/**'
     
 jobs:
   build:
