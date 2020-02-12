@@ -33,25 +33,3 @@ jobs:
     - name: Build with dotnet
       run: dotnet build --configuration Release
       working-directory: /home/runner/work/RazorComponents/RPedretti.RazorComponents.BingMap
-    
-    - name: Generate Nuget Version
-      uses: emrekas/build-number@v3
-      id: buildnumber
-      with:
-        token: ${{secrets.github_token}}
-        prefix: bingmap
-        
-    - name: Build Nuget
-      run: dotnet pack -c Release -p:Version=1.1.0-build-$bingmap_BUILD_NUMBER -o /home/runner/work/RazorComponents/publish
-      working-directory: /home/runner/work/RazorComponents/RPedretti.RazorComponents.BingMap
-    - name: Upload nuget artifact
-      uses: actions/upload-artifact@v1
-      with:
-        name: nugetFile
-        path: /home/runner/work/RazorComponents/publish/RPedretti.RazorComponents.BingMap.1.1.0-build-$bingmap_BUILD_NUMBER.nupkg
-    - name: Upload build number
-      uses: actions/upload-artifact@v1
-      with:
-        name: BUILD_NUMBER
-        path: BUILD_NUMBER
-
