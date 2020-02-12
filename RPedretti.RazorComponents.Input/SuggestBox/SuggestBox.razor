@@ -1,6 +1,6 @@
 ﻿@typeparam TItem
-@inherits SuggestBoxBase<TItem>
 @using RPedretti.RazorComponents.Input.Spinner
+@inherits SuggestBoxBaseJSInterop
 
 <div data-widget="acessible-suggest" class="@($"suggest-box{(!LoadingSuggestion && OpenSuggestion ? " -open" : null)}")">
     <div class="sb-input">
@@ -29,12 +29,7 @@
                         role="option"
                         aria-selected="@(item.Selected.ToString().ToLower())"
                         @onclick="@(() => InternalSuggestionSelected(item))">
-                        @if(SuggestionTemplate != null) {
-                            @SuggestionTemplate(item)
-                        }
-                        else {
-                            <p class="sb-suggestion">@item.Value</p>
-                        }
+                            @SuggestionTemplate?.Invoke(item) ?? <p class="sb-suggestion">@item.Value</p>
                     </li>
                 }
             </ul>

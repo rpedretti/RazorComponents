@@ -14,8 +14,8 @@
             var children = modalRoot.parentElement!.children;
             for (var i = 0; i < children.length; i++) {
                 var child = children.item(i);
-                if (child && child.id != id) {
-                    child.setAttribute("aria-hidden", "true");
+                if (child?.id != id) {
+                    child?.setAttribute("aria-hidden", "true");
                 }
             }
         }
@@ -27,8 +27,8 @@
             var children = modalRoot.parentElement!.children;
             for (var i = 0; i < children.length; i++) {
                 var child = children.item(i);
-                if (child && child.id != id) {
-                    child.removeAttribute("aria-hidden");
+                if (child?.id != id) {
+                    child?.removeAttribute("aria-hidden");
                 }
             }
         }

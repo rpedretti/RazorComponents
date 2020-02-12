@@ -2,7 +2,7 @@
 
 namespace RPedretti.RazorComponents.Input.ProgressBar
 {
-    public class ProgressBarBase : ComponentBase
+    public partial class ProgressBar
     {
         #region Properties
 

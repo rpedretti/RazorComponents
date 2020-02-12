@@ -5,21 +5,23 @@ using System.Threading.Tasks;
 
 namespace RPedretti.RazorComponents.Sample.Shared.Shared
 {
-    public class MainLayoutBase : LayoutComponentBase
+    public partial class MainLayout
     {
-        [Inject] ILogger<MainLayout> Logger { get; set; }
-        [Inject] protected IModalService ModalService { get; set; }
+#pragma warning disable CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
+        [Inject] private ILogger<MainLayout> _logger { get; set; }
+        [Inject] private IModalService _modalService { get; set; }
+#pragma warning restore CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
 
-        protected RenderFragment ModalContent { get; set; }
+        protected RenderFragment? ModalContent { get; set; }
 
         public bool Checked { get; set; }
         public int Light { get; set; }
-        public string LightError { get; set; }
+        public string? LightError { get; set; }
 
         protected Task OnError(string error)
         {
             LightError = error;
-            Logger.LogError(error);
+            _logger.LogError(error);
             return Task.CompletedTask;
         }
 
@@ -30,13 +32,13 @@ namespace RPedretti.RazorComponents.Sample.Shared.Shared
 
         protected void ShowModal()
         {
-            ModalService.Show(new Layout.Models.ModalConfig { CloseOnOverlayClick = false });
+            _modalService.Show(new Layout.Models.ModalConfig { CloseOnOverlayClick = false });
         }
 
         protected void Close()
         {
-            Logger.LogInformation("closing");
-            ModalService.Hide();
+            _logger.LogInformation("closing");
+            _modalService.Hide();
         }
     }
 }

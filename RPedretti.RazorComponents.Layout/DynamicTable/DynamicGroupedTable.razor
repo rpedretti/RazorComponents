@@ -1,5 +1,6 @@
-﻿@typeparam TItem
-@inherits DynamicGroupedTableBase
+﻿@using RPedretti.RazorComponents.Shared.Components
+@typeparam TItem
+@inherits BaseComponent
 
 <div class="dynamic-grouped-table">
     @if (Loading)
@@ -39,16 +40,16 @@
                                     {
                                         var header = Headers.ElementAt(i);
                                         var column = Columns.ElementAt(i);
-                                    <td class="@($"table-cell {column.Classes}{(header.Hidden ? " -hidden" : null)}")">
-                                        @if (column.Template != null)
-                                        {
-                                            @column.Template(row.Context);
-                                        }
-                                        else
-                                        {
-                                            @row.Context.ToString();
-                                        }
-                                    </td>
+                                        <td class="@($"table-cell {column.Classes}{(header.Hidden ? " -hidden" : null)}")">
+                                            @if (column.Template != null)
+                                            {
+                                                @column.Template(row.Context);
+                                            }
+                                            else
+                                            {
+                                                @row.Context.ToString();
+                                            }
+                                        </td>
                                     }
                                 </tr>
                             }
@@ -59,16 +60,3 @@
         }
     }
 </div>
-
-@code {
-    [Parameter] public IEnumerable<DynamicTableGroup<TItem>> Groups { get; set; } = new List<DynamicTableGroup<TItem>>();
-    [Parameter] public RenderFragment<DynamicTableGroup<TItem>> GroupHeaderTemplate { get; set; }
-    [Parameter] public RenderFragment LoadingTemplate { get; set; }
-    [Parameter] public IEnumerable<DynamicTableColumn<TItem>> Columns { get; set; } = new DynamicTableColumn<TItem>[] { };
-
-    protected Task ToggleGroupCollapsed(DynamicTableGroup<TItem> group)
-    {
-        group.Collapsed = !group.Collapsed;
-        return Task.CompletedTask;
-    }
-}

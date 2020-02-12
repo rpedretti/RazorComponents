@@ -2,19 +2,27 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Text.Json.Serialization;
 
 namespace RPedretti.RazorComponents.BingMap.Entities.Polyline
 {
     public partial class BingMapPolyline : BaseBingMapEntity
     {
-        private const string _polylineNamespace = "rpedrettiBlazorComponents.bingMap.map.polyline";
+        #region Fields
+
         private const string _polylineGet = _polylineNamespace + ".getPropertie";
+        private const string _polylineNamespace = "rpedrettiBlazorComponents.bingMap.map.polyline";
         private const string clearEventsFunctionName = _polylineNamespace + ".clearEvents";
 
-        private DotNetObjectReference<BingMapPolyline> thisRef;
         private BindingList<Location> _coordinates = new BindingList<Location>();
         private BingMapPolylineOptions _options;
+        private DotNetObjectReference<BingMapPolyline> thisRef;
 
+        #endregion Fields
+
+        #region Properties
+
+        [JsonPropertyName("coordinates")]
         public BindingList<Location> Coordinates
         {
             get => _coordinates;
@@ -37,34 +45,27 @@ namespace RPedretti.RazorComponents.BingMap.Entities.Polyline
             }
         }
 
-        private void CoordinatesChanged(object sender, System.ComponentModel.ListChangedEventArgs e)
-        {
-            RaisePropertyChanged();
-        }
+        [JsonPropertyName("metadata")]
+        public string Metadata { get; set; }
 
-        public BingMapPolylineOptions OptionsSnapshot { get; set; } = new BingMapPolylineOptions
-        {
-            Cursor = "pointer",
-            Generalizable = true,
-            Visible = true
-        };
+        [JsonPropertyName("options")]
         public BingMapPolylineOptions Options
         {
             get => _options;
             set => SetParameter(ref _options, value, () => MergeSnapshot(value));
         }
 
-        private void MergeSnapshot(BingMapPolylineOptions value)
+        [JsonIgnore]
+        public BingMapPolylineOptions OptionsSnapshot { get; set; } = new BingMapPolylineOptions
         {
-            OptionsSnapshot.Cursor = value?.Cursor ?? OptionsSnapshot?.Cursor;
-            OptionsSnapshot.Generalizable = value?.Generalizable ?? OptionsSnapshot?.Generalizable;
-            OptionsSnapshot.StrokeColor = value?.StrokeColor ?? OptionsSnapshot.StrokeColor;
-            OptionsSnapshot.StrokeDashArray = value?.StrokeDashArray ?? OptionsSnapshot?.StrokeDashArray;
-            OptionsSnapshot.StrokeThickness = value?.StrokeThickness ?? OptionsSnapshot?.StrokeThickness;
-            OptionsSnapshot.Visible = value?.Visible ?? OptionsSnapshot?.Visible;
-        }
+            Cursor = "pointer",
+            Generalizable = true,
+            Visible = true
+        };
 
-        public string Metadata { get; set; }
+        #endregion Properties
+
+        #region Constructors
 
         public BingMapPolyline()
         {
@@ -72,15 +73,15 @@ namespace RPedretti.RazorComponents.BingMap.Entities.Polyline
             Id ??= "polyline-" + Guid.NewGuid().ToString();
         }
 
-        public override void Dispose()
+        #endregion Constructors
+
+        #region Methods
+
+        private void AssureThisRef()
         {
-            try
+            if (thisRef == null)
             {
-                JSRuntime.InvokeAsync<object>($"{_polylineNamespace}.remove", Id).AsTask()
-                    .ContinueWith(t => thisRef.Dispose());
-            } catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
+                thisRef = DotNetObjectReference.Create(this);
             }
         }
 
@@ -95,12 +96,34 @@ namespace RPedretti.RazorComponents.BingMap.Entities.Polyline
             }
         }
 
-        private void AssureThisRef()
+        private void CoordinatesChanged(object sender, System.ComponentModel.ListChangedEventArgs e)
         {
-            if (thisRef == null)
+            RaisePropertyChanged();
+        }
+
+        private void MergeSnapshot(BingMapPolylineOptions value)
+        {
+            OptionsSnapshot.Cursor = value?.Cursor ?? OptionsSnapshot?.Cursor;
+            OptionsSnapshot.Generalizable = value?.Generalizable ?? OptionsSnapshot?.Generalizable;
+            OptionsSnapshot.StrokeColor = value?.StrokeColor ?? OptionsSnapshot.StrokeColor;
+            OptionsSnapshot.StrokeDashArray = value?.StrokeDashArray ?? OptionsSnapshot?.StrokeDashArray;
+            OptionsSnapshot.StrokeThickness = value?.StrokeThickness ?? OptionsSnapshot?.StrokeThickness;
+            OptionsSnapshot.Visible = value?.Visible ?? OptionsSnapshot?.Visible;
+        }
+
+        public override void Dispose()
+        {
+            try
             {
-                thisRef = DotNetObjectReference.Create(this);
+                JSRuntime.InvokeAsync<object>($"{_polylineNamespace}.remove", Id).AsTask()
+                    .ContinueWith(t => thisRef.Dispose());
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
             }
         }
+
+        #endregion Methods
     }
 }

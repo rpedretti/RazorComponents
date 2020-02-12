@@ -6,7 +6,6 @@ namespace RPedretti.RazorComponents.BingMap.Entities.Polyline
 {
     public partial class BingMapPolyline : BaseBingMapEntity
     {
-
         #region Fields
 
         private const string attachEventFunctionName = _polylineNamespace + ".attachEvent";
@@ -17,44 +16,16 @@ namespace RPedretti.RazorComponents.BingMap.Entities.Polyline
         #region Events
 
         private event EventHandler<MouseEventArgs<BingMapPolyline>> _onClick;
+
         private event EventHandler<MouseEventArgs<BingMapPolyline>> _onDoubleClick;
+
         private event EventHandler<MouseEventArgs<BingMapPolyline>> _onMouseDown;
+
         private event EventHandler<MouseEventArgs<BingMapPolyline>> _onMouseOut;
+
         private event EventHandler<MouseEventArgs<BingMapPolyline>> _onMouseOver;
+
         private event EventHandler<MouseEventArgs<BingMapPolyline>> _onMouseUp;
-
-        #endregion Events
-
-        #region Methods
-
-        [JSInvokable]
-        public Task EmitPolylineEvent(MouseEventArgs<BingMapPolyline> args)
-        {
-            switch (args.EventName)
-            {
-                case PolylineEvents.Click:
-                    _onClick?.Invoke(this, args);
-                    break;
-                case PolylineEvents.DoubleClick:
-                    _onDoubleClick?.Invoke(this, args);
-                    break;
-                case PolylineEvents.MouseDown:
-                    _onMouseDown?.Invoke(this, args);
-                    break;
-                case PolylineEvents.MouseOut:
-                    _onMouseOut?.Invoke(this, args);
-                    break;
-                case PolylineEvents.MouseOver:
-                    _onMouseOver?.Invoke(this, args);
-                    break;
-                case PolylineEvents.MouseUp:
-                    _onMouseUp?.Invoke(this, args);
-                    break;
-            }
-            return Task.CompletedTask;
-        }
-
-        #endregion Methods
 
         public event EventHandler<MouseEventArgs<BingMapPolyline>> OnClick
         {
@@ -187,5 +158,43 @@ namespace RPedretti.RazorComponents.BingMap.Entities.Polyline
                 CheckThisRef();
             }
         }
+
+        #endregion Events
+
+        #region Methods
+
+        [JSInvokable]
+        public Task EmitPolylineEvent(MouseEventArgs<BingMapPolyline> args)
+        {
+            switch (args.EventName)
+            {
+                case PolylineEvents.Click:
+                    _onClick?.Invoke(this, args);
+                    break;
+
+                case PolylineEvents.DoubleClick:
+                    _onDoubleClick?.Invoke(this, args);
+                    break;
+
+                case PolylineEvents.MouseDown:
+                    _onMouseDown?.Invoke(this, args);
+                    break;
+
+                case PolylineEvents.MouseOut:
+                    _onMouseOut?.Invoke(this, args);
+                    break;
+
+                case PolylineEvents.MouseOver:
+                    _onMouseOver?.Invoke(this, args);
+                    break;
+
+                case PolylineEvents.MouseUp:
+                    _onMouseUp?.Invoke(this, args);
+                    break;
+            }
+            return Task.CompletedTask;
+        }
+
+        #endregion Methods
     }
 }

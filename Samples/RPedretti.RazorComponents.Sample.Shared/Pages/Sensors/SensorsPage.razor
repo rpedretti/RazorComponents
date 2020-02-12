@@ -1,0 +1,38 @@
+﻿@namespace RPedretti.RazorComponents.Sample.Shared.Pages.Sensors
+@using System.Text.Json;
+@using RPedretti.RazorComponents.Input.Spinner
+@using RPedretti.RazorComponents.Sensors.AmbientLight
+@using RPedretti.RazorComponents.Sensors.Geolocation
+@using RPedretti.RazorComponents.Input.ToggleSwitch
+@using RPedretti.RazorComponents.Shared.Components
+
+@page "/sensors"
+@inherits BaseComponent
+
+<Geolocation Watching="@Watching" />
+<LightSensor PollTime="1" />
+
+<div class="sensors">
+    <div class="sensors-ambientlight">
+        <h1>Ambient light</h1>
+        <p>Ambient light is @(LightError ?? Light.ToString())</p>
+    </div>
+    <div class="sensors-geolocation">
+        <h1>Position</h1>
+        <div class="sensors-geolocation-controls">
+            <ToggleSwitch @bind-Checked="@Watching" Label="Watch Position"></ToggleSwitch>
+        </div>
+        @if (Watching & Position == null)
+        {
+            <Spinner Centered Active />
+        }
+        else if (Watching && Position != null)
+        {
+            <pre>@(JsonSerializer.Serialize(Position, new JsonSerializerOptions { WriteIndented = true }))</pre>
+        }
+        else
+        {
+            <p>No readings</p>
+        }
+    </div>
+</div>

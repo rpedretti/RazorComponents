@@ -1,6 +1,6 @@
-﻿@inherits MoviePosterBase
+﻿@using RPedretti.RazorComponents.Shared.Components
 @using RPedretti.RazorComponents.Input.Spinner
-
+@inherits BaseAccessibleComponent
 
 <div class="movie-poster_card"
      tabindex="0"
@@ -24,7 +24,7 @@
                  alt="@Movie.Title"
                  src="@(ImageError ? "_content/rpedretti.razorcomponents.sample.shared/assets/poster-placeholder.png" : Movie.Poster)"
                  @onerror="UpdateError"
-                 @onload="UpdateLoader"/>
+                 @onload="UpdateLoader" />
         }
     </div>
 </div>

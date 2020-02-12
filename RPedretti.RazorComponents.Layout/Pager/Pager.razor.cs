@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Components;
-using RPedretti.RazorComponents.Shared.Components;
 using System;
 using System.Threading.Tasks;
 
@@ -12,7 +11,7 @@ namespace RPedretti.RazorComponents.Layout.Pager
         CENTER
     }
 
-    public class PagerBase : BaseAccessibleComponent
+    public partial class Pager
     {
         #region Fields
 
@@ -28,7 +27,7 @@ namespace RPedretti.RazorComponents.Layout.Pager
 
         #region Properties
 
-        private int TotalPaginationPages { get; set; }
+        private int _totalPaginationPages { get; set; }
 
         protected int IndicatorCount { get; set; }
 
@@ -79,7 +78,7 @@ namespace RPedretti.RazorComponents.Layout.Pager
                     var limit = Math.Min(PageCount - start + 1, MaxIndicators);
 
                     ShowFirst = CurrentPage > MaxIndicators;
-                    ShowLast = Math.Ceiling(CurrentPage / (double)MaxIndicators) < TotalPaginationPages;
+                    ShowLast = Math.Ceiling(CurrentPage / (double)MaxIndicators) < _totalPaginationPages;
 
                     for (int i = 0; i < limit; i++)
                     {
@@ -145,7 +144,7 @@ namespace RPedretti.RazorComponents.Layout.Pager
                 };
             }
 
-            TotalPaginationPages = (int)Math.Ceiling(PageCount / (double)MaxIndicators);
+            _totalPaginationPages = (int)Math.Ceiling(PageCount / (double)MaxIndicators);
             _initialized = true;
             UpdatePagerCount();
         }

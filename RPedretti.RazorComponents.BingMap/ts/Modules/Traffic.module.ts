@@ -17,9 +17,7 @@ export class TrafficModule {
 
     public updateTraffic = (mapId: string, options: Microsoft.Maps.Traffic.ITrafficOptions) => {
         const manager = this._managers.get(mapId);
-        if (!!manager) {
-            manager.setOptions(options);
-        }
+        manager?.setOptions(options);
 
         return 1;
     }

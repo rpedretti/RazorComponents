@@ -1,4 +1,5 @@
 ﻿using Microsoft.JSInterop;
+using System.Text.Json.Serialization;
 
 namespace RPedretti.RazorComponents.BingMap.Entities.Pushpin
 {
@@ -17,8 +18,10 @@ namespace RPedretti.RazorComponents.BingMap.Entities.Pushpin
 
         #region Properties
 
+        [JsonPropertyName("center")]
         public Geocoordinate Center { get => _center; set => SetParameter(ref _center, value); }
 
+        [JsonPropertyName("options")]
         public PushpinOptions Options
         {
             get => _options;
@@ -47,7 +50,7 @@ namespace RPedretti.RazorComponents.BingMap.Entities.Pushpin
             EnableClickedStyle = false,
             EnableHoverStyle = false,
             RoundClickableArea = false,
-            TextOffset = new System.Drawing.Point(0, 5),
+            TextOffset = new GeolocatonPoint { X = 0, Y = 0.5 },
             Visible = true
         };
 

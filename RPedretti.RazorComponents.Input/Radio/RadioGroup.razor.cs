@@ -1,22 +1,21 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using RPedretti.RazorComponents.Shared.Components;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace RPedretti.RazorComponents.Input.Radio
 {
-    public abstract class RadioGroupBase : BaseComponent
+    public partial class RadioGroup
     {
         #region Properties
 
-        [Parameter] public IEnumerable<RadioButton> Buttons { get; set; }
+        [Parameter] public IEnumerable<RadioButton> Buttons { get; set; } = new List<RadioButton>();
 
         [Parameter] public bool CanDeselect { get; set; }
 
         [Parameter] public RadioOrientation Orientation { get; set; } = RadioOrientation.VERTICAL;
 
-        [Parameter] public RadioButton Selected { get; set; }
+        [Parameter] public RadioButton? Selected { get; set; }
 
         [Parameter] public EventCallback<RadioButton> SelectedChanged { get; set; }
 

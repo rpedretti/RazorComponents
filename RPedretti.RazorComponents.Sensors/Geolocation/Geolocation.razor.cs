@@ -2,27 +2,26 @@
 using Microsoft.Extensions.Logging;
 using Microsoft.JSInterop;
 using RPedretti.RazorComponents.Sensors.AmbientLight;
-using RPedretti.RazorComponents.Shared.Components;
 using System;
 using System.Threading.Tasks;
 
 namespace RPedretti.RazorComponents.Sensors.Geolocation
 {
-    public class GeolocationBase : BaseComponent, IDisposable
+    public partial class Geolocation : IDisposable
     {
         #region Fields
 
         private bool? _internalWatching;
         private bool init;
-        private DotNetObjectReference<GeolocationBase> thisRef;
+        private DotNetObjectReference<Geolocation> thisRef;
         private int? watchId;
 
         #endregion Fields
 
         #region Properties
 
-        [Inject] private IJSRuntime JSRuntime { get; set; }
         [Inject] private GeolocationSensorService GeolocationSensorService { get; set; }
+        [Inject] private IJSRuntime JSRuntime { get; set; }
         [Inject] private ILogger<LightSensor> Logger { get; set; }
 
         [Parameter] public EventCallback<PositionError> OnError { get; set; }

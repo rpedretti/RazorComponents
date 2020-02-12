@@ -1,0 +1,12 @@
+﻿.hello-modal {
+    width: 100px;
+    height: 100px;
+    background-color: white;
+    margin: auto;
+    border-radius: 4px;
+    box-shadow: rgba(0,0,0,0.8) 0 0 10px;
+
+    & > &-content {
+        padding: 8px;
+    }
+}

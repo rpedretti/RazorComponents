@@ -47,9 +47,7 @@ export class Geolocation {
     }
 
     stopWatchPosition = (watchId: number) => {
-        if (navigator.geolocation) {
-            navigator.geolocation.clearWatch(watchId);
-        }
+        navigator.geolocation?.clearWatch(watchId);
     }
 }
 

@@ -1,4 +1,3 @@
-using System.Text.Json;
 using Microsoft.AspNetCore.Components.Builder;
 using Microsoft.Extensions;
 using Microsoft.Extensions.Configuration;
@@ -14,12 +13,11 @@ namespace RPedretti.RazorComponents.Wasm.Sample
     {
         public void ConfigureServices(IServiceCollection services)
         {
-            var fileProvider = new EmbeddedFileProvider(this.GetType().Assembly);
+            var fileProvider = new EmbeddedFileProvider(GetType().Assembly);
             var configuration = new ConfigurationBuilder()
                 .AddJsonFile(provider: fileProvider, path: "appsettings.json", optional: true, reloadOnChange: false)
                 .Build();
 
-            
             services.AddSingleton<IFileProvider>(fileProvider);
             services.AddSingleton(configuration.GetSection("Weather").Get<WeatherConfig>());
             services.AddSingleton<IConfiguration>(configuration);

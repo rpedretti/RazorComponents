@@ -11,10 +11,6 @@ namespace RPedretti.RazorComponents.BingMap.Modules.Directions
         private const string ModuleId = "Microsoft.Maps.Directions";
         private DotNetObjectReference<BingMapDirectionsModule> thisRef;
 
-        public BingMapDirectionsModule(IJSRuntime jSRuntime): base(jSRuntime)
-        {
-        }
-
         #endregion Fields
 
         #region Properties
@@ -33,6 +29,14 @@ namespace RPedretti.RazorComponents.BingMap.Modules.Directions
         public event EventHandler DirectionsUpdated;
 
         #endregion Events
+
+        #region Constructors
+
+        public BingMapDirectionsModule(IJSRuntime jSRuntime) : base(jSRuntime)
+        {
+        }
+
+        #endregion Constructors
 
         #region Methods
 

@@ -7,15 +7,50 @@ namespace RPedretti.RazorComponents.BingMap.Collections
 {
     public abstract class BaseBingMapEntityList<T> : System.ComponentModel.BindingList<T> where T : BaseBingMapEntity
     {
+        #region Events
+
         public event EventHandler<T> BeforeRemove;
+
         public event EventHandler<IEnumerable<T>> BeforeRemoveRange;
+
         public event EventHandler<RangeChangdEventArgs> ListRangeChanged;
+
+        #endregion Events
+
+        #region Methods
 
         protected override void RemoveItem(int index)
         {
             T deletedItem = Items[index];
             BeforeRemove?.Invoke(this, deletedItem);
             base.RemoveItem(index);
+        }
+
+        public void AddRange(IEnumerable<T> collection)
+        {
+            if (collection == null)
+            {
+                throw new ArgumentNullException(nameof(collection));
+            }
+
+            var oldRaiseEventsValue = RaiseListChangedEvents;
+            var start = this.Items.Count;
+            var ammount = collection.Count();
+
+            try
+            {
+                RaiseListChangedEvents = false;
+
+                foreach (var value in collection)
+                {
+                    Add(value);
+                }
+            }
+            finally
+            {
+                RaiseListChangedEvents = oldRaiseEventsValue;
+                ListRangeChanged?.Invoke(this, new RangeChangdEventArgs(start, ammount, RangeChangeType.Add));
+            }
         }
 
         public void RemoveRange(int start, int ammount)
@@ -37,7 +72,6 @@ namespace RPedretti.RazorComponents.BingMap.Collections
                     base.RemoveItem(index);
                 }
                 BeforeRemoveRange?.Invoke(this, items);
-
             }
             finally
             {
@@ -46,31 +80,6 @@ namespace RPedretti.RazorComponents.BingMap.Collections
             }
         }
 
-        public void AddRange(IEnumerable<T> collection)
-        {
-            if (collection == null)
-            {
-                throw new ArgumentNullException(nameof(collection));
-            }
-
-            var oldRaiseEventsValue = RaiseListChangedEvents;
-            var start = this.Items.Count;
-            var ammount = collection.Count();
-
-            try
-            {
-                RaiseListChangedEvents = false;
-                
-                foreach (var value in collection)
-                {
-                    Add(value);
-                }
-            }
-            finally
-            {
-                RaiseListChangedEvents = oldRaiseEventsValue;
-                ListRangeChanged?.Invoke(this, new RangeChangdEventArgs(start, ammount, RangeChangeType.Add));
-            }
-        }
+        #endregion Methods
     }
 }

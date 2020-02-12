@@ -1,4 +1,37 @@
 ﻿@page "/pushpins"
-@inherits PushPinsPageBase
+@using RPedretti.RazorComponents.BingMap
+@using RPedretti.RazorComponents.BingMap.Entities.Pushpin
+@using RPedretti.RazorComponents.Shared.Components
 
-<h3>PinsPage</h3>
+@inherits BaseComponent
+
+<div class="pushpin-page">
+    <div style="width: 300px; display:inline-block; float:left">
+        <span style="display:inline-block; margin-right: 12px">Map click: @MapClick</span>
+        <span style="display:inline-block;">Map Right Click: @MapRightClick</span>
+        <button class="btn btn-primary update-btn" @onclick="AddPushpin" disabled="@DisableAddButton">Add pushpin</button>
+        <ul class="list-group">
+            @foreach (BingMapPushpin pushpin in Entities)
+            {
+                var p = pushpin;
+                <li class="list-group-item" title="(@(p.Center.Latitude), @(p.Center.Longitude))">
+                    <span style="vertical-align: middle;line-height: 38px;">@(p.Id)</span>
+                    <span style="float:right;">
+                        <i class="@($"btn fas fa-{(p.OptionsSnapshot.Visible ?? true ? "eye" : "eye-slash")}")" @onclick="() => ToggleVisibility(p)"></i>
+                        <i class="btn fas fa-times" style="font-weight:900;" @onclick="() => RemovePushpin(p)"></i>
+                    </span>
+                </li>
+            }
+        </ul>
+    </div>
+    <BingMap Id="@BingMapId"
+             @ref="bingMap"
+             ApiKey="AkUyQ5km3V0tUHk_BL1gRFWunbT1x6dlbH_0mUHDREAHPgsJ1LlpS0ma2-0SIvV7"
+             Entities="@Entities"
+             MapsConfig="@MapsConfig"
+             ViewConfig="@MapsViewConfig"
+             MapLoaded="@MapLoaded"
+             Click="@OnMapClick"
+             RightClick="@OnMapRightClick"
+             ThrottleViewChangeEnd="@OnMapThrottleViewChangeEnd" />
+</div>

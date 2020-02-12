@@ -8,17 +8,28 @@ namespace RPedretti.RazorComponents.BingMap
 {
     public sealed class DevToolService
     {
+        #region Properties
+
+        public IJSRuntime JSRuntime { get; }
+
+        #endregion Properties
+
+        #region Constructors
+
         public DevToolService(IJSRuntime jSRuntime)
         {
             JSRuntime = jSRuntime;
         }
 
-        public IJSRuntime JSRuntime { get; }
+        #endregion Constructors
+
+        #region Methods
 
         public async Task<List<BingMapPushpin>> GetPushpins(int ammount, LocationRectangle bounds = null, PushpinOptions options = null)
         {
-            var p = await JSRuntime.InvokeAsync<List<BingMapPushpin>>("rpedrettiBlazorComponents.bingMap.devTools.getPushpins", ammount, bounds, options);
-            return p;
-         }
+            return await JSRuntime.InvokeAsync<List<BingMapPushpin>>("rpedrettiBlazorComponents.bingMap.devTools.getPushpins", ammount, bounds, options);
+        }
+
+        #endregion Methods
     }
 }

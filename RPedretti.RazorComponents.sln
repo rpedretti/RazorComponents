@@ -17,6 +17,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{FB46
 	ProjectSection(SolutionItems) = preProject
 		scripts\build-debug.ps1 = scripts\build-debug.ps1
 		scripts\build-prod.ps1 = scripts\build-prod.ps1
+		scripts\build-prod.sh = scripts\build-prod.sh
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{16206768-4832-4209-B307-8689E71165AE}"
@@ -24,12 +25,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RPedretti.RazorComponents.Wasm.Sample", "Samples\RPedretti.RazorComponents.Wasm.Sample\RPedretti.RazorComponents.Wasm.Sample.csproj", "{3B9DB598-7BD2-419F-AC3F-6998B4713973}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RPedretti.RazorComponents.Sample.Shared", "Samples\RPedretti.RazorComponents.Sample.Shared\RPedretti.RazorComponents.Sample.Shared.csproj", "{BD546317-FAAF-497B-9F3A-CB783A771695}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{3DEB6EA2-0C39-4450-A92B-DDC0EBECEE3D}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RPedretti.RazorComponents.Input.Tests", "Tests\RPedretti.RazorComponents.Input.Tests\RPedretti.RazorComponents.Input.Tests.csproj", "{D0D915F8-1706-48A5-A135-2FF16ACA9935}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.AspNetCore.Components.Testing", "..\BlazorUnitTestingPrototype\Microsoft.AspNetCore.Components.Testing\Microsoft.AspNetCore.Components.Testing.csproj", "{D2756B8A-69E7-4AED-AB85-35C051B4E0C1}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RPedretti.RazorComponents.BingMap", "RPedretti.RazorComponents.BingMap\RPedretti.RazorComponents.BingMap.csproj", "{26435277-399A-4C80-BB97-9703B64D626F}"
 EndProject
@@ -129,30 +124,6 @@ Global
 		{BD546317-FAAF-497B-9F3A-CB783A771695}.Release|x64.Build.0 = Release|Any CPU
 		{BD546317-FAAF-497B-9F3A-CB783A771695}.Release|x86.ActiveCfg = Release|Any CPU
 		{BD546317-FAAF-497B-9F3A-CB783A771695}.Release|x86.Build.0 = Release|Any CPU
-		{D0D915F8-1706-48A5-A135-2FF16ACA9935}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D0D915F8-1706-48A5-A135-2FF16ACA9935}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D0D915F8-1706-48A5-A135-2FF16ACA9935}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{D0D915F8-1706-48A5-A135-2FF16ACA9935}.Debug|x64.Build.0 = Debug|Any CPU
-		{D0D915F8-1706-48A5-A135-2FF16ACA9935}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{D0D915F8-1706-48A5-A135-2FF16ACA9935}.Debug|x86.Build.0 = Debug|Any CPU
-		{D0D915F8-1706-48A5-A135-2FF16ACA9935}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D0D915F8-1706-48A5-A135-2FF16ACA9935}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D0D915F8-1706-48A5-A135-2FF16ACA9935}.Release|x64.ActiveCfg = Release|Any CPU
-		{D0D915F8-1706-48A5-A135-2FF16ACA9935}.Release|x64.Build.0 = Release|Any CPU
-		{D0D915F8-1706-48A5-A135-2FF16ACA9935}.Release|x86.ActiveCfg = Release|Any CPU
-		{D0D915F8-1706-48A5-A135-2FF16ACA9935}.Release|x86.Build.0 = Release|Any CPU
-		{D2756B8A-69E7-4AED-AB85-35C051B4E0C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D2756B8A-69E7-4AED-AB85-35C051B4E0C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D2756B8A-69E7-4AED-AB85-35C051B4E0C1}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{D2756B8A-69E7-4AED-AB85-35C051B4E0C1}.Debug|x64.Build.0 = Debug|Any CPU
-		{D2756B8A-69E7-4AED-AB85-35C051B4E0C1}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{D2756B8A-69E7-4AED-AB85-35C051B4E0C1}.Debug|x86.Build.0 = Debug|Any CPU
-		{D2756B8A-69E7-4AED-AB85-35C051B4E0C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D2756B8A-69E7-4AED-AB85-35C051B4E0C1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D2756B8A-69E7-4AED-AB85-35C051B4E0C1}.Release|x64.ActiveCfg = Release|Any CPU
-		{D2756B8A-69E7-4AED-AB85-35C051B4E0C1}.Release|x64.Build.0 = Release|Any CPU
-		{D2756B8A-69E7-4AED-AB85-35C051B4E0C1}.Release|x86.ActiveCfg = Release|Any CPU
-		{D2756B8A-69E7-4AED-AB85-35C051B4E0C1}.Release|x86.Build.0 = Release|Any CPU
 		{26435277-399A-4C80-BB97-9703B64D626F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{26435277-399A-4C80-BB97-9703B64D626F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{26435277-399A-4C80-BB97-9703B64D626F}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -185,8 +156,6 @@ Global
 		{87B86669-7795-4765-8766-A3EBE9DC1B8F} = {16206768-4832-4209-B307-8689E71165AE}
 		{3B9DB598-7BD2-419F-AC3F-6998B4713973} = {16206768-4832-4209-B307-8689E71165AE}
 		{BD546317-FAAF-497B-9F3A-CB783A771695} = {16206768-4832-4209-B307-8689E71165AE}
-		{D0D915F8-1706-48A5-A135-2FF16ACA9935} = {3DEB6EA2-0C39-4450-A92B-DDC0EBECEE3D}
-		{D2756B8A-69E7-4AED-AB85-35C051B4E0C1} = {3DEB6EA2-0C39-4450-A92B-DDC0EBECEE3D}
 		{CC44B1E4-698C-4CA5-B26E-5A9353D00713} = {16206768-4832-4209-B307-8689E71165AE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution

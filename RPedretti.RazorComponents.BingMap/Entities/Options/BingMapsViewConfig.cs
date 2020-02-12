@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace RPedretti.RazorComponents.BingMap.Entities
 {
@@ -6,11 +7,14 @@ namespace RPedretti.RazorComponents.BingMap.Entities
     {
         #region Properties
 
+        [JsonPropertyName("center")]
         public Geocoordinate Center { get; set; }
 
+        [JsonPropertyName("mapTypeId")]
         public string MapTypeId { get; set; }
 
-        public int Zoom { get; set; } = 10;
+        [JsonPropertyName("zoom")]
+        public int? Zoom { get; set; }
 
         #endregion Properties
 
@@ -32,8 +36,7 @@ namespace RPedretti.RazorComponents.BingMap.Entities
 
         public override bool Equals(object obj)
         {
-            var config = obj as BingMapsViewConfig;
-            return config != null &&
+            return obj is BingMapsViewConfig config &&
                    Zoom == config.Zoom &&
                    MapTypeId == config.MapTypeId &&
                    EqualityComparer<Geocoordinate>.Default.Equals(Center, config.Center);
@@ -41,11 +44,7 @@ namespace RPedretti.RazorComponents.BingMap.Entities
 
         public override int GetHashCode()
         {
-            var hashCode = -1051533646;
-            hashCode = hashCode * -1521134295 + Zoom.GetHashCode();
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(MapTypeId);
-            hashCode = hashCode * -1521134295 + EqualityComparer<Geocoordinate>.Default.GetHashCode(Center);
-            return hashCode;
+            return System.HashCode.Combine(Zoom, MapTypeId, Center);
         }
 
         #endregion Methods

@@ -1,45 +1,42 @@
-﻿using Microsoft.AspNetCore.Components;
-using Microsoft.JSInterop;
-using RPedretti.RazorComponents.Layout.Models;
+﻿using RPedretti.RazorComponents.Layout.Models;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace RPedretti.RazorComponents.Layout.Services
 {
     public class ModalService : IModalService
     {
-        private readonly IJSRuntime _jSRuntime;
+        #region Properties
 
-        public event EventHandler<ShowModalEventArgs> ShowChanged;
         public bool IsOpen { get; private set; }
 
-        public ModalService(IJSRuntime jSRuntime)
+        #endregion Properties
+
+        #region Events
+
+        public event EventHandler<ShowModalEventArgs> ShowChanged;
+
+        #endregion Events
+
+        #region Methods
+
+        public void Hide()
         {
-            _jSRuntime = jSRuntime;
+            IsOpen = false;
+            ShowChanged?.Invoke(this, new ShowModalEventArgs { Show = false });
         }
 
         public void Show(ModalConfig config = null)
         {
             var modalConfig = config ?? new ModalConfig();
             IsOpen = true;
-            ShowChanged?.Invoke(this, new ShowModalEventArgs {
-                Show = true, 
+            ShowChanged?.Invoke(this, new ShowModalEventArgs
+            {
+                Show = true,
                 CloseOnOverlayClick = modalConfig.CloseOnOverlayClick,
                 Content = modalConfig.Content
             });
-
-            if (config.LockScroll)
-            {
-                _jSRuntime.InvokeVoidAsync("rpedrettiBlazorComponents.modal.setScroll", false);
-            }
         }
 
-        public void Hide()
-        {
-            IsOpen = false;
-            ShowChanged?.Invoke(this, new ShowModalEventArgs { Show = false });
-            _jSRuntime.InvokeVoidAsync("rpedrettiBlazorComponents.modal.setScroll", true);
-        }
+        #endregion Methods
     }
 }

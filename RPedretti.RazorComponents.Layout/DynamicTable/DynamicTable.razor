@@ -1,5 +1,6 @@
-﻿@typeparam TItem
-@inherits DynamicTableBase
+﻿@using RPedretti.RazorComponents.Shared.Components
+@typeparam TItem
+@inherits BaseComponent
 
 <div class="dynamic-table">
     <table class="@($"table {@Classes}")">
@@ -36,7 +37,8 @@
                                 {
                                     @column.Template(row.Context);
                                 }
-                                else {
+                                else
+                                {
                                     @row.Context.ToString();
                                 }
                             </td>
@@ -51,16 +53,3 @@
         @LoadingTemplate
     }
 </div>
-
-@code {
-    [Parameter] public IEnumerable<DynamicTableRow<TItem>> Rows { get; set; } = new DynamicTableRow<TItem>[] { };
-    [Parameter] public IEnumerable<DynamicTableColumn<TItem>> Columns { get; set; } = new DynamicTableColumn<TItem>[] { };
-    [Parameter] public Func<DynamicTableRow<TItem>, Task> OnRowClick { get; set; }
-    [Parameter] public RenderFragment LoadingTemplate { get; set; }
-
-    protected Task SortHeader(DynamicTableHeader header)
-    {
-        if (header.CanSort) Sort(header);
-        return Task.CompletedTask;
-    }
-}

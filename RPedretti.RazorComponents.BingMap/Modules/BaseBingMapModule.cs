@@ -5,13 +5,20 @@ namespace RPedretti.RazorComponents.BingMap.Modules
 {
     public abstract class BaseBingMapModule : IBingMapModule
     {
+        #region Properties
+
+        protected IJSRuntime JSRuntime { get; set; }
+
+        #endregion Properties
+
+        #region Constructors
 
         public BaseBingMapModule(IJSRuntime jSRuntime)
         {
             JSRuntime = jSRuntime;
         }
 
-        protected IJSRuntime JSRuntime { get; set; }
+        #endregion Constructors
 
         #region Methods
 
