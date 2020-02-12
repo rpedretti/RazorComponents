@@ -1,4 +1,4 @@
-name: Build BingMap
+name: 'Build Input'
 
 on:
   push:
