@@ -1,7 +1,6 @@
 name: Build BingMap
 
 on:
-  pull_request:
   push:
     branches-ignore: master
     paths: RazorComponents/RPedretti.RazorComponents.Input/**
