@@ -1,12 +1,8 @@
-name: Build BingMap
+name: Build BingMap PR
 
 on:
-  push:
-    branches-ignore:
-    - master
-    paths: 
-    - RPedretti.RazorComponents.BingMap/**
   pull_request:
+    types: [opened, synchronize, reopened]
     branches-ignore: 
       - master
     paths:
