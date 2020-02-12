@@ -3,12 +3,14 @@ name: Build BingMap
 on:
   push:
     branches-ignore:
-      - master
-    paths: '**/RPedretti.RazorComponents.BingMap/**'
+    - master
+    paths: 
+    - '**/RPedretti.RazorComponents.BingMap/**'
   pull_request:
     branches-ignore: 
       - master
-    paths: '**/RPedretti.RazorComponents.BingMap/**'
+    paths:
+    - '**/RPedretti.RazorComponents.BingMap/**'
     
 jobs:
   build:
