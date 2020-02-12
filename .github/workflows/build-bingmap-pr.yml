@@ -7,13 +7,13 @@ on:
   push:
     branches-ignore:
     - master
-    paths: 
-    - {{ env.project }}/**
+    paths:
+    - '{{ env.project }}/**'
   pull_request:
     branches-ignore: 
       - master
     paths:
-    - {{ env.project }}/**
+    - '{{ env.project }}/**'
     
 jobs:
   build:
