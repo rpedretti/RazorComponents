@@ -9,6 +9,8 @@ on:
     - RPedretti.RazorComponents.Layout/**
     - RPedretti.RazorComponents.Sensors/**
     - RPedretti.RazorComponents.Shared/**
+    - RPedretti.RazorComponents.Sample.Shared/**
+    - Samples/RPedretti.RazorComponents.Wasm.Sample/**
     
 jobs:
   publish:

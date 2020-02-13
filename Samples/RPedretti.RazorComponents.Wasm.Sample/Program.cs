@@ -24,9 +24,7 @@ namespace RPedretti.RazorComponents.Wasm.Sample
 
             builder.RootComponents.Add<App>("app");
 
-            var host = builder.Build();
-
-            await host.RunAsync();
+            await builder.Build().RunAsync();
         }
 
         private static void RegisterDependencies(IServiceCollection services, IConfigurationBuilder configurationBuilder)

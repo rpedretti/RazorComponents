@@ -24,8 +24,6 @@ namespace RPedretti.RazorComponents.Wasm.BingMap
 
             var host = builder.Build();
 
-            Console.WriteLine(string.Join("\n", host.Configuration.AsEnumerable().Select(c => $"{c.Key}:{c.Value}")));
-
             await host.RunAsync();
         }
 
