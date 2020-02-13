@@ -52,7 +52,7 @@ jobs:
       working-directory: ./Samples/RPedretti.RazorComponents.Wasm.BingMap
 
     - name: List content
-      run: ls -la ./publish/RPedretti.RazorComponents.Wasm.BingMap/dist
+      run: ls -laR ./publish
 
     - name: Copy GitHub Pages specific files
       run: cp ./GitHubPages/404.html ./GitHubPages/.nojekyll ./publish/RPedretti.RazorComponents.Wasm.BingMap/dist

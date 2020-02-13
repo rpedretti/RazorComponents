@@ -44,7 +44,7 @@ jobs:
       working-directory: ./Samples/RPedretti.RazorComponents.Wasm.Sample
 
     - name: List content
-      run: ls -la ./publish/RPedretti.RazorComponents.Wasm.Sample/dist
+      run: ls -la ./publish
         
     - name: Copy GitHub Pages specific files
       run: cp ./GitHubPages/404.html ./GitHubPages/.nojekyll ./publish/RPedretti.RazorComponents.Wasm.Sample/dist
