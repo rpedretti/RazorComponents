@@ -27,9 +27,6 @@ jobs:
 
     - name: Install LibMan
       run: dotnet tool install -g Microsoft.Web.LibraryManager.Cli
-
-    - name: Install blazor template
-      run: dotnet new -i Microsoft.AspNetCore.Blazor.Templates::3.2.0-preview1.20073.1
             
     - name: Restore LibMan dependencies
       run: ~/.dotnet/tools/libman restore
@@ -44,7 +41,7 @@ jobs:
       working-directory: ./Samples/RPedretti.RazorComponents.Wasm.Sample
 
     - name: List content
-      run: ls -la ./publish
+      run: ls -laR ./publish
         
     - name: Copy GitHub Pages specific files
       run: cp ./GitHubPages/404.html ./GitHubPages/.nojekyll ./publish/RPedretti.RazorComponents.Wasm.Sample/dist
