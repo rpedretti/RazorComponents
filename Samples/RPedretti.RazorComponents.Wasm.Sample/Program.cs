@@ -6,7 +6,6 @@ using Microsoft.Extensions.FileProviders;
 using RPedretti.RazorComponents.Sample.Shared.HttpClients;
 using RPedretti.RazorComponents.Sample.Shared.Services;
 using RPedretti.RazorComponents.Wasm.Sample.HttpClients;
-using System;
 using System.Reflection;
 using System.Threading.Tasks;
 
@@ -15,17 +14,6 @@ namespace RPedretti.RazorComponents.Wasm.Sample
     public class Program
     {
         #region Methods
-
-        public static async Task Main(string[] args)
-        {
-            var builder = WebAssemblyHostBuilder.CreateDefault(args);
-
-            RegisterDependencies(builder);
-
-            builder.RootComponents.Add<App>("app");
-
-            await builder.Build().RunAsync();
-        }
 
         private static void RegisterDependencies(WebAssemblyHostBuilder builder)
         {
@@ -47,6 +35,17 @@ namespace RPedretti.RazorComponents.Wasm.Sample
             services.AddAmbientLightSensor();
             services.AddGeolocationSensor();
             services.AddModalService();
+        }
+
+        public static async Task Main(string[] args)
+        {
+            var builder = WebAssemblyHostBuilder.CreateDefault(args);
+
+            RegisterDependencies(builder);
+
+            builder.RootComponents.Add<App>("app");
+
+            await builder.Build().RunAsync();
         }
 
         #endregion Methods

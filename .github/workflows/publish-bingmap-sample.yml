@@ -37,7 +37,7 @@ jobs:
       working-directory: ./Samples/RPedretti.RazorComponents.Wasm.BingMap
             
     - name: Restore LibMan dependencies
-      run: libman restore
+      run: ~/.dotnet/tools/libman restore
       working-directory: ./Samples/RPedretti.RazorComponents.Wasm.BingMap
 
     - name: Build with dotnet
