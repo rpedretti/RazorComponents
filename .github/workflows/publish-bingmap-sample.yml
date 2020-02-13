@@ -48,6 +48,9 @@ jobs:
       run: dotnet publish -c Release -o ../../publish
       working-directory: ./Samples/RPedretti.RazorComponents.Wasm.BingMap
 
+    - name: List content
+      run: ls -la ./publish/RPedretti.RazorComponents.Wasm.BingMap/dist
+
     - name: Copy GitHub Pages specific files
       run: cp ./GitHubPages/404.html ./GitHubPages/.nojekyll ./publish/RPedretti.RazorComponents.Wasm.BingMap/dist
         
