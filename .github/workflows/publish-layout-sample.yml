@@ -31,23 +31,23 @@ jobs:
     
     - name: Install npm dependencies
       run: npm i
-      working-directory: .Samples/RPedretti.RazorComponents.Wasm.Sample
+      working-directory: ./Samples/RPedretti.RazorComponents.Wasm.Sample
       
     - name: Build with Node
       run: npm run build:prod
-      working-directory: .Samples/RPedretti.RazorComponents.Wasm.Sample
+      working-directory: ./Samples/RPedretti.RazorComponents.Wasm.Sample
             
     - name: Restore LibMan dependencies
       run: libman restore
-      working-directory: .Samples/RPedretti.RazorComponents.Wasm.Sample
+      working-directory: ./Samples/RPedretti.RazorComponents.Wasm.Sample
 
     - name: Build with dotnet
       run: dotnet build --configuration Release
-      working-directory: .Samples/RPedretti.RazorComponents.Wasm.Sample
+      working-directory: ./Samples/RPedretti.RazorComponents.Wasm.Sample
 
     - name: Create Sample dist folder
       run: dotnet publish -c Release -o ../../publish/dist
-      working-directory: .Samples/RPedretti.RazorComponents.Wasm.Sample
+      working-directory: ./Samples/RPedretti.RazorComponents.Wasm.Sample
         
     - name: Add base ref
       run: sed -i sed -i 's/<base href=".*" \/>/<base href="https:\/\/rpedretti.github.io\/ClientSideRazorComponents\/" \/>/g' publish/dist/index.html
