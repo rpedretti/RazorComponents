@@ -41,7 +41,7 @@ jobs:
       working-directory: ./Samples/RPedretti.RazorComponents.Wasm.Sample
         
     - name: Copy GitHub Pages specific files
-      run: cp ./GitHubPages/* ./publish/RPedretti.RazorComponents.Wasm.Sample/dist
+      run: cp ./GitHubPages/404.html ./GitHubPages/.nojekyll ./publish/RPedretti.RazorComponents.Wasm.Sample/dist
 
     - name: Add base ref
       run: sed -i 's/<base href=".*" \/>/<base href="https:\/\/rpedretti.github.io\/ClientSideRazorComponents\/" \/>/g' ./publish/RPedretti.RazorComponents.Wasm.Sample/dist/index.html

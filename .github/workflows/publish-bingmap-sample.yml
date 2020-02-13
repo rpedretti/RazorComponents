@@ -47,6 +47,9 @@ jobs:
     - name: Create Sample dist folder
       run: dotnet publish -c Release -o ../../publish
       working-directory: ./Samples/RPedretti.RazorComponents.Wasm.BingMap
+
+    - name: Copy GitHub Pages specific files
+      run: cp ./GitHubPages/404.html ./GitHubPages/.nojekyll ./publish/RPedretti.RazorComponents.Wasm.BingMap/dist
         
     - name: Add base ref
       run: sed -i 's/<base href=".*" \/>/<base href="https:\/\/rpedretti.github.io\/BingMapWasm\/" \/>/g' ./publish/RPedretti.RazorComponents.Wasm.BingMap/dist/index.html
