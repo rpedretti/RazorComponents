@@ -41,7 +41,7 @@ jobs:
       working-directory: ./Samples/RPedretti.RazorComponents.Wasm.Sample
         
     - name: Add base ref
-      run: sed -i sed -i 's/<base href=".*" \/>/<base href="https:\/\/rpedretti.github.io\/ClientSideRazorComponents\/" \/>/g' publish/dist/index.html
+      run: sed -i 's/<base href=".*" \/>/<base href="https:\/\/rpedretti.github.io\/ClientSideRazorComponents\/" \/>/g' publish/dist/index.html
           
     - name: GitHub Pages action
       uses: peaceiris/actions-gh-pages@v3.0.3
