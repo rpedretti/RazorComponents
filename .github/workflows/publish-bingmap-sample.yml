@@ -58,4 +58,4 @@ jobs:
         publish_branch: master
         publish_dir: ./publish/RPedretti.RazorComponents.Wasm.BingMap/dist
         external_repository: rpedretti/BingMapWasm
-        commit_message: 'Updated to version $BUILD_NUMBER'
+        commit_message: 'Updated version'

@@ -40,6 +40,9 @@ jobs:
       run: dotnet publish -c Release -o ../../publish
       working-directory: ./Samples/RPedretti.RazorComponents.Wasm.Sample
         
+    - name: Copy GitHub Pages specific files
+      run: cp ./GitHubPages/* ./publish/RPedretti.RazorComponents.Wasm.Sample/dist
+
     - name: Add base ref
       run: sed -i 's/<base href=".*" \/>/<base href="https:\/\/rpedretti.github.io\/ClientSideRazorComponents\/" \/>/g' ./publish/RPedretti.RazorComponents.Wasm.Sample/dist/index.html
           
@@ -50,4 +53,4 @@ jobs:
         publish_branch: master
         publish_dir: ./publish/RPedretti.RazorComponents.Wasm.Sample/dist/
         external_repository: rpedretti/ClientSideRazorComponents
-        commit_message: 'Updated to version $BUILD_NUMBER'
+        commit_message: 'Updated version'
