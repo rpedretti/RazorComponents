@@ -1,0 +1,62 @@
+name: Build Layout Sample
+
+on:
+  push:
+    branches: 
+    - master
+    paths:
+    - RPedretti.RazorComponents.Input/**
+    - RPedretti.RazorComponents.Layout/**
+    - RPedretti.RazorComponents.Sensors/**
+    - RPedretti.RazorComponents.Shared/**
+    
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    name: Build
+
+    steps:
+    - uses: actions/checkout@v2
+      
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.100
+
+    - name: Install LibMan
+      run: dotnet tool install -g Microsoft.Web.LibraryManager.Cli
+    
+    - name: Setup Node.js for use with actions
+      uses: actions/setup-node@v1.1.0
+    
+    - name: Install npm dependencies
+      run: npm i
+      working-directory: .Samples/RPedretti.RazorComponents.Wasm.Sample
+      
+    - name: Build with Node
+      run: npm run build:prod
+      working-directory: .Samples/RPedretti.RazorComponents.Wasm.Sample
+            
+    - name: Restore LibMan dependencies
+      run: libman restore
+      working-directory: .Samples/RPedretti.RazorComponents.Wasm.Sample
+
+    - name: Build with dotnet
+      run: dotnet build --configuration Release
+      working-directory: .Samples/RPedretti.RazorComponents.Wasm.Sample
+
+    - name: Create Sample dist folder
+      run: dotnet publish -c Release -o ../../publish/dist
+      working-directory: .Samples/RPedretti.RazorComponents.Wasm.Sample
+        
+    - name: Add base ref
+      run: sed -i sed -i 's/<base href=".*" \/>/<base href="https:\/\/rpedretti.github.io\/ClientSideRazorComponents\/" \/>/g' publish/dist/index.html
+          
+    - name: GitHub Pages action
+      uses: peaceiris/actions-gh-pages@v3.0.3
+      with:
+        deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+        publish_branch: master
+        publish_dir: ./publish/dist
+        external_repository: rpedretti/ClientSideRazorComponents
+        commit_message: "Updated to version $BUILD_NUMBER"

@@ -1,0 +1,80 @@
+name: Build PR
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+      
+    - name: Cache node modules
+      uses: actions/cache@v1
+      env:
+        cache-name: cache-node-modules
+      with:
+        path: ~/.npm # npm cache files are stored in `~/.npm` on Linux/macOS
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-build-${{ env.cache-name }}-
+          ${{ runner.os }}-build-
+          ${{ runner.os }}-
+
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.100
+    
+    - name: Setup Node.js for use with actions
+      uses: actions/setup-node@v1.1.0
+    
+    - name: Install BingMap npm dependencies
+      run: npm i
+      working-directory: ./RPedretti.RazorComponents.BingMap
+      
+    - name: Build BingMap with Node
+      run: npm run build:prod
+      working-directory: ./RPedretti.RazorComponents.BingMap
+            
+    - name: Build BingMap with dotnet
+      run: dotnet build --configuration Release
+      working-directory: ./RPedretti.RazorComponents.BingMap
+    
+    - name: Install Input npm dependencies
+      run: npm i
+      working-directory: ./RPedretti.RazorComponents.Input
+      
+    - name: Build Input with Node
+      run: npm run build:prod
+      working-directory: ./RPedretti.RazorComponents.Input
+            
+    - name: Build Input with dotnet
+      run: dotnet build --configuration Release
+      working-directory: ./RPedretti.RazorComponents.Input
+    
+    - name: Install Layout npm dependencies
+      run: npm i
+      working-directory: ./RPedretti.RazorComponents.Layout
+      
+    - name: Build Layout with Node
+      run: npm run build:prod
+      working-directory: ./RPedretti.RazorComponents.Layout
+            
+    - name: Build Layout with dotnet
+      run: dotnet build --configuration Release
+      working-directory: ./RPedretti.RazorComponents.Layout
+    
+    - name: Install Sensors npm dependencies
+      run: npm i
+      working-directory: ./RPedretti.RazorComponents.Sensors
+      
+    - name: Build Sensors with Node
+      run: npm run build:prod
+      working-directory: ./RPedretti.RazorComponents.Sensors
+            
+    - name: Build Sensors with dotnet
+      run: dotnet build --configuration Release
+      working-directory: ./RPedretti.RazorComponents.Sensors
