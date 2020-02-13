@@ -18,7 +18,7 @@ namespace RPedretti.RazorComponents.Wasm.BingMap
         {
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
-            RegisterDependencies(builder.Services, builder.Configuration);
+            RegisterDependencies(builder);
 
             builder.RootComponents.Add<App>("app");
 
@@ -27,10 +27,12 @@ namespace RPedretti.RazorComponents.Wasm.BingMap
             await host.RunAsync();
         }
 
-        private static void RegisterDependencies(IServiceCollection services, IConfigurationBuilder configurationBuilder)
+        private static void RegisterDependencies(WebAssemblyHostBuilder builder)
         {
+            var services = builder.Services;
+
             var fileProvider = new EmbeddedFileProvider(Assembly.GetExecutingAssembly());
-            var configuration = configurationBuilder
+            var configuration = builder.Configuration
                 .AddJsonFile(provider: fileProvider, path: "appsettings.json", optional: true, reloadOnChange: false)
                 .Build();
 
