@@ -28,11 +28,27 @@ jobs:
     - name: Setup Node.js for use with actions
       uses: actions/setup-node@v1.1.0
     
-    - name: Install npm dependencies
+    - name: Install Lib npm dependencies
+      run: npm i
+      working-directory: ./RPedretti.RazorComponents.BingMap
+      
+    - name: Build Lib with Node
+      run: npm run build:prod
+      working-directory: ./RPedretti.RazorComponents.BingMap
+    
+    - name: Install Shared npm dependencies
+      run: npm i
+      working-directory: ./Samples/RPedretti.RazorComponents.Sample.Shared
+      
+    - name: Build Shared with Node
+      run: npm run build:prod
+      working-directory: ./Samples/RPedretti.RazorComponents.Sample.Shared
+    
+    - name: Install Sample npm dependencies
       run: npm i
       working-directory: ./Samples/RPedretti.RazorComponents.Wasm.BingMap
       
-    - name: Build with Node
+    - name: Build Sample with Node
       run: npm run build:prod
       working-directory: ./Samples/RPedretti.RazorComponents.Wasm.BingMap
             

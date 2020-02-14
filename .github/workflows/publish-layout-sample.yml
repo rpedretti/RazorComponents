@@ -25,6 +25,49 @@ jobs:
       with:
         dotnet-version: 3.1.100
 
+    - name: Setup Node.js for use with actions
+      uses: actions/setup-node@v1.1.0
+    
+    - name: Install Layout npm dependencies
+      run: npm i
+      working-directory: ./RPedretti.RazorComponents.Layout
+      
+    - name: Build Layout with Node
+      run: npm run build:prod
+      working-directory: ./RPedretti.RazorComponents.Layout
+    
+    - name: Install Sensors npm dependencies
+      run: npm i
+      working-directory: ./RPedretti.RazorComponents.Sensors
+      
+    - name: Build Sensors with Node
+      run: npm run build:prod
+      working-directory: ./RPedretti.RazorComponents.Sensors
+    
+    - name: Install Input npm dependencies
+      run: npm i
+      working-directory: ./RPedretti.RazorComponents.Input
+      
+    - name: Build Input with Node
+      run: npm run build:prod
+      working-directory: ./RPedretti.RazorComponents.Input
+    
+    - name: Install Shared npm dependencies
+      run: npm i
+      working-directory: ./Samples/RPedretti.RazorComponents.Sample.Shared
+      
+    - name: Build Shared with Node
+      run: npm run build:prod
+      working-directory: ./Samples/RPedretti.RazorComponents.Sample.Shared
+    
+    - name: Install Sample npm dependencies
+      run: npm i
+      working-directory: ./Samples/RPedretti.RazorComponents.Wasm.Sample
+      
+    - name: Build Sample with Node
+      run: npm run build:prod
+      working-directory: ./Samples/RPedretti.RazorComponents.Wasm.Sample
+
     - name: Install LibMan
       run: dotnet tool install -g Microsoft.Web.LibraryManager.Cli
             
