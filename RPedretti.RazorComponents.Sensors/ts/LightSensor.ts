@@ -12,6 +12,10 @@
             };
             sensor.start();
             this.sensors.set(sensorRef, sensor);
+        } else if ('ondevicelight' in window) {
+            window.addEventListener('devicelight', e => {
+                sensorRef.invokeMethodAsync('NotifyReading', e.value);
+            });
         } else {
             sensorRef.invokeMethodAsync('NotifyAmbientLightError', 'not supported');
         }
