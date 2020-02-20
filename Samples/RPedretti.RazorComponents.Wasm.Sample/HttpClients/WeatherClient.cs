@@ -3,6 +3,7 @@ using System.Text.Json;
 using RPedretti.RazorComponents.Sample.Shared.HttpClients;
 using RPedretti.RazorComponents.Sample.Shared.Data;
 using Microsoft.Extensions.FileProviders;
+using RPedretti.RazorComponents.Sample.Shared.Configuration;
 
 namespace RPedretti.RazorComponents.Wasm.Sample.HttpClients
 {

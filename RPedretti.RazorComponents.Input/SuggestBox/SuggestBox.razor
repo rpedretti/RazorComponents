@@ -5,7 +5,7 @@
 <div data-widget="acessible-suggest" class="@($"suggest-box{(!LoadingSuggestion && OpenSuggestion ? " -open" : null)}")">
     <div class="sb-input">
         <input type="text"
-               ref="input"
+               @ref="input"
                id="@SuggestBoxId"
                autocomplete="off"
                class="form-control"
@@ -15,8 +15,8 @@
                aria-expanded="@OpenSuggestion"
                aria-activedescendant="@(_suggestionItems.Any(s => s.Selected) ? "selectedOption" : "")"
                @onkeydown="@HandleKeyDown"
-               oninput="dispatchEvent(new CustomEvent('change', { bubbles: true }))"
-               @bind="Query" />
+               @bind-value="Query"
+               @bind-value:event="oninput"/>
         <div class="sb-flyout">
             <ul id="results" class="suggestion-list" role="listbox" tabindex="0">
                 @for (var i = 0; i < _suggestionItems.Count; i++)
@@ -29,7 +29,14 @@
                         role="option"
                         aria-selected="@(item.Selected.ToString().ToLower())"
                         @onclick="@(() => InternalSuggestionSelected(item))">
-                            @SuggestionTemplate?.Invoke(item) ?? <p class="sb-suggestion">@item.Value</p>
+                            @if (SuggestionTemplate != null)
+                            {
+                                @SuggestionTemplate(item);
+                            } 
+                            else 
+                            {
+                                <p class="sb-suggestion">@item.Value</p>
+                            }
                     </li>
                 }
             </ul>

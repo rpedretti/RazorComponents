@@ -1,0 +1,13 @@
+﻿@page "/signalr"
+
+<div class="signalr">
+    <form>
+        <div class="form-group">
+            <input class="form-control" type="text" autocomplete="username" placeholder="username" @bind-value="Username" @bind-value:event="oninput" />
+            <input class="form-control" type="password" autocomplete="current-password" placeholder="password" @bind-value="Password" />
+        </div>
+    </form>
+    <button class="btn btn-primary" @onclick="LoginAsync" disabled="@HasToken">Login</button>
+    <button class="btn btn-primary" @onclick="LogoutAsync" disabled="@(!HasToken)">Logout</button>
+    <button class="btn btn-primary" @onclick="RequestLongProcessAsync" disabled="@(!HasToken)">Request download (5s delay)</button>
+</div>

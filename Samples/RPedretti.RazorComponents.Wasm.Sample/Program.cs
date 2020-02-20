@@ -3,7 +3,9 @@ using Microsoft.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
+using RPedretti.RazorComponents.Sample.Shared.Configuration;
 using RPedretti.RazorComponents.Sample.Shared.HttpClients;
+using RPedretti.RazorComponents.Sample.Shared.Managers;
 using RPedretti.RazorComponents.Sample.Shared.Services;
 using RPedretti.RazorComponents.Wasm.Sample.HttpClients;
 using System.Reflection;
@@ -26,12 +28,16 @@ namespace RPedretti.RazorComponents.Wasm.Sample
 
             services.AddSingleton<IFileProvider>(fileProvider);
             services.AddSingleton(configuration.GetSection("Weather").Get<WeatherConfig>());
+            services.AddSingleton(configuration.GetSection("Hub").Get<HubConfig>());
             services.AddSingleton<IConfiguration>(configuration);
             services.AddSingleton<IWeatherClient, WeatherClient>();
             services.AddSingleton<IImdbClient, ImdbClient>();
             services.AddSingleton<IForecastService, ForecastService>();
             services.AddSingleton<IMovieService, ImdbService>();
             services.AddSingleton<IForecastService, ForecastService>();
+            services.AddSingleton<NotificationManager>();
+            services.AddSingleton<DownloadManager>();
+            services.AddSingleton<BlazorHubConnectionManager>();
             services.AddAmbientLightSensor();
             services.AddGeolocationSensor();
             services.AddModalService();

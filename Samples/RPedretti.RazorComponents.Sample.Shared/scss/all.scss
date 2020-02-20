@@ -154,6 +154,7 @@ app > .spinner-wrapper {
 @import "../Pages/Movies/MoviesPage.razor.scss";
 @import "../Pages/Sensors/SensorsPage.razor.scss";
 @import "../Components/MoviePoster/MoviePoster.razor.scss";
+@import "../Components/DownlodList/DownloadList.razor.scss";
 
 .dark .checkbox {
     --label-color: red;

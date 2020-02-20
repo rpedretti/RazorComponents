@@ -12,8 +12,8 @@
            class="form-control"
            aria-label="title"
            placeholder="Movie title..."
-           oninput="(this.dispatchEvent(new CustomEvent('change', { bubbles: true })))"
-           @bind="SearchMovieTitle" />
+           @bind="SearchMovieTitle" 
+           @bind:event="oninput"/>
     <div class="input-group-append">
         <button class="btn btn-outline-secondary"
                 type="button"
