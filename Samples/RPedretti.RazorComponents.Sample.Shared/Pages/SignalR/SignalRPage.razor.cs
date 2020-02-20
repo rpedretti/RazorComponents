@@ -8,8 +8,10 @@ namespace RPedretti.RazorComponents.Sample.Shared.Pages.SignalR
     {
         #region Properties
 
-        [Inject] private DownloadManager DownloadManager { get; set; }
-        [Inject] private BlazorHubConnectionManager HubConnectionManager { get; set; }
+#pragma warning disable CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
+        [Inject] private DownloadManager _downloadManager { get; set; }
+        [Inject] private BlazorHubConnectionManager _hubConnectionManager { get; set; }
+#pragma warning restore CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
 
         protected bool HasToken { get; set; }
         protected string Password { get; set; } = "bla";
@@ -21,26 +23,26 @@ namespace RPedretti.RazorComponents.Sample.Shared.Pages.SignalR
 
         protected async Task LoginAsync()
         {
-            var connection = await HubConnectionManager.ConnectAsync(Username, Password);
+            var connection = await _hubConnectionManager.ConnectAsync(Username, Password);
             HasToken = true;
-            DownloadManager.SetConnection(connection);
+            _downloadManager.SetConnection(connection);
         }
 
         protected async Task LogoutAsync()
         {
-            await HubConnectionManager.CloseConnectionAsync();
+            await _hubConnectionManager.CloseConnectionAsync();
             HasToken = false;
         }
 
         protected override void OnInitialized()
         {
-            HasToken = HubConnectionManager.IsConnected;
+            HasToken = _hubConnectionManager.IsConnected;
             base.OnInitialized();
         }
 
         protected async Task RequestLongProcessAsync()
         {
-            await DownloadManager.RequestLongRunningProcess();
+            await _downloadManager.RequestLongRunningProcess();
         }
 
         #endregion Methods

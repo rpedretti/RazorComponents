@@ -3,6 +3,7 @@ using Microsoft.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
+using RPedretti.RazorComponents.Sample.Shared.Configuration;
 using RPedretti.RazorComponents.Sample.Shared.HttpClients;
 using RPedretti.RazorComponents.Sample.Shared.Managers;
 using RPedretti.RazorComponents.Sample.Shared.Services;
@@ -27,6 +28,7 @@ namespace RPedretti.RazorComponents.Wasm.Sample
 
             services.AddSingleton<IFileProvider>(fileProvider);
             services.AddSingleton(configuration.GetSection("Weather").Get<WeatherConfig>());
+            services.AddSingleton(configuration.GetSection("Hub").Get<HubConfig>());
             services.AddSingleton<IConfiguration>(configuration);
             services.AddSingleton<IWeatherClient, WeatherClient>();
             services.AddSingleton<IImdbClient, ImdbClient>();

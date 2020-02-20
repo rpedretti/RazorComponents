@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http.Connections;
 using Microsoft.AspNetCore.SignalR.Client;
+using RPedretti.RazorComponents.Sample.Shared.Configuration;
 using RPedretti.RazorComponents.Sample.Shared.Models;
 using System;
 using System.Net.Http;
@@ -13,31 +14,29 @@ namespace RPedretti.RazorComponents.Sample.Shared.Managers
     {
         #region Fields
 
-#if DEBUG
-        private readonly string baseUrl = "https://localhost:4001";
-#else
-        private readonly string baseUrl = "https://blazorsignalr.azurewebsites.net";
-#endif
-        private HubConnection? connection;
-        private readonly HttpClient HttpClient;
-        private TokenModel? Jwt;
-        private NotificationManager NotificationManager;
+        private readonly string _baseUrl;
+
+        private HubConnection? _connection;
+        private TokenModel? _jwt;
+        private readonly HttpClient _httpClient;
+        private readonly NotificationManager _notificationManager;
 
         #endregion Fields
 
         #region Constructors
 
-        public BlazorHubConnectionManager(HttpClient httpClient, NotificationManager notificationManager)
+        public BlazorHubConnectionManager(HttpClient httpClient, NotificationManager notificationManager, HubConfig hubConfig)
         {
-            HttpClient = httpClient;
-            NotificationManager = notificationManager;
+            _httpClient = httpClient;
+            _notificationManager = notificationManager;
+            _baseUrl = hubConfig.Url;
         }
 
         #endregion Constructors
 
         #region Properties
 
-        public bool IsConnected => connection != null;
+        public bool IsConnected => _connection != null;
 
         #endregion Properties
 
@@ -48,11 +47,11 @@ namespace RPedretti.RazorComponents.Sample.Shared.Managers
 
             if (IsConnected)
             {
-                await connection!.StopAsync();
+                await _connection!.StopAsync();
             }
 
-            connection = null;
-            Jwt = null;
+            _connection = null;
+            _jwt = null;
             return true;
         }
 
@@ -62,54 +61,54 @@ namespace RPedretti.RazorComponents.Sample.Shared.Managers
 
             HttpResponseMessage response;
 
-            if (Jwt?.IsExpired ?? false)
+            if (_jwt?.IsExpired ?? false)
             {
                 Console.WriteLine("token expired");
-                var refreshContent = new StringContent(Convert.ToBase64String(Encoding.UTF8.GetBytes(Jwt.RefreshToken)), Encoding.UTF8, "application/json");
-                response = await HttpClient.PostAsync($"{baseUrl}/{Jwt.RefreshUrl}", refreshContent);
+                var refreshContent = new StringContent(Convert.ToBase64String(Encoding.UTF8.GetBytes(_jwt.RefreshToken)), Encoding.UTF8, "application/json");
+                response = await _httpClient.PostAsync($"{_baseUrl}/{_jwt.RefreshUrl}", refreshContent);
                 if (response.IsSuccessStatusCode)
                 {
                     var serializedJwt = await response.Content.ReadAsStringAsync();
                     var jwt = JsonSerializer.Deserialize<SecureJwtModel>(serializedJwt);
-                    Jwt = jwt.TokenModel;
+                    _jwt = jwt.TokenModel;
                 }
             }
             else
             {
                 var userModel = new UserAuthenticationModel { Username = username, Password = password };
                 var content = new StringContent(JsonSerializer.Serialize(userModel), Encoding.UTF8, "application/json");
-                response = await HttpClient.PostAsync($"{baseUrl}/jwt/requestjwt", content);
+                response = await _httpClient.PostAsync($"{_baseUrl}/jwt/requestjwt", content);
 
                 if (response.IsSuccessStatusCode)
                 {
                     var serializedJwt = await response.Content.ReadAsStringAsync();
                     var jwt = JsonSerializer.Deserialize<SecureJwtModel>(serializedJwt);
-                    Jwt = jwt.TokenModel;
-                    connection = new HubConnectionBuilder()
-                        .WithUrl($"{baseUrl}/blazorhub?access_token={Jwt.Token}", opt =>
+                    _jwt = jwt.TokenModel;
+                    _connection = new HubConnectionBuilder()
+                        .WithUrl($"{_baseUrl}/blazorhub?access_token={_jwt.Token}", opt =>
                         {
                             opt.SkipNegotiation = true;
                             opt.Transports = HttpTransportType.WebSockets;
                         })
                         .Build();
 
-                    connection.On<string>("GuestEntered", id =>
+                    _connection.On<string>("GuestEntered", id =>
                     {
-                        NotificationManager.ShowNotificationMessage($"User {id} just entered", "New User");
+                        _notificationManager.ShowNotificationMessage($"User {id} just entered", "New User");
                         return Task.CompletedTask;
                     });
 
-                    connection.On<string>("GuestLeft", id =>
+                    _connection.On<string>("GuestLeft", id =>
                     {
-                        NotificationManager.ShowNotificationMessage($"User {id} just left", "New User");
+                        _notificationManager.ShowNotificationMessage($"User {id} just left", "New User");
                         return Task.CompletedTask;
                     });
 
-                    await connection.StartAsync();
+                    await _connection.StartAsync();
                 }
             }
 
-            return connection;
+            return _connection;
         }
 
         public async void Dispose()
