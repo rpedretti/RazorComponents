@@ -1,4 +1,4 @@
-name: Build BingMap Sample
+name: Publish BingMap Sample
 
 on:
   push:

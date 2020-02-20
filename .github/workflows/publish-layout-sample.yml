@@ -1,4 +1,4 @@
-name: Build Layout Sample
+name: Publish Layout Sample
 
 on:
   push:

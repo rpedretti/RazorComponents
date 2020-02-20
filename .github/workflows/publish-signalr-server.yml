@@ -1,4 +1,4 @@
-name: Build Layout Sample
+name: Publish SignalR Server
 
 on:
   push:
