@@ -101,8 +101,7 @@ namespace RPedretti.RazorComponents.Sample.SignalRServer
                         "http://localhost:1236", "https://localhost:1237",
                         "http://localhost:5000", "https://localhost:5001",
 #endif
-                        "https://rpedretti.github.io/ClientSideRazorComponents",
-                        "https://rpedretti.github.io/BingMapWasm"
+                        "https://rpedretti.github.io"
                     )
                     .AllowCredentials();
             });
