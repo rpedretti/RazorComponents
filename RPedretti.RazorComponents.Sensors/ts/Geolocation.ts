@@ -4,22 +4,22 @@
 }
 
 interface CustomPosition {
-    coords: {
-        accuracy: number,
-        altitude: number | null,
-        altitudeAccuracy: number | null,
-        heading: number | null,
-        latitude: number,
-        longitude: number,
-        speed: number | null
-    },
+    coords: Coordinates,
     timestamp: Date
 }
 
 export class Geolocation {
     private mapPosition(position: Position): CustomPosition {
         return {
-            coords: position.coords,
+            coords: {
+                accuracy: position.coords.accuracy === NaN ? 0 : position.coords.accuracy,
+                altitude: position.coords.altitude === NaN ? 0 : position.coords.altitude,
+                altitudeAccuracy: position.coords.altitudeAccuracy === NaN ? 0 : position.coords.altitudeAccuracy,
+                heading: position.coords.heading === NaN ? 0 : position.coords.heading,
+                latitude: position.coords.latitude === NaN ? 0 : position.coords.latitude,
+                longitude: position.coords.longitude === NaN ? 0 : position.coords.longitude,
+                speed: position.coords.speed === NaN ? 0 : position.coords.speed,
+            },
             timestamp: new Date(position.timestamp)
         };
     };
