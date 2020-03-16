@@ -14,35 +14,44 @@
               Label="Grouped"
               @bind-Checked="@Grouped" />
 
-@foreach (var header in Headers)
+@foreach (var header in _headers)
 {
     var h = header;
     <button type="button" class="btn" @onclick="@(() => ToggleColumn(h))">@(h.Hidden ? "Show" : "Hide") @(h.Title)</button>
 }
 
 @{
-    RenderFragment<WeatherForecast> dateTemplate = (w) => @<span>@w.Date.ToString("dd/MM HH:00")</span>;
-RenderFragment<WeatherForecast> tempTemplate = (w) => @<span>@w.Temperature</span>;
-RenderFragment<WeatherForecast> rainChanceTemplate = (w) => @<span>@w.RainChangePercent</span>;
-RenderFragment<WeatherForecast> rainAmmountTemplate = (w) => @<span>@w.RainAmmount</span>;
-RenderFragment<DynamicTableGroup<WeatherForecast>> groupHeaderTemplate = (g) => @<span class="@g.Classes">@g.Rows.Average(f => f.Context.Temperature)</span>;
 
-Columns = new List<DynamicTableColumn<WeatherForecast>>
-{
-        new DynamicTableColumn<WeatherForecast> { SortProp = nameof(WeatherForecast.Date), Classes = "-l", Template = dateTemplate },
-        new DynamicTableColumn<WeatherForecast> { SortProp = nameof(WeatherForecast.Temperature), Classes = "-l", Template = tempTemplate },
-        new DynamicTableColumn<WeatherForecast> { SortProp = nameof(WeatherForecast.RainChangePercent), Classes = "-r", Template = rainChanceTemplate },
-        new DynamicTableColumn<WeatherForecast> { SortProp = nameof(WeatherForecast.RainAmmount), Classes = "-r", Template = rainAmmountTemplate }
+    _dateTemplate = (w) => @<span>@w.Date.ToString("dd/MM HH:00")</span>;
+    _tempTemplate = (w) => @<span>@w.Temperature</span>;
+    _rainChanceTemplate = (w) => @<span>@w.RainChangePercent</span>;
+    _rainAmmountTemplate = (w) => @<span>@w.RainAmmount</span>;
+    _groupHeaderTemplate = (g) => @<span class="@g.Classes">@g.Rows.Average(f => f.Context.Temperature)</span>;
+
+    _headers = new List<DynamicTableHeader>()
+    {
+        new DynamicTableHeader{ Title =  "Date", Classes = "-l"},
+        new DynamicTableHeader{ Title =  "Temp. (C)", CanSort = true, Classes = "-l", SortId = "1" },
+        new DynamicTableHeader{ Title =  "Rain chance (%)", CanSort = true, Classes = "-r", SortId = "2" },
+        new DynamicTableHeader{ Title =  "Rain Ammount (mm)", CanSort = true, Classes = "-r", SortId = "3" }
+    };
+
+    _columns = new List<DynamicTableColumn<WeatherForecast>>
+    {
+        new DynamicTableColumn<WeatherForecast> { SortProp = nameof(WeatherForecast.Date), Classes = "-l", Template = _dateTemplate },
+        new DynamicTableColumn<WeatherForecast> { SortProp = nameof(WeatherForecast.Temperature), Classes = "-l", Template = _tempTemplate },
+        new DynamicTableColumn<WeatherForecast> { SortProp = nameof(WeatherForecast.RainChangePercent), Classes = "-r", Template = _rainChanceTemplate },
+        new DynamicTableColumn<WeatherForecast> { SortProp = nameof(WeatherForecast.RainAmmount), Classes = "-r", Template = _rainAmmountTemplate }
     };
 }
 
 @if (Grouped)
 {
-    <DynamicGroupedTable Headers="@Headers"
+    <DynamicGroupedTable Headers="@_headers"
                          TItem="WeatherForecast"
-                         Groups="@GroupedForecast"
-                         GroupHeaderTemplate="groupHeaderTemplate"
-                         Columns="@Columns"
+                         Groups="@_groupedForecast"
+                         GroupHeaderTemplate="_groupHeaderTemplate"
+                         Columns="@_columns"
                          Loading="@Loading">
         <LoadingTemplate>
             <Spinner Centered Active Size="SpinnerSize.MEDIUM" />
@@ -52,10 +61,10 @@ Columns = new List<DynamicTableColumn<WeatherForecast>>
 else
 {
     <DynamicTable Classes="table-bordered"
-                  Headers="@Headers"
+                  Headers="@_headers"
                   TItem="WeatherForecast"
-                  Rows="@Forecasts"
-                  Columns="@Columns"
+                  Rows="@_forecasts"
+                  Columns="@_columns"
                   Loading="@Loading"
                   SortRequest="@Sort"
                   OnRowClick="@RowClicked">
