@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace RPedretti.RazorComponents.I18n
+namespace RPedretti.RazorComponents.I18n.Models
 {
     public interface ITranslations<TKey> : IReadOnlyDictionary<TKey, string>
     {

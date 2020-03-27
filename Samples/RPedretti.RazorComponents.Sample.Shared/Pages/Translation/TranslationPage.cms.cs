@@ -1,7 +1,4 @@
-﻿using RPedretti.RazorComponents.I18n;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using RPedretti.RazorComponents.I18n.Models;
 
 namespace RPedretti.RazorComponents.Sample.Shared.Pages.Translation
 {

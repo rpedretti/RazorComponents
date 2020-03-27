@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 
-namespace RPedretti.RazorComponents.I18n
+namespace RPedretti.RazorComponents.I18n.Models
 {
     public class Translations<TKey> : ITranslations<TKey>
     {
