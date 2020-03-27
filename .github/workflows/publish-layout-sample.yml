@@ -5,6 +5,7 @@ on:
     branches: 
     - master
     paths:
+    - RPedretti.RazorComponents.I18n/**
     - RPedretti.RazorComponents.Input/**
     - RPedretti.RazorComponents.Layout/**
     - RPedretti.RazorComponents.Sensors/**

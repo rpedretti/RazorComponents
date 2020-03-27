@@ -1,11 +1,11 @@
-name: Build I18n
+name: Build Shared
 
 on:
   push:
     branches: 
     - master
     paths:
-    - RPedretti.RazorComponents.I18n/**
+    - RPedretti.RazorComponents.Shared/**
     
 jobs:
   build:
@@ -21,7 +21,7 @@ jobs:
     
     - name: Build with dotnet
       run: dotnet build --configuration Release
-      working-directory: ./RPedretti.RazorComponents.I18n
+      working-directory: ./RPedretti.RazorComponents.Shared
     
     - name: Generate Nuget Version
       uses: emrekas/build-number@v3
@@ -32,7 +32,7 @@ jobs:
         
     - name: Build Nuget
       run: dotnet pack -c Release -p:Version=1.1.$BUILD_NUMBER -o ../publish
-      working-directory: ./RPedretti.RazorComponents.I18n
+      working-directory: ./RPedretti.RazorComponents.Shared
       
     - name: Upload nuget artifact
       uses: actions/upload-artifact@v1
