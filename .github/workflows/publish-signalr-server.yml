@@ -8,7 +8,7 @@ on:
     - Samples/RPedretti.RazorComponents.Sample.SignalRServer/**
     
 env:
-    DOTNET_VERSION: '3.1.100'
+    DOTNET_VERSION: '3.1.102'
     AZURE_WEBAPP_NAME: 'razorsignalrserver'
 
 jobs:

@@ -31,22 +31,25 @@ export class Geolocation {
         };
     };
 
-    watchPosition = (objectRef): number | undefined => {
+    public watchPosition(objectRef: DotNet.DotNetObject): number | undefined {
         if (navigator.geolocation) {
             const id = navigator.geolocation.watchPosition(
                 p => objectRef.invokeMethodAsync('WatchPositionResponse', this.mapPosition(p)),
-                e => objectRef.invokeMethodAsync('WatchPositionError', this.mapPositionError(e))
+                e => objectRef.invokeMethodAsync('WatchPositionError', this.mapPositionError(e)),
+                {
+                    enableHighAccuracy: true
+                }
             );
 
             return id;
         } else {
             const error: CustomError = { code: -1, message: "Geolocation not available" }
             objectRef.invokeMethodAsync('WatchPositionError', error)
-            null
+            null;
         }
     }
 
-    stopWatchPosition = (watchId: number) => {
+    public stopWatchPosition(watchId: number): void {
         navigator.geolocation?.clearWatch(watchId);
     }
 }

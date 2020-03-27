@@ -1,0 +1,15 @@
+﻿@page "/i18n"
+@using RPedretti.RazorComponents.I18n
+
+<CascadingValue Value="this">
+    <button @onclick="AddTranslation" class="btn btn-primary">Add Translation</button>
+    <I18nProvider TSource="TranslationPage" TKey="int" Selector="(s) => s.Source">
+        <ul>
+            @foreach (var cms in Cms)
+            {
+                <li @key="cms.Key"><I18n Translation="cms" /></li>
+            }
+        </ul>
+    </I18nProvider>
+</CascadingValue>
+

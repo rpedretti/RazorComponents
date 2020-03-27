@@ -1,0 +1,10 @@
+﻿@typeparam TKey
+
+@(Translations.TryGetValue(Translation.Key, out var translation) ? translation : Translation.Text)
+
+@code
+{
+    [CascadingParameter] public ITranslations<TKey> Translations { get; set; }
+
+    [Parameter] public ITranslation<TKey> Translation { get; set; }
+}

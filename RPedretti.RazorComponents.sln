@@ -17,7 +17,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{FB46
 	ProjectSection(SolutionItems) = preProject
 		scripts\build-debug.ps1 = scripts\build-debug.ps1
 		scripts\build-prod.ps1 = scripts\build-prod.ps1
-		scripts\build-prod.sh = scripts\build-prod.sh
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{16206768-4832-4209-B307-8689E71165AE}"
@@ -31,6 +30,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RPedretti.RazorComponents.Wasm.BingMap", "Samples\RPedretti.RazorComponents.Wasm.BingMap\RPedretti.RazorComponents.Wasm.BingMap.csproj", "{CC44B1E4-698C-4CA5-B26E-5A9353D00713}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RPedretti.RazorComponents.Sample.SignalRServer", "Samples\RPedretti.RazorComponents.Sample.SignalRServer\RPedretti.RazorComponents.Sample.SignalRServer.csproj", "{8CA24BAD-7E0B-40CE-A9A3-4A72FBD9F3E4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RPedretti.RazorComponents.I18n", "RPedretti.RazorComponents.I18n\RPedretti.RazorComponents.I18n.csproj", "{27EBE5E4-6682-4E3A-BE68-C1ED4D6FBD0F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -162,6 +163,18 @@ Global
 		{8CA24BAD-7E0B-40CE-A9A3-4A72FBD9F3E4}.Release|x64.Build.0 = Release|Any CPU
 		{8CA24BAD-7E0B-40CE-A9A3-4A72FBD9F3E4}.Release|x86.ActiveCfg = Release|Any CPU
 		{8CA24BAD-7E0B-40CE-A9A3-4A72FBD9F3E4}.Release|x86.Build.0 = Release|Any CPU
+		{27EBE5E4-6682-4E3A-BE68-C1ED4D6FBD0F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27EBE5E4-6682-4E3A-BE68-C1ED4D6FBD0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27EBE5E4-6682-4E3A-BE68-C1ED4D6FBD0F}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{27EBE5E4-6682-4E3A-BE68-C1ED4D6FBD0F}.Debug|x64.Build.0 = Debug|Any CPU
+		{27EBE5E4-6682-4E3A-BE68-C1ED4D6FBD0F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{27EBE5E4-6682-4E3A-BE68-C1ED4D6FBD0F}.Debug|x86.Build.0 = Debug|Any CPU
+		{27EBE5E4-6682-4E3A-BE68-C1ED4D6FBD0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27EBE5E4-6682-4E3A-BE68-C1ED4D6FBD0F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{27EBE5E4-6682-4E3A-BE68-C1ED4D6FBD0F}.Release|x64.ActiveCfg = Release|Any CPU
+		{27EBE5E4-6682-4E3A-BE68-C1ED4D6FBD0F}.Release|x64.Build.0 = Release|Any CPU
+		{27EBE5E4-6682-4E3A-BE68-C1ED4D6FBD0F}.Release|x86.ActiveCfg = Release|Any CPU
+		{27EBE5E4-6682-4E3A-BE68-C1ED4D6FBD0F}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

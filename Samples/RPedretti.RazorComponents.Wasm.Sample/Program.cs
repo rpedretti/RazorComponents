@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Blazor.Hosting;
+﻿using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -23,7 +23,7 @@ namespace RPedretti.RazorComponents.Wasm.Sample
 
             var fileProvider = new EmbeddedFileProvider(Assembly.GetExecutingAssembly());
             var configuration = builder.Configuration
-                .AddJsonFile(provider: fileProvider, path: "appsettings.json", optional: true, reloadOnChange: false)
+                .AddJsonFile(provider: fileProvider, path: "appsettings.json", optional: false, reloadOnChange: false)
                 .Build();
 
             services.AddSingleton<IFileProvider>(fileProvider);
@@ -46,6 +46,7 @@ namespace RPedretti.RazorComponents.Wasm.Sample
         public static async Task Main(string[] args)
         {
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
+            builder.Services.AddBaseAddressHttpClient();
 
             RegisterDependencies(builder);
 
