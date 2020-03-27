@@ -43,7 +43,7 @@ jobs:
       run: dotnet build --configuration Release
       working-directory: ./RPedretti.RazorComponents.BingMap
             
-    - name: Build I18m with dotnet
+    - name: Build I18n with dotnet
       run: dotnet build --configuration Release
       working-directory: ./RPedretti.RazorComponents.I18n
     
