@@ -15,7 +15,14 @@
 <div class="sensors">
     <div class="sensors-ambientlight">
         <h1>Ambient light</h1>
-        <p>Ambient light is @(LightError ?? Light.ToString())</p>
+        @if (LightError != null)
+        { 
+            @LightError 
+        }
+        else
+        {
+            <p>Ambient light is @Light</p>
+        }
     </div>
     <div class="sensors-geolocation">
         <h1>Position</h1>

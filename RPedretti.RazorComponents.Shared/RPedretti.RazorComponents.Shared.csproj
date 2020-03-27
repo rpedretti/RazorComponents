@@ -13,8 +13,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="3.1.1" />
-    <PackageReference Include="Microsoft.JSInterop" Version="3.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="3.1.2" />
+    <PackageReference Include="Microsoft.JSInterop" Version="3.1.2" />
+    <PackageReference Include="Microsoft.JSInterop.WebAssembly" Version="3.2.0-preview2.20160.5" />
   </ItemGroup>
 
 </Project>

@@ -1,0 +1,16 @@
+﻿@typeparam TSource
+@typeparam TKey
+
+
+<CascadingValue Value="@Selector(Source)">
+    @ChildContent
+</CascadingValue>
+
+@code
+{
+    [CascadingParameter] public TSource Source { get; set; }
+
+    [Parameter] public Func<TSource, ITranslations<TKey>> Selector { get; set; }
+
+    [Parameter] public RenderFragment ChildContent { get; set; }
+}

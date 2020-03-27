@@ -26,7 +26,7 @@ jobs:
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 3.1.100
+        dotnet-version: 3.1.102
     
     - name: Setup Node.js for use with actions
       uses: actions/setup-node@v1.1.0
@@ -42,6 +42,10 @@ jobs:
     - name: Build BingMap with dotnet
       run: dotnet build --configuration Release
       working-directory: ./RPedretti.RazorComponents.BingMap
+            
+    - name: Build I18n with dotnet
+      run: dotnet build --configuration Release
+      working-directory: ./RPedretti.RazorComponents.I18n
     
     - name: Install Input npm dependencies
       run: npm i

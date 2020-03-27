@@ -8,10 +8,14 @@ Live samples at
 
 ## Packages
 
+- BingMaps: https://www.nuget.org/packages/RPedretti.RazorComponents.BingMap/
+- I18n: https://www.nuget.org/packages/RPedretti.RazorComponents.I18n/
 - Inputs: https://www.nuget.org/packages/RPedretti.RazorComponents.Input/
 - Layouts: https://www.nuget.org/packages/RPedretti.RazorComponents.Layout/
 - Sensors: https://www.nuget.org/packages/RPedretti.RazorComponents.Sensors/
-- BingMaps: https://www.nuget.org/packages/RPedretti.RazorComponents.BingMap/
+
+## I18n
+**TBD**
 
 ## Inputs
 There are four custom inputs, with acessibility

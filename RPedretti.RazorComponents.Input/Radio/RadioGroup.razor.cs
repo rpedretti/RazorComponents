@@ -17,7 +17,7 @@ namespace RPedretti.RazorComponents.Input.Radio
 
         [Parameter] public RadioButton? Selected { get; set; }
 
-        [Parameter] public EventCallback<RadioButton> SelectedChanged { get; set; }
+        [Parameter] public EventCallback<RadioButton?> SelectedChanged { get; set; }
 
         #endregion Properties
 
@@ -40,11 +40,12 @@ namespace RPedretti.RazorComponents.Input.Radio
             if (Selected == button && CanDeselect)
             {
                 Selected = null;
+                await SelectedChanged.InvokeAsync(Selected);
             }
             else if (Selected != button)
             {
-                Selected = button;
-                await SelectedChanged.InvokeAsync(button);
+                Selected = button;      
+                await SelectedChanged.InvokeAsync(Selected);
             }
         }
 
