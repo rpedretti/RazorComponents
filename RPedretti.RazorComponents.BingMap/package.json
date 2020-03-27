@@ -19,6 +19,7 @@
     "@types/emscripten": "0.0.32",
     "@types/lodash": "4.14.130",
     "@types/uuid": "3.4.4",
+    "acorn": "^6.4.1",
     "bingmaps": "2.0.3",
     "cross-env": "^6.0.0",
     "del-cli": "^3.0.0",

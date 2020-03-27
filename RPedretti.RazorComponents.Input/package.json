@@ -17,6 +17,7 @@
   },
   "devDependencies": {
     "@types/jquery": "3.3.9",
+    "acorn": "^6.4.1",
     "cross-env": "^6.0.3",
     "del-cli": "^3.0.0",
     "move-cli": "^1.2.1",
