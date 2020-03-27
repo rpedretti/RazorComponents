@@ -80,16 +80,16 @@ jobs:
       run: ls -laR ./publish
 
     - name: Copy GitHub Pages specific files
-      run: cp ./GitHubPages/404.html ./GitHubPages/.nojekyll ./publish/RPedretti.RazorComponents.Wasm.BingMap/dist
+      run: cp ./GitHubPages/404.html ./GitHubPages/.nojekyll ./publish/wwwroot
         
     - name: Add base ref
-      run: sed -i 's/<base href=".*" \/>/<base href="https:\/\/rpedretti.github.io\/BingMapWasm\/" \/>/g' ./publish/RPedretti.RazorComponents.Wasm.BingMap/dist/index.html
+      run: sed -i 's/<base href=".*" \/>/<base href="https:\/\/rpedretti.github.io\/BingMapWasm\/" \/>/g' ./publish/wwwroot/index.html
           
     - name: GitHub Pages action
       uses: peaceiris/actions-gh-pages@v3.0.3
       with:
         deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY_BINGMAP }}
         publish_branch: master
-        publish_dir: ./publish/RPedretti.RazorComponents.Wasm.BingMap/dist
+        publish_dir: ./publish/wwwroot
         external_repository: rpedretti/BingMapWasm
         commit_message: 'Updated version'
