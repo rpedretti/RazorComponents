@@ -1,13 +1,23 @@
 ﻿@using RPedretti.RazorComponents.Sample.Shared.Pages.Inputs
 @using RPedretti.RazorComponents.Sample.Shared.Shared
+@using RPedretti.RazorComponents.Sample.Shared.State
+@using RPedretti.RazorComponents.I18n
 
-<Router AppAssembly="typeof(Program).Assembly" AdditionalAssemblies="new[] { typeof(InputsPage).Assembly }">
-    <Found Context="routeData">
-        <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
-    </Found>
-    <NotFound>
-        <LayoutView Layout="@typeof(MainLayout)">
-            <p>This is not the page you are looking for...</p>
-        </LayoutView>
-    </NotFound>
-</Router>
+<CascadingValue Value="State">
+    <I18nProvider TSource="IAppState" TKey="int" Selector="(s) => s.Translations">
+        <Router AppAssembly="typeof(Program).Assembly" AdditionalAssemblies="new[] { typeof(InputsPage).Assembly }">
+            <Found Context="routeData">
+                <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
+            </Found>
+            <NotFound>
+                <LayoutView Layout="@typeof(MainLayout)">
+                    <p>This is not the page you are looking for...</p>
+                </LayoutView>
+            </NotFound>
+        </Router>
+    </I18nProvider>
+</CascadingValue>
+
+@code {
+    private IAppState State = new AppState();
+}

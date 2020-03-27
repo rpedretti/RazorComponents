@@ -1,15 +1,60 @@
 ﻿@page "/i18n"
+@using RPedretti.RazorComponents.Input.Radio
+@using RPedretti.RazorComponents.Sample.Shared.State
 @using RPedretti.RazorComponents.I18n
 
-<CascadingValue Value="this">
-    <button @onclick="AddTranslation" class="btn btn-primary">Add Translation</button>
-    <I18nProvider TSource="TranslationPage" TKey="int" Selector="(s) => s.Source">
-        <ul>
-            @foreach (var cms in Cms)
+<div class="translation-page">
+    <RadioGroup Buttons="RadioButtons" @bind-Selected="SelectedButton" CanDeselect Orientation="@RadioOrientation.HORIZONTAL" />
+
+    <ul>
+        <li><I18n Translation="TranslationPageCms.P1" /></li>
+        <li><I18n Translation="TranslationPageCms.P2" /></li>
+    </ul>
+</div>
+
+@code {
+    [CascadingParameter] IAppState AppState { get; set; }
+
+    private (int, string)[] _en = new (int, string)[] {
+        (1, "Hello"),
+        (2, "World")
+    };
+
+    private (int, string)[] _it = new (int, string)[] {
+        (1, "Ciao"),
+        (2, "Mondo")
+    };
+
+    private (int, string)[] _pt = new (int, string)[] {
+        (1, "Olá"),
+        (2, "Mundo")
+    };
+
+    private RadioButton[] RadioButtons { get; set; } = new RadioButton[]
+{
+        new RadioButton { Label = "English", Value = 1 },
+        new RadioButton { Label = "Português", Value = 2 },
+        new RadioButton { Label = "Italiano", Value = 3 }
+    };
+
+    private RadioButton? _selectedButton;
+    private RadioButton? SelectedButton
+    {
+        get => _selectedButton;
+        set
+        {
+            _selectedButton = value;
+            var translations = _selectedButton?.Value switch
             {
-                <li @key="cms.Key"><I18n Translation="cms" /></li>
-            }
-        </ul>
-    </I18nProvider>
-</CascadingValue>
+                1 => _en,
+                2 => _pt,
+                3 => _it,
+                _ => null
+            };
+
+            if (translations != null) AppState?.Translations.Add(translations);
+            else AppState.Translations.Clear();
+        }
+    }
+}
 

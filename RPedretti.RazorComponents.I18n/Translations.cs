@@ -37,6 +37,14 @@ namespace RPedretti.RazorComponents.I18n
             _translations[key] = value;
         }
 
+        public void Add(params (TKey, string)[] values)
+        {
+            foreach (var (k, v) in values)
+            {
+                _translations[k] = v;
+            }
+        }
+
         public void Remove(TKey key)
         {
             _translations.Remove(key);
