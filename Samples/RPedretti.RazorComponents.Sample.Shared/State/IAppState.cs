@@ -1,4 +1,4 @@
-﻿using RPedretti.RazorComponents.I18n;
+﻿using RPedretti.RazorComponents.I18n.Models;
 
 namespace RPedretti.RazorComponents.Sample.Shared.State
 {

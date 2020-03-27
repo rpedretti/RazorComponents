@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29123.89
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RPedretti.RazorComponents.Sample", "Samples\RPedretti.RazorComponents.Sample\RPedretti.RazorComponents.Sample.csproj", "{87B86669-7795-4765-8766-A3EBE9DC1B8F}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RPedretti.RazorComponents.Input", "RPedretti.RazorComponents.Input\RPedretti.RazorComponents.Input.csproj", "{A4CFF588-A999-4B8F-8D39-3B3A71FBCD70}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RPedretti.RazorComponents.Shared", "RPedretti.RazorComponents.Shared\RPedretti.RazorComponents.Shared.csproj", "{5381EA51-B992-4201-BE6C-8EDB30A6A41F}"
@@ -31,7 +29,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RPedretti.RazorComponents.W
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RPedretti.RazorComponents.Sample.SignalRServer", "Samples\RPedretti.RazorComponents.Sample.SignalRServer\RPedretti.RazorComponents.Sample.SignalRServer.csproj", "{8CA24BAD-7E0B-40CE-A9A3-4A72FBD9F3E4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RPedretti.RazorComponents.I18n", "RPedretti.RazorComponents.I18n\RPedretti.RazorComponents.I18n.csproj", "{27EBE5E4-6682-4E3A-BE68-C1ED4D6FBD0F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RPedretti.RazorComponents.I18n", "RPedretti.RazorComponents.I18n\RPedretti.RazorComponents.I18n.csproj", "{27EBE5E4-6682-4E3A-BE68-C1ED4D6FBD0F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,18 +41,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{87B86669-7795-4765-8766-A3EBE9DC1B8F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{87B86669-7795-4765-8766-A3EBE9DC1B8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{87B86669-7795-4765-8766-A3EBE9DC1B8F}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{87B86669-7795-4765-8766-A3EBE9DC1B8F}.Debug|x64.Build.0 = Debug|Any CPU
-		{87B86669-7795-4765-8766-A3EBE9DC1B8F}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{87B86669-7795-4765-8766-A3EBE9DC1B8F}.Debug|x86.Build.0 = Debug|Any CPU
-		{87B86669-7795-4765-8766-A3EBE9DC1B8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{87B86669-7795-4765-8766-A3EBE9DC1B8F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{87B86669-7795-4765-8766-A3EBE9DC1B8F}.Release|x64.ActiveCfg = Release|Any CPU
-		{87B86669-7795-4765-8766-A3EBE9DC1B8F}.Release|x64.Build.0 = Release|Any CPU
-		{87B86669-7795-4765-8766-A3EBE9DC1B8F}.Release|x86.ActiveCfg = Release|Any CPU
-		{87B86669-7795-4765-8766-A3EBE9DC1B8F}.Release|x86.Build.0 = Release|Any CPU
 		{A4CFF588-A999-4B8F-8D39-3B3A71FBCD70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A4CFF588-A999-4B8F-8D39-3B3A71FBCD70}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A4CFF588-A999-4B8F-8D39-3B3A71FBCD70}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -180,7 +166,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{87B86669-7795-4765-8766-A3EBE9DC1B8F} = {16206768-4832-4209-B307-8689E71165AE}
 		{3B9DB598-7BD2-419F-AC3F-6998B4713973} = {16206768-4832-4209-B307-8689E71165AE}
 		{BD546317-FAAF-497B-9F3A-CB783A771695} = {16206768-4832-4209-B307-8689E71165AE}
 		{CC44B1E4-698C-4CA5-B26E-5A9353D00713} = {16206768-4832-4209-B307-8689E71165AE}
