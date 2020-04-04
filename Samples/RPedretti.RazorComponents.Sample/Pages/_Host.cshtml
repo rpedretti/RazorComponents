@@ -14,34 +14,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>RPedretti.RazorComponents.Sample</title>
     <base href="" />
-    <link rel="stylesheet" href="_content/rpedretti.razorcomponents.input/css/all@(min).css" />
-    <link rel="stylesheet" href="_content/rpedretti.razorcomponents.layout/css/all@(min).css" />
-    <link rel="stylesheet" href="_content/rpedretti.razorcomponents.sample.shared/css/all@(min).css" />
-    <script src="_content/rpedretti.razorcomponents.sample.shared/lib/js/jquery.min.js"></script>
-    <script src="_content/rpedretti.razorcomponents.sample.shared/lib/js/popper.min.js"></script>
+    <link rel="stylesheet" href="_content/RPedretti.RazorComponents.Input/css/all@(min).css" />
+    <link rel="stylesheet" href="_content/RPedretti.RazorComponents.Layout/css/all@(min).css" />
 
     <environment include="Development">
-        <link rel="stylesheet" href="_content/rpedretti.razorcomponents.sample.shared/lib/css/bootstrap.min.css" />
-        <script src="_content/rpedretti.razorcomponents.sample.shared/lib/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="lib/css/bootstrap.min.css" />
+        <script src="lib/js/bootstrap.min.js"></script>
     </environment>
     <environment exclude="Development">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-              asp-fallback-href="_content/rpedretti.razorcomponents.sample.shared/lib/css/bootstrap.min.css"
+              asp-fallback-href="lib/css/bootstrap.min.css"
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute"
               crossorigin="anonymous"
               integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" />
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-                asp-fallback-src="_content/rpedretti.razorcomponents.sample.shared/lib/js/bootstrap.min.js"
+                asp-fallback-src="lib/js/bootstrap.min.js"
                 crossorigin="anonymous"
                 integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"></script>
 
     </environment>
 
-    <script src="_content/rpedretti.razorcomponents.input/js/init-namespaces@(min).js"></script>
-    <script src="_content/rpedretti.razorcomponents.input/js/suggest-box@(min).js"></script>
-    <script src="_content/rpedretti.razorcomponents.sensors/js/init-namespaces@(min).js"></script>
-    <script src="_content/rpedretti.razorcomponents.sensors/js/lightsensor@(min).js"></script>
-    <script src="_content/rpedretti.razorcomponents.sensors/js/geolocation@(min).js"></script>
+    <script src="_content/RPedretti.RazorComponents.Input/js/init-namespaces@(min).js"></script>
+    <script src="_content/RPedretti.RazorComponents.Input/js/suggest-box@(min).js"></script>
+    <script src="_content/RPedretti.RazorComponents.Sensors/js/init-namespaces@(min).js"></script>
+    <script src="_content/RPedretti.RazorComponents.Sensors/js/lightsensor@(min).js"></script>
+    <script src="_content/RPedretti.RazorComponents.Sensors/js/geolocation@(min).js"></script>
 </head>
 <body>
     <app>@(await Html.RenderComponentAsync<App>(RenderMode.Server))</app>
